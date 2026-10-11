@@ -1,0 +1,138 @@
+{
+  "builtin": [
+    "en",
+    "ru"
+  ],
+  "fallback": "en",
+  "keys": {
+    "premise": {
+      "en": "Premise",
+      "usage": "Node kind: a thesis that rests on nothing else. One or two words. Also used lowercased in the legend.",
+      "note": "Logic term: premise. Not 'parcel'."
+    },
+    "conclusion": {
+      "en": "Conclusion",
+      "usage": "Node kind: a thesis derived from others. One or two words. Also used lowercased in the legend.",
+      "note": "Logic term: conclusion. Not 'output' or 'withdrawal'."
+    },
+    "restsOn": {
+      "en": "Rests on",
+      "usage": "Heading above the list of a thesis's premises. Up to three words, shown in capitals."
+    },
+    "leadsTo": {
+      "en": "Leads to",
+      "usage": "Heading above the list of what follows from a thesis. Up to three words, shown in capitals."
+    },
+    "derived": {
+      "en": "From {refs}",
+      "usage": "Line above a conclusion's text; {refs} becomes a list of clickable numbers joined with the language's own 'and'.",
+      "note": "Keep {refs}."
+    },
+    "noPremises": {
+      "en": "A starting premise: it rests on nothing else in the chain.",
+      "usage": "Shown instead of the premises list for a premise. One sentence."
+    },
+    "noConsequences": {
+      "en": "A final conclusion: nothing follows from it.",
+      "usage": "Shown instead of the consequences list for a final conclusion. One sentence."
+    },
+    "prev": {
+      "en": "← Previous",
+      "usage": "Button: go to the previous thesis in reading order. Keep the arrow."
+    },
+    "next": {
+      "en": "Next →",
+      "usage": "Button: go to the next thesis in reading order. Keep the arrow."
+    },
+    "collapse": {
+      "en": "Hide",
+      "usage": "Button that collapses the side panel. One word."
+    },
+    "expand": {
+      "en": "Show",
+      "usage": "Button that expands the collapsed side panel. One word."
+    },
+    "zoomIn": {
+      "en": "Zoom in",
+      "usage": "Accessible label of the + button."
+    },
+    "zoomOut": {
+      "en": "Zoom out",
+      "usage": "Accessible label of the − button."
+    },
+    "fitAll": {
+      "en": "Whole graph",
+      "usage": "Button that fits the whole graph on screen. Two words at most."
+    },
+    "legendSelected": {
+      "en": "Selected",
+      "usage": "Legend item for the selected node. Shown lowercased."
+    },
+    "legendAncestors": {
+      "en": "What it rests on",
+      "usage": "Legend item for nodes the selected one depends on, directly or indirectly. Shown lowercased."
+    },
+    "legendDescendants": {
+      "en": "What follows",
+      "usage": "Legend item for nodes that follow from the selected one. Shown lowercased."
+    },
+    "hint": {
+      "en": "Drag or scroll to move the graph; Ctrl + scroll or + and − zoom. ← → go in order, ↑ to a premise, ↓ to a consequence, 0 shows the whole graph.",
+      "usage": "Help line at the bottom of the panel. Keep the key names as they appear on a keyboard."
+    },
+    "graphLabel": {
+      "en": "Thesis graph: arrows lead from premises to conclusions",
+      "usage": "Accessible label of the whole graph for screen readers."
+    },
+    "nodeLabel": {
+      "en": "Thesis {id}: {text}",
+      "usage": "Accessible label of a node for screen readers.",
+      "note": "Keep {id} and {text}."
+    },
+    "source": {
+      "en": "Source",
+      "usage": "Label before the link to the original article in the header. One word."
+    },
+    "error": {
+      "en": "Can't build the graph: {message}",
+      "usage": "Shown instead of the graph when the data is invalid. {message} is a technical English message.",
+      "note": "Keep {message}."
+    }
+  },
+  "glossary": [
+    {
+      "term": "premise",
+      "ru": "посылка",
+      "avoid": [
+        "parcel",
+        "package"
+      ],
+      "meaning": "A starting claim the reasoning rests on"
+    },
+    {
+      "term": "conclusion",
+      "ru": "вывод",
+      "avoid": [
+        "output",
+        "withdrawal"
+      ],
+      "meaning": "A claim derived from other claims"
+    },
+    {
+      "term": "thesis",
+      "ru": "тезис",
+      "avoid": [
+        "dissertation"
+      ],
+      "meaning": "Any single claim in the graph, premise or conclusion"
+    },
+    {
+      "term": "consequence",
+      "ru": "следствие",
+      "avoid": [
+        "penalty"
+      ],
+      "meaning": "A claim that follows from the selected one"
+    }
+  ]
+}

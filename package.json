@@ -1,0 +1,59 @@
+{
+  "name": "ergomap",
+  "version": "0.1.0",
+  "description": "Clickable argument maps from a JSON of theses, premises and conclusions. One JS file, no dependencies.",
+  "keywords": [
+    "argument-map",
+    "argument-graph",
+    "critical-thinking",
+    "reasoning",
+    "visualization",
+    "dagre",
+    "svg",
+    "claude-skills",
+    "agent-skills"
+  ],
+  "homepage": "https://github.com/maxim-ge/ergomap#readme",
+  "bugs": "https://github.com/maxim-ge/ergomap/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxim-ge/ergomap.git"
+  },
+  "license": "MIT",
+  "author": "Maxim Geraskin",
+  "type": "module",
+  "main": "./dist/ergomap.mjs",
+  "module": "./dist/ergomap.mjs",
+  "browser": "./dist/ergomap.min.js",
+  "unpkg": "./dist/ergomap.min.js",
+  "jsdelivr": "./dist/ergomap.min.js",
+  "exports": {
+    ".": {
+      "import": "./dist/ergomap.mjs",
+      "default": "./dist/ergomap.min.js"
+    },
+    "./locales/*": "./locales/*",
+    "./schema/*": "./schema/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "locales",
+    "schema"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --serve",
+    "test": "node --test \"test/*.test.js\"",
+    "prepublishOnly": "npm test && npm run build"
+  },
+  "devDependencies": {
+    "@dagrejs/dagre": "3.1.1",
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cdn.jsdelivr.net/npm/ergomap/schema/data.schema.json",
+  "title": "ergomap data",
+  "description": "An article's reasoning as a graph: theses (premises and conclusions) and which theses each conclusion follows from.",
+  "type": "object",
+  "required": ["theses"],
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "description": "Positive integer as in a numbered chain, or a short slug. Shown as [id] and used in the URL as #t<id>.",
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
+      ]
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "lang": {
+      "type": "string",
+      "description": "BCP 47 language of the content, e.g. \"ru\" or \"en-GB\". Picks the UI strings."
+    },
+    "title": { "type": "string", "description": "Shown in the viewer header." },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "author": { "type": "string" }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "Optional grouping of theses, shown above the selected thesis.",
+      "items": {
+        "type": "object",
+        "required": ["id", "title"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "title": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "theses": {
+      "type": "array",
+      "minItems": 1,
+      "description": "In reading order. Prev/next and arrow keys follow this order.",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "section": { "$ref": "#/$defs/id" },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Short node caption, two to four words. The viewer wraps it; \"\\n\" forces a line break."
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The claim as a complete standalone sentence."
+          },
+          "from": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/id" },
+            "description": "Ids of the theses this one follows from. Empty or missing for a premise."
+          },
+          "note": {
+            "type": "string",
+            "description": "Context from the source: examples, quotes, references. Markdown links [text](https://…) become links."
+          }
+        }
+      }
+    },
+    "start": { "$ref": "#/$defs/id", "description": "Thesis selected when the page opens. Defaults to the first one." },
+    "strings": {
+      "type": "object",
+      "description": "UI strings for a language without a built-in dictionary, or overrides. Keys are listed in locales/index.json.",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}

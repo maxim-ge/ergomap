@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ergomap example</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500&display=swap">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { padding: 12px 16px; box-sizing: border-box; background: #EEF1F5; }
+    @media (prefers-color-scheme: dark) { body { background: #0C1015; } }
+    #graph { height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="graph"></div>
+  <!-- Local development: `npm run dev`, then open http://localhost:8000/examples/ -->
+  <script src="../dist/ergomap.js"></script>
+  <script>
+    fetch("agentic-poetry.json")
+      .then(r => r.json())
+      .then(data => Ergomap.mount("#graph", data));
+  </script>
+</body>
+</html>
