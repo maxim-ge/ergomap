@@ -236,8 +236,8 @@ The map shows the logic as a graph:
 ## Goal
 
 Extend ergomap from an argument map to an argument analysis. A page shows:
-- Key points (up to 7)
-- Key concepts (up to 7)
+- Key points
+- Key concepts
 - Premise validation
 - Original logic
 - Fixed logic
@@ -246,10 +246,9 @@ Extend ergomap from an argument map to an argument analysis. A page shows:
 Examples refer to the theses in [examples/sdd-scrum-kanban.json](../examples/sdd-scrum-kanban.json).
 
 
-## Overview
+## UI
 
-The six items group into three parts:
-1. **Summary:** key points and key concepts
+1. **Summary:** Final conclusions, key points and key concepts
 2. **Audit:** issues (fallacies, gaps) and premise validation
 3. **Logic:** original, fixed and optimized, as three states of one map
 
@@ -258,131 +257,6 @@ The audit adds one item to the goal: an explicit list of issues. Every fix in th
 - **Premise validation:** are the premises true?
 
 The plan describes the parts in four layers, each in its own terms: what the reader sees, how the analysis is made, data, and the viewer implementation.
-
-## What the reader sees
-
-The page answers the reader's questions, bottom line first:
-1. What does the article claim, and does it hold up? → key points, each with a verdict
-2. Which terms does it rest on? → key concepts
-3. How does it argue? → the map
-4. Where does the reasoning break? → issues, marked on the map
-5. What would a sound version look like? → the fixed and optimized maps
-
-### Summary view
-
-Opens first. The sketch uses the SDD article; verdicts and counts are illustrative.
-
-```
-SDD in Scrum and Kanban
-Source: Spec-Driven Development in Scrum and Kanban · Jaroslaw Wasowski
-
-[ Summary ]   Map
-
-Key points
-  ✓ Holds   The real tension is a frozen spec vs a living one
-  ✓ Holds   Pick the lowest SDD level that fits the problem
-  ✓ Holds   The spec lives inside the sprint, as a DoR agreement
-  ! Weak    Fitting the level decides the outcome
-            The success cases aren't about AI agents; "fit" is judged after the fact
-  ✓ Holds   Measure instead of trusting perception
-
-Key concepts
-  SDD            a contract first, an agent builds from it      ! two senses
-  Spec level     spec-first / spec-anchored / spec-as-source    ! two senses
-  Living spec    a contract that matures inside the sprint
-  ...
-
-Issues: 4 flaws, 4 weaknesses · Premises: 7 supported, 3 weak, 1 unsupported
-  Flaw   Doesn't follow (non sequitur)       a mandate failure taken as proof of "fit"
-  Flaw   Circular                            "fit" is judged by the outcome
-  ...
-```
-
-- **Key points:** each has a verdict: Holds / Weak / Doesn't hold. Anything other than "Holds" gets a one-line reason.
-- **Key concepts:** a term used in two senses is marked, and both senses are shown.
-- **Issues:** ordered by severity. The plain name comes first and the textbook name second. Opening an issue shows the explanation, a quote from the article and the theses involved.
-- Every item opens the map at the relevant place.
-
-### Map view
-
-- The map as now, with marks added:
-  - **Premise:** how well supported it is, shown by border and icon, not by color alone
-  - **Conclusion with a broken step:** a warning badge
-  - **Broken link:** a dashed red line
-- A switch changes between Original, Fixed and Optimized; nodes stay in place.
-  - **Fixed:** added premises and split theses are marked "added", and so is the implicit condition on every non-deductive step; each change names the issue it fixes. The only marks left are weak premises.
-  - **Optimized:** theses not needed for the key points fade out, and a counter shows the reduction, for example "22 → 15 theses, 11 → 7 premises".
-- The panel for a selected thesis also shows:
-  - **For a premise:** its verdict and the reason
-  - **For any thesis:** the issues that touch it
-  - **For a conclusion:** its strength, for example "as strong as its weakest premise: [16]", and in the original logic its step's type and strength, for example "Generalization, weak: three hand-picked cases"
-
-### Pages without analysis
-
-They work as now: the page opens on the map, with no Summary view.
-
-## How the analysis is made
-
-### Key points and concepts
-
-- **Key points:** up to 7. Each is a conclusion in the map, not a free-standing summary, so it opens in the map and its verdict comes from the analysis. Key points also define what the optimized logic must preserve.
-- **Key point verdict:** the key point's strength in the fixed logic. Supported → Holds, weak → Weak, unsupported or false → Doesn't hold.
-- **Key concepts:** up to 7. Each has a term, a one-line definition and the theses that use it. This is where equivocations live: "SDD" (an agent building from a spec vs any kind of spec) and "level" (rung vs abstraction). An issue can point at a concept.
-
-### Issues
-
-- An issue can target:
-  - **Inference** (a conclusion and the theses it follows from): the non sequitur 17 → 18, the questionable cause 6 → 7
-  - **Premise:** "after" taken as "because of" in 16
-  - **Concept:** "level", "SDD"
-  - **Pair of theses:** 5 vs 18 each name a different deciding factor
-  - **Whole argument:** the opening question answered with a different comparison in 22
-- Each issue has:
-  - a type from a fixed list
-  - a severity (flaw vs weakness)
-  - an explanation
-  - a short quote from the article
-
-  The quote is required, because without it the LLM will produce plausible but false accusations. The quote is what makes an issue checkable.
-
-### Premise validation
-
-- Premises are validated differently depending on their kind:
-  - **Fact:** supported / weak / unsupported / false
-  - **Definition:** not true or false, only checked for consistent use (handled through concepts)
-  - **Authority or value judgment:** flagged as such
-- **Basis of validation:** checking only against the article, or also against outside sources with links (see Open questions). Outside fact-checking needs web search in the skill, and that's where the risk of invented facts is highest.
-- **Strength:** a conclusion needs all of its premises, so it is as strong as its weakest required premise. That turns validation into the answer readers care about: which key points survive.
-
-### Logic versions
-
-- **Original:** what we have now, faithful to the author. The skill's "stay faithful" rule applies only here.
-- **Fixed:** the author's conclusions made valid with minimal changes, each change linked to an issue. There are two ways to close a gap: state the hidden premise the author relies on, or weaken the conclusion. Preferred: state the hidden premise, because the conclusion stays the author's and the new premise goes through validation like any other.
-  - Example: 16 bundles a fact ("quality improved in three contexts") with an assertion ("those specs matched the problem's scale"). Fixed splits them, and the assertion fails validation because the article never states the levels. That makes the circular "fit" visible as weak evidence instead of hiding it inside one thesis.
-- **Optimized:** "same conclusions" needs a definition. Proposed: the key-point conclusions, not every intermediate step (see Open questions).
-  - Built from Fixed, not Original, or it minimizes a broken argument.
-  - Premises that failed validation are dropped first. If a key point can't be reached without a failed premise, that's a finding to show, not something to hide.
-
-## Data
-
-- **Key point:** `{ text, theses: [18] }`
-- **Key concept:** `{ term, definition, theses }`; a term used in two senses needs both senses.
-- **Issues:** a top-level list with typed targets rather than a field on each thesis, because an issue can target an inference, a concept, a pair of theses or the whole argument.
-- **Premise verdict:** stored with each premise.
-- **Caps:** `maxItems: 7` for key points and key concepts.
-- **Versions:** see decision 5.
-- To be drafted:
-  - Phase 1: issues and premise verdicts on the original map
-  - Later phases: key points, key concepts, fixed and optimized versions
-
-## Viewer implementation
-
-- Two views, Summary and Map (decision 1). The view and the version are in the URL, for example `#fixed/t18`.
-- The differences between versions are computed from shared thesis ids (decision 5).
-- All versions are laid out together once, so nodes stay in place when switching.
-- Conclusion strength is computed by the viewer from premise verdicts, not stored.
-- Marks never rely on color alone.
-- Data without analysis renders as now.
 
 ## Skill
 
