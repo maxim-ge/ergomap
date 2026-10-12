@@ -1,11 +1,16 @@
 ---
 name: ergomap
-description: Turn an article's reasoning into a clickable argument map (premises, conclusions and what follows from what) published as a page. Use when asked for an argument map, a thesis graph, "граф тезисов", "карта тезисов", or to map the logic of an article.
+description: Extract an article's reasoning as premises and conclusions, as markdown or as a clickable argument map. Use when asked for the theses or logic of an article, an argument map or a thesis graph.
 ---
 
 # ergomap: article to argument map
 
-You extract the reasoning of an article as a graph of theses and publish a page that renders it with the ergomap viewer. You write only data. Never read or copy the viewer's code: the page loads it from the CDN.
+You extract the reasoning of an article as a chain of theses and output it in the form the user asked for:
+
+- Markdown: steps 1, 2 and 8. Nothing is published
+- Graph: steps 1–7. If the user didn't say, make the graph
+
+For the graph you write only data. Never read or copy the viewer's code: the page loads it from the CDN.
 
 ## 1. Read the source
 
@@ -80,3 +85,22 @@ The title is a short name for the map, two to four words, in the article's langu
 ## 7. Publish
 
 Publish the page as an artifact with the icon `map` and a one-sentence description that names the article. Then tell the user in one or two sentences what the map covers and which thesis it opens on.
+
+## 8. Markdown
+
+Reply in the article's language. Group theses under the article's sections, keep one continuous numbering, and start each conclusion with the theses it follows from:
+
+```markdown
+## Problem
+
+1. Agents make generating code cheap
+2. The developer stays responsible for the code
+3. From [1] and [2]: generation speed doesn't remove the need to understand the code
+
+## Conclusion
+
+4. From [3]: ...
+```
+
+Write "From [n] and [m]:" in the article's language. Leave out labels and notes unless the user asks for them.
+

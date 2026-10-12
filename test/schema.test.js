@@ -10,7 +10,7 @@ test("examples match the JSON schema and pass runtime validation", async () => {
   const schema = await read("../schema/data.schema.json");
   const ajv = new Ajv2020({ allErrors: true, strict: false });
   const check = ajv.compile(schema);
-  for (const name of ["agentic-poetry.json"]) {
+  for (const name of ["sdd-scrum-kanban.json"]) {
     const data = await read(`../examples/${name}`);
     assert.ok(check(data), `${name}: ${ajv.errorsText(check.errors)}`);
     assert.doesNotThrow(() => validate(data), name);

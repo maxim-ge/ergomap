@@ -1,0 +1,180 @@
+{
+  "$schema": "../schema/data.schema.json",
+  "lang": "en",
+  "title": "SDD in Scrum and Kanban",
+  "source": {
+    "title": "Spec-Driven Development in Scrum and Kanban: Where the Spec Actually Lives",
+    "url": "https://levelup.gitconnected.com/spec-driven-development-in-scrum-and-kanban-where-the-spec-actually-lives-b4cc7025d971",
+    "author": "Jaroslaw Wasowski"
+  },
+  "sections": [
+    { "id": "tension", "title": "The real tension" },
+    { "id": "ladder", "title": "Three levels of spec" },
+    { "id": "cycle", "title": "Where the spec lives in the cycle" },
+    { "id": "evidence", "title": "When it works and when it fails" },
+    { "id": "practice", "title": "Fit and measure" },
+    { "id": "summary", "title": "Summary" }
+  ],
+  "theses": [
+    {
+      "id": 1,
+      "section": "tension",
+      "label": "Agents don't ask",
+      "text": "An AI agent builds exactly what the contract says: where a human would ask a follow-up question, the agent confidently builds the wrong thing.",
+      "note": "The article's opening contrast: the same team runs one sprint from a story and a conversation, and another from a contract that an agent implements."
+    },
+    {
+      "id": 2,
+      "section": "tension",
+      "label": "Spec quality is output quality",
+      "text": "With an agent in the repository, the quality of the spec becomes the quality of the output.",
+      "from": [1],
+      "note": "A vague prompt turns the sprint into a string of fixes."
+    },
+    {
+      "id": 3,
+      "section": "tension",
+      "label": "Frozen or living spec",
+      "text": "A spec can be frozen, agreed up front and defended by phase gates, or living, maturing inside the sprint as the implementation teaches the team.",
+      "note": "The frozen variant is Big Design Up Front, and it is what gives SDD its bad name."
+    },
+    {
+      "id": 4,
+      "section": "tension",
+      "label": "Agile never banned docs",
+      "text": "The Agile Manifesto ranks working software above documentation without excluding documentation; agility is the contract's right to change after the build starts.",
+      "note": "So the common objection that SDD is waterfall in Markdown targets the spec's presence instead of its being frozen."
+    },
+    {
+      "id": 5,
+      "section": "tension",
+      "label": "The tension: frozen vs living",
+      "text": "The real tension is between a frozen spec and a living one, not between fast delivery and writing specs, and only the frozen spec deserves the waterfall charge.",
+      "from": [3, 4]
+    },
+    {
+      "id": 6,
+      "section": "tension",
+      "label": "AI: faster greenfield, slower legacy",
+      "text": "AI assistance sped up a greenfield task in a controlled study but slowed experienced developers down on a mature repository with millions of lines of code.",
+      "note": "Different conditions, different results: the author reads them as two ends of the same axis."
+    },
+    {
+      "id": 7,
+      "section": "tension",
+      "label": "The spec closes the gaps",
+      "text": "On mature code, gaps a human would question turn into wrong implementations, so the spec is the place to close them before the agent starts building.",
+      "from": [1, 6]
+    },
+    {
+      "id": 8,
+      "section": "ladder",
+      "label": "Three rungs of SDD",
+      "text": "SDD comes in three levels: spec-first, spec-anchored and spec-as-source, and each higher rung raises the maintenance cost and the coupling between spec and code.",
+      "note": "The classification is by Birgitta Böckeler of Thoughtworks. Spec-first: the spec leads, the code is maintained. Spec-anchored: the spec is versioned and evolves with the code. Spec-as-source: the spec is the source of truth, the code is generated and disposable."
+    },
+    {
+      "id": 9,
+      "section": "ladder",
+      "label": "\"Spec\" is a blurry word",
+      "text": "\"Spec\" can mean anything from an elaborate prompt to dozens of Markdown files, so any SDD statistic is meaningless without its level.",
+      "note": "Conflating levels is, in the author's words, the costliest mistake in the whole topic."
+    },
+    {
+      "id": 10,
+      "section": "ladder",
+      "label": "Pick the lowest rung that fits",
+      "text": "Most work should stay at spec-first, shared contracts such as public APIs justify spec-anchored, and spec-as-source belongs to experiments and safety-critical systems.",
+      "from": [8, 9],
+      "note": "The one antipattern is paying for a higher rung while the problem sits on a lower one, such as a simple bug that spawns several stories and a dozen acceptance criteria."
+    },
+    {
+      "id": 11,
+      "section": "cycle",
+      "label": "The spec lives in the sprint",
+      "text": "The backlog should stay at the level of goal and intent, and the contract should be developed inside the sprint, as part of doing the work.",
+      "from": [5],
+      "note": "The author credits Yuval Yeret with this placement. A finished contract in the backlog signals a spec at the wrong level of abstraction."
+    },
+    {
+      "id": 12,
+      "section": "cycle",
+      "label": "The spec feeds the DoR",
+      "text": "A spec already supplies what a Definition of Ready asks for: acceptance criteria, scope boundaries and edge cases."
+    },
+    {
+      "id": 13,
+      "section": "cycle",
+      "label": "A DoR can become a gate",
+      "text": "A Definition of Ready can turn into a gatekeeper that blocks the iteration and drifts back toward waterfall.",
+      "note": "This is Mike Cohn's warning, quoted in the article."
+    },
+    {
+      "id": 14,
+      "section": "cycle",
+      "label": "Scrum: DoR as agreement",
+      "text": "In Scrum the spec belongs in the Definition of Ready, treated as the team's agreement on entry quality rather than a phase gate.",
+      "from": [11, 12, 13]
+    },
+    {
+      "id": 15,
+      "section": "cycle",
+      "label": "Kanban: the commitment point",
+      "text": "In Kanban the commitment point takes the role of the Definition of Ready, and WIP limits in Upstream Kanban keep specs from going stale before anyone builds them.",
+      "from": [11, 12],
+      "note": "A task crosses the commitment point only when it is ready to pull: there is clarity about what to build."
+    },
+    {
+      "id": 16,
+      "section": "evidence",
+      "label": "Fitted specs paid off",
+      "text": "Where the spec matched the scale of the problem, quality improved in three different contexts.",
+      "note": "A Scrum quasi-experiment with an architectural spec (sMBSAP, Colorado State, 2023): velocity up about 19%, defect density down about 31%. A semiconductor product line: about half the defects despite higher complexity. A global bank: firefighting dropped from over a third of developer time to single digits after nine months of behavior-driven specs."
+    },
+    {
+      "id": 17,
+      "section": "evidence",
+      "label": "Mismatched specs failed",
+      "text": "Where the spec level didn't fit, or SDD was imposed as a mandate, it slowed teams down and turned them against it.",
+      "note": "A practitioner measured roughly a tenfold slowdown with a rigid SDD workflow on a small CRUD feature, with more Markdown than code to review. Another rollout, imposed top-down, met a petition of more than a thousand engineers; the author notes that some details are unverified."
+    },
+    {
+      "id": 18,
+      "section": "evidence",
+      "label": "Fit decides, not presence",
+      "text": "What decides the outcome is fitting the spec level to the context, not the mere presence of a spec.",
+      "from": [10, 16, 17]
+    },
+    {
+      "id": 19,
+      "section": "practice",
+      "label": "Perception isn't measurement",
+      "text": "Developers who expected AI to speed them up by about 24% were measured to be about 19% slower on a mature repository.",
+      "note": "METR, 2025: sixteen developers, wide confidence interval. The author calls the gap between perception and metrics the real opponent."
+    },
+    {
+      "id": 20,
+      "section": "practice",
+      "label": "Roll it out as an experiment",
+      "text": "SDD should be rolled out as an experiment that tracks cycle time, rework rate and the ratio of code to Markdown, and the batch size should shrink when rework or spec files grow faster than code.",
+      "from": [18, 19]
+    },
+    {
+      "id": 21,
+      "section": "practice",
+      "label": "One owner, few invariants",
+      "text": "A living spec needs a single owner, a version history and only a small set of invariant rules, or spec drift comes back.",
+      "from": [3, 17],
+      "note": "Too many fixed constraints don't add order; they add places for contradictions to hide."
+    },
+    {
+      "id": 22,
+      "section": "summary",
+      "label": "Living, fitted, measured",
+      "text": "SDD strengthens Agile when the spec is living, kept inside the sprint at the level the problem needs, and judged by measurement rather than by feel.",
+      "from": [2, 7, 14, 15, 20, 21],
+      "note": "The article's answer to its opening question: the faster sprint was the one where the spec lived inside the sprint at the right level."
+    }
+  ],
+  "start": 18
+}

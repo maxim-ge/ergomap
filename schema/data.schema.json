@@ -19,7 +19,7 @@
     "$schema": { "type": "string" },
     "lang": {
       "type": "string",
-      "description": "BCP 47 language of the content, e.g. \"ru\" or \"en-GB\". Picks the UI strings."
+      "description": "BCP 47 language of the content, e.g. \"en\" or \"pt-BR\". Picks the UI strings."
     },
     "title": { "type": "string", "description": "Shown in the viewer header." },
     "source": {

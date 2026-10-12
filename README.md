@@ -24,7 +24,7 @@ ergomap takes a JSON list of theses, where each conclusion names the theses it f
 
 Always pin an exact version in the script URL. Published versions never change, so a page keeps working when a new version comes out.
 
-A full example is in [`examples/agentic-poetry.json`](examples/agentic-poetry.json): the 27 theses of an article on agentic development, in Russian.
+A full example is in [`examples/sdd-scrum-kanban.json`](examples/sdd-scrum-kanban.json): the reasoning of an article on spec-driven development in Scrum and Kanban, as 22 theses in six sections.
 
 ## Data format
 

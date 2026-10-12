@@ -102,7 +102,6 @@
   "glossary": [
     {
       "term": "premise",
-      "ru": "посылка",
       "avoid": [
         "parcel",
         "package"
@@ -111,7 +110,6 @@
     },
     {
       "term": "conclusion",
-      "ru": "вывод",
       "avoid": [
         "output",
         "withdrawal"
@@ -120,7 +118,6 @@
     },
     {
       "term": "thesis",
-      "ru": "тезис",
       "avoid": [
         "dissertation"
       ],
@@ -128,7 +125,6 @@
     },
     {
       "term": "consequence",
-      "ru": "следствие",
       "avoid": [
         "penalty"
       ],

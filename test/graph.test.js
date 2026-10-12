@@ -41,7 +41,7 @@ test("data errors are caught with readable messages", () => {
 });
 
 test("layout places every node without overlaps", async () => {
-  const data = JSON.parse(await readFile(new URL("../examples/agentic-poetry.json", import.meta.url), "utf8"));
+  const data = JSON.parse(await readFile(new URL("../examples/sdd-scrum-kanban.json", import.meta.url), "utf8"));
   const m = validate(data);
   const measure = s => s.length * 7;
   const L = computeLayout(m, { measureLabel: measure, measureNum: measure });
