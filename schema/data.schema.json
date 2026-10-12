@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cdn.jsdelivr.net/npm/ergomap/schema/data.schema.json",
   "title": "ergomap data",
-  "description": "An article's reasoning as a graph: theses (premises and conclusions) and which theses each conclusion follows from.",
+  "description": "An article's reasoning as a graph: theses (starting claims and conclusions) and which theses each conclusion follows from, with an optional analysis.",
   "type": "object",
   "required": ["theses"],
   "additionalProperties": false,
@@ -13,6 +13,107 @@
         { "type": "integer", "minimum": 0 },
         { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" }
       ]
+    },
+    "ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "reasoningType": {
+      "enum": ["deductive", "generalization", "abductive", "analogy"],
+      "description": "The rule by which the step gets from its premises to its conclusion. Defaults to deductive."
+    },
+    "condition": {
+      "type": "object",
+      "description": "What a non-deductive step relies on without saying so, rated by its reasoning type's criteria.",
+      "required": ["text", "rating", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "description": "The condition as a sentence, e.g. \"Nothing else explains the effect.\"" },
+        "rating": { "enum": ["strong", "weak", "none"] },
+        "reason": { "type": "string", "minLength": 1, "description": "Why it has this rating, in a few words." }
+      }
+    },
+    "step": {
+      "type": "object",
+      "required": ["from"],
+      "additionalProperties": false,
+      "properties": {
+        "from": { "$ref": "#/$defs/ids", "minItems": 1 },
+        "type": { "$ref": "#/$defs/reasoningType" },
+        "condition": { "$ref": "#/$defs/condition" },
+        "pool": { "$ref": "#/$defs/ids", "minItems": 2, "description": "Premises of this step that are alternative evidence for the conclusion; they count as one premise." }
+      }
+    },
+    "versionThesis": {
+      "type": "object",
+      "description": "A thesis of the reconstructed or optimized logic. Label, text, note and section default to the thesis with the same id in the version it's built from; from and pool are never inherited.",
+      "required": ["id"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "section": { "$ref": "#/$defs/id" },
+        "label": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "note": { "type": "string" },
+        "from": { "$ref": "#/$defs/ids", "description": "The theses this one follows from in this version. Empty or missing for a starting claim." },
+        "type": { "$ref": "#/$defs/reasoningType" },
+        "condition": { "$ref": "#/$defs/condition" },
+        "pool": { "$ref": "#/$defs/ids", "minItems": 2, "description": "Premises in from that are alternative evidence for the conclusion; they count as one premise." },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/step" },
+          "description": "Instead of from, type, condition and pool: separate steps of different reasoning types for one conclusion."
+        },
+        "verdict": {
+          "enum": ["supported", "weak", "unsupported", "false", "definition"],
+          "description": "For a starting claim: how well its backing matches what it says."
+        },
+        "reason": { "type": "string", "minLength": 1, "description": "Why the starting claim has its verdict, pointing to its backing in the article." },
+        "fixes": { "$ref": "#/$defs/ids", "description": "Ids of the issues whose fix added or changed this thesis." },
+        "flaw": { "$ref": "#/$defs/id", "description": "Id of a flaw with no fix that breaks this step; its strength is 0." }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": ["id", "type", "severity", "target", "explanation", "quote"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": { "enum": ["non-sequitur", "missing-premise", "circular", "equivocation", "straw-man", "inconsistency", "irrelevant-conclusion"] },
+        "severity": { "enum": ["flaw", "weakness"] },
+        "target": {
+          "enum": ["inference", "thesis", "concept", "pair", "argument"],
+          "description": "inference: a conclusion and, optionally, the premises at fault; thesis: one thesis; pair: two theses; concept: a term from concepts; argument: the whole argument."
+        },
+        "theses": { "$ref": "#/$defs/ids", "description": "The theses involved, ids from the original logic." },
+        "concept": { "type": "string", "description": "For a concept target: the term, as in concepts." },
+        "explanation": { "type": "string", "minLength": 1 },
+        "quote": { "type": "string", "minLength": 1, "description": "A short quote from the article that shows the issue." }
+      }
+    },
+    "concept": {
+      "type": "object",
+      "required": ["term", "senses"],
+      "additionalProperties": false,
+      "properties": {
+        "term": { "type": "string", "minLength": 1 },
+        "senses": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Usually one; a term the article uses in two senses lists both.",
+          "items": {
+            "type": "object",
+            "required": ["definition", "theses"],
+            "additionalProperties": false,
+            "properties": {
+              "definition": { "type": "string", "minLength": 1 },
+              "theses": { "$ref": "#/$defs/ids", "minItems": 1 }
+            }
+          }
+        }
+      }
     }
   },
   "properties": {
@@ -47,7 +148,7 @@
     "theses": {
       "type": "array",
       "minItems": 1,
-      "description": "In reading order. Prev/next and arrow keys follow this order.",
+      "description": "The original logic, in reading order. Prev/next and arrow keys follow this order.",
       "items": {
         "type": "object",
         "required": ["id", "label", "text"],
@@ -69,7 +170,7 @@
             "type": "array",
             "uniqueItems": true,
             "items": { "$ref": "#/$defs/id" },
-            "description": "Ids of the theses this one follows from. Empty or missing for a premise."
+            "description": "Ids of the theses this one follows from. Empty or missing for a starting claim."
           },
           "note": {
             "type": "string",
@@ -83,6 +184,28 @@
       "type": "object",
       "description": "UI strings for a language without a built-in dictionary, or overrides. Keys are listed in locales/index.json.",
       "additionalProperties": { "type": "string" }
+    },
+    "analysis": {
+      "type": "object",
+      "description": "Optional argument analysis. With it the page opens on a summary and adds an audit and the reconstructed and optimized logic; strength is computed by the viewer.",
+      "required": ["reconstructed"],
+      "additionalProperties": false,
+      "properties": {
+        "issues": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+        "concepts": { "type": "array", "maxItems": 7, "items": { "$ref": "#/$defs/concept" } },
+        "reconstructed": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The original made explicit: every thesis with its verdict or its step, implicit premises added, bundled theses split, fixes applied.",
+          "items": { "$ref": "#/$defs/versionThesis" }
+        },
+        "optimized": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The reconstructed logic reduced to the fewest starting claims that keep every final conclusion at the same strength. Ids only from the reconstructed logic.",
+          "items": { "$ref": "#/$defs/versionThesis" }
+        }
+      }
     }
   }
 }

@@ -1,19 +1,7 @@
-const ID_STRING = /^[A-Za-z0-9_-]+$/;
+import { DataError, fail, isId, ID_MESSAGE, linkTheses, ancestors, descendants } from "./graph.js";
+import { validateAnalysis } from "./analysis.js";
 
-export class DataError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "DataError";
-  }
-}
-
-function fail(message) {
-  throw new DataError(message);
-}
-
-function isId(v) {
-  return (Number.isInteger(v) && v >= 0) || (typeof v === "string" && ID_STRING.test(v));
-}
+export { DataError, ancestors, descendants };
 
 /**
  * Checks the data and returns a normalized model.
@@ -27,7 +15,7 @@ export function validate(data) {
   if (data.sections !== undefined) {
     if (!Array.isArray(data.sections)) fail("data.sections must be an array");
     data.sections.forEach((s, i) => {
-      if (!s || !isId(s.id)) fail(`sections[${i}].id must be a non-negative integer or a string of letters, digits, "-" and "_"`);
+      if (!s || !isId(s.id)) fail(`sections[${i}].id ${ID_MESSAGE}`);
       if (typeof s.title !== "string" || !s.title.trim()) fail(`sections[${i}].title must be a non-empty string`);
       const key = String(s.id);
       if (sections.has(key)) fail(`duplicate section id "${key}"`);
@@ -36,13 +24,14 @@ export function validate(data) {
   }
 
   const theses = [];
-  const byKey = new Map();
+  const keys = new Set();
   data.theses.forEach((t, i) => {
     const where = `theses[${i}]`;
     if (!t || typeof t !== "object") fail(`${where} must be an object`);
-    if (!isId(t.id)) fail(`${where}.id must be a non-negative integer or a string of letters, digits, "-" and "_"`);
+    if (!isId(t.id)) fail(`${where}.id ${ID_MESSAGE}`);
     const key = String(t.id);
-    if (byKey.has(key)) fail(`duplicate thesis id "${key}"`);
+    if (keys.has(key)) fail(`duplicate thesis id "${key}"`);
+    keys.add(key);
     if (typeof t.label !== "string" || !t.label.trim()) fail(`thesis ${key}: label must be a non-empty string`);
     if (typeof t.text !== "string" || !t.text.trim()) fail(`thesis ${key}: text must be a non-empty string`);
     if (t.note !== undefined && typeof t.note !== "string") fail(`thesis ${key}: note must be a string`);
@@ -52,7 +41,7 @@ export function validate(data) {
       section = String(t.section);
       if (!sections.has(section)) fail(`thesis ${key}: unknown section "${section}"`);
     }
-    const node = {
+    theses.push({
       id: t.id,
       key,
       index: i,
@@ -61,43 +50,10 @@ export function validate(data) {
       note: t.note || "",
       section,
       from: (t.from || []).map(String)
-    };
-    byKey.set(key, node);
-    theses.push(node);
+    });
   });
 
-  const children = new Map(theses.map(t => [t.key, []]));
-  for (const t of theses) {
-    const seen = new Set();
-    for (const p of t.from) {
-      if (p === t.key) fail(`thesis ${t.key} lists itself in from`);
-      if (!byKey.has(p)) fail(`thesis ${t.key}: from refers to missing thesis "${p}"`);
-      if (seen.has(p)) fail(`thesis ${t.key}: from lists "${p}" twice`);
-      seen.add(p);
-      children.get(p).push(t.key);
-    }
-  }
-
-  // cycle check: iterative DFS with colors
-  const color = new Map();
-  for (const start of theses) {
-    if (color.get(start.key)) continue;
-    const stack = [[start.key, 0]];
-    color.set(start.key, 1);
-    while (stack.length) {
-      const top = stack[stack.length - 1];
-      const parents = byKey.get(top[0]).from;
-      if (top[1] < parents.length) {
-        const next = parents[top[1]++];
-        const c = color.get(next);
-        if (c === 1) fail(`cycle in from involving theses "${next}" and "${top[0]}"`);
-        if (!c) { color.set(next, 1); stack.push([next, 0]); }
-      } else {
-        color.set(top[0], 2);
-        stack.pop();
-      }
-    }
-  }
+  const { byKey, children } = linkTheses(theses);
 
   let start = theses[0].key;
   if (data.start !== undefined) {
@@ -117,7 +73,7 @@ export function validate(data) {
     fail("data.strings must be an object");
   }
 
-  return {
+  const model = {
     lang: typeof data.lang === "string" ? data.lang : "",
     title: typeof data.title === "string" ? data.title : "",
     source,
@@ -126,26 +82,9 @@ export function validate(data) {
     byKey,
     children,
     start,
-    strings: data.strings || null
+    strings: data.strings || null,
+    analysis: null
   };
-}
-
-export function ancestors(model, key) {
-  return closure(key, k => model.byKey.get(k).from);
-}
-
-export function descendants(model, key) {
-  return closure(key, k => model.children.get(k));
-}
-
-function closure(start, next) {
-  const seen = new Set();
-  const stack = [...next(start)];
-  while (stack.length) {
-    const k = stack.pop();
-    if (seen.has(k)) continue;
-    seen.add(k);
-    stack.push(...next(k));
-  }
-  return seen;
+  if (data.analysis !== undefined) model.analysis = validateAnalysis(data.analysis, model);
+  return model;
 }

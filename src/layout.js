@@ -39,30 +39,44 @@ export function wrapLabel(label, measure, maxWidth = METRICS.maxLabelWidth, maxL
 
 /**
  * Computes node sizes and positions with dagre (left to right: premises first, conclusions last).
- * measureLabel/measureNum return text width in px for the label and the number fonts.
+ * graph.theses: { key, id, from } with a label, or labels when versions word it differently (sized for the widest);
+ * graph.clusters: lists of keys kept together, such as pools.
+ * measureLabel/measureNum return text width in px for the label and the number fonts; badge reserves room for a strength.
  */
-export function computeLayout(model, { measureLabel, measureNum, rankdir = "LR" } = {}) {
+export function computeLayout(graph, { measureLabel, measureNum, badge = 0, rankdir = "LR" } = {}) {
   const m = METRICS;
-  const g = new graphlib.Graph();
+  const clusters = graph.clusters || [];
+  const g = new graphlib.Graph({ compound: clusters.length > 0 });
   g.setGraph({ rankdir, nodesep: 16, ranksep: 46, edgesep: 8, marginx: 16, marginy: 16 });
   g.setDefaultEdgeLabel(() => ({}));
 
   const sizes = new Map();
-  for (const t of model.theses) {
-    const lines = wrapLabel(t.label, measureLabel);
+  for (const t of graph.theses) {
     const numW = Math.ceil(measureNum(String(t.id)));
-    const textW = Math.ceil(Math.max(...lines.map(l => measureLabel(l))));
-    const width = Math.max(m.minWidth, m.padX + numW + m.gap + textW + m.padX);
-    const height = Math.max(m.minHeight, m.padY * 2 + lines.length * m.lineHeight);
-    sizes.set(t.key, { lines, width, height, textX: m.padX + numW + m.gap });
+    const linesByLabel = new Map();
+    let textW = 0, rows = 1;
+    for (const label of t.labels || [t.label]) {
+      const lines = wrapLabel(label, measureLabel);
+      linesByLabel.set(label, lines);
+      textW = Math.max(textW, Math.ceil(Math.max(...lines.map(l => measureLabel(l)))));
+      rows = Math.max(rows, lines.length);
+    }
+    const width = Math.max(m.minWidth, m.padX + numW + m.gap + textW + m.padX) + (badge ? badge + m.gap : 0);
+    const height = Math.max(m.minHeight, m.padY * 2 + rows * m.lineHeight);
+    sizes.set(t.key, { lines: linesByLabel.values().next().value, linesByLabel, width, height, textX: m.padX + numW + m.gap, badge });
     g.setNode(t.key, { width, height });
   }
-  for (const t of model.theses) for (const p of t.from) g.setEdge(p, t.key);
+  // ":" can't occur in a thesis id, so cluster names never clash with theses
+  clusters.forEach((members, i) => {
+    g.setNode(`cluster:${i}`, {});
+    for (const k of members) g.setParent(k, `cluster:${i}`);
+  });
+  for (const t of graph.theses) for (const p of t.from) g.setEdge(p, t.key);
 
   dagreLayout(g);
 
   const nodes = new Map();
-  for (const t of model.theses) {
+  for (const t of graph.theses) {
     const n = g.node(t.key);
     nodes.set(t.key, { ...sizes.get(t.key), x: n.x, y: n.y });
   }

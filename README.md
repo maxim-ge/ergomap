@@ -4,6 +4,8 @@ Article -> argument map. A skill extracts the reasoning, a one-file viewer rende
 
 ergomap takes a JSON list of theses, where each conclusion names the theses it follows from, and draws a clickable graph. Click a thesis to see what it rests on and what follows from it. The viewer is a single script with no runtime dependencies: dagre and the styles are bundled in.
 
+With an optional analysis, the page also judges the argument: a summary of the final conclusions and key points with the strength of each, an audit of the issues and of the starting claims, and the map in three versions (the author's logic, the reconstructed logic and the optimized one).
+
 ## Quick start
 
 ```html
@@ -24,7 +26,7 @@ ergomap takes a JSON list of theses, where each conclusion names the theses it f
 
 Always pin an exact version in the script URL. Published versions never change, so a page keeps working when a new version comes out.
 
-A full example is in [`examples/sdd-scrum-kanban.json`](examples/sdd-scrum-kanban.json): the reasoning of an article on spec-driven development in Scrum and Kanban, as 22 theses in six sections.
+Full examples, both with an analysis: [`examples/sdd-scrum-kanban.json`](examples/sdd-scrum-kanban.json), the reasoning of an article on spec-driven development in Scrum and Kanban as 22 theses in six sections, and [`examples/agentic-poetry.json`](examples/agentic-poetry.json), a Russian article on writing code with agents.
 
 ## Data format
 
@@ -36,7 +38,7 @@ The contract is [`schema/data.schema.json`](schema/data.schema.json). In short:
 | `theses[].id` | yes | Integer or slug (`[A-Za-z0-9_-]+`). Shown as `[id]`, used in the URL as `#t<id>` |
 | `theses[].label` | yes | Short node caption, two to four words. Wrapped automatically; `\n` forces a break |
 | `theses[].text` | yes | The claim as a complete standalone sentence |
-| `theses[].from` | no | Ids this thesis follows from. Empty or missing means a premise |
+| `theses[].from` | no | Ids this thesis follows from. Empty or missing means a starting claim |
 | `theses[].note` | no | Context from the source. Markdown links `[text](https://…)` become links |
 | `theses[].section` | no | Id of a section |
 | `sections` | no | `[{ id, title }]`, shown above the selected thesis |
@@ -44,8 +46,22 @@ The contract is [`schema/data.schema.json`](schema/data.schema.json). In short:
 | `title`, `source` | no | Shown in the header. `source` is `{ title, url, author }` |
 | `start` | no | Thesis selected on open. Defaults to the first one |
 | `strings` | no | UI strings for languages without a built-in dictionary |
+| `analysis` | no | The argument analysis, see below |
 
 The viewer checks the data on mount. A reference to a missing thesis, a cycle, a duplicate id and similar mistakes show a readable error instead of a blank page.
+
+### Analysis
+
+`theses` is the original logic, faithful to the author. `analysis` adds:
+
+- `reconstructed`: the original made explicit. Each thesis repeats its id and inherits the original's `label`, `text`, `note` and `section`; it gives its own `from`, and either a `verdict` and `reason` (a starting claim: `supported`, `weak`, `unsupported`, `false` or `definition`) or a step: `type` (`deductive` by default, `generalization`, `abductive`, `analogy`), an implicit `condition` `{ text, rating, reason }` rated `strong`, `weak` or `none`, and a `pool` of premises that are alternative evidence. Reasons of different types for one conclusion go in `steps`. New theses (implicit premises, parts of a split thesis) bring their own `label` and `text`. `fixes` names the issues whose fix added or changed a thesis; `flaw` names a flaw with no fix, which sets the thesis to 0
+- `optimized`: the reconstructed logic with the fewest starting claims that keep every final conclusion at the same strength. Ids from the reconstructed logic, which they inherit from, `from` and `pool` excepted
+- `issues`: `{ id, type, severity, target, theses, concept, explanation, quote }`; types are `non-sequitur`, `missing-premise`, `circular`, `equivocation`, `straw-man`, `inconsistency` and `irrelevant-conclusion`, severities `flaw` and `weakness`
+- `concepts`: up to 7 `{ term, senses: [{ definition, theses }] }`; a term used in two senses lists both
+
+The data names types, verdicts and ratings; the viewer computes the numbers. A starting claim's strength is its verdict's (supported 0.95, weak 0.6, unsupported and false 0, definition 1). A conclusion's strength is its step's (deductive 1, generalization 0.9, abductive 0.8, analogy 0.7) times the weakest of its premises and its condition (strong 0.95, weak 0.6, none 0). A pool, and separate steps of one conclusion, combine as 0.95 × (1 − ∏(1 − sᵢ/0.95)). Where a weak rating or a flaw lowered a strength, the viewer names that weakest link. Key points are chosen by rule: conclusions ranked by the theses behind them times the theses depending on them, cut where a score falls below half of the previous one, at most 7.
+
+With an analysis the page opens on the Summary view; Audit lists the issues and the verdicts, and Logic is the map with a switch between the versions. The view is in the URL: `#summary`, `#audit`, `#t18`, `#reconstructed/t18`, `#optimized/t18`.
 
 ## API
 
@@ -98,19 +114,19 @@ All styles are scoped to `.ergomap` and driven by custom properties, so you can 
 }
 ```
 
-Colors: `--em-bg`, `--em-canvas`, `--em-surface`, `--em-premise`, `--em-ink`, `--em-muted`, `--em-line`, `--em-edge`, `--em-up`, `--em-up-soft`, `--em-down`, `--em-down-soft`. Fonts: `--em-font-body`, `--em-font-serif`, `--em-font-mono`, `--em-font-display`. The viewer doesn't load fonts; the default stacks start with IBM Plex and fall back to system fonts.
+Colors: `--em-bg`, `--em-canvas`, `--em-surface`, `--em-premise`, `--em-ink`, `--em-muted`, `--em-line`, `--em-edge`, `--em-up`, `--em-up-soft`, `--em-down`, `--em-down-soft`, `--em-warn`, `--em-warn-soft`, `--em-bad`, `--em-bad-soft`. Fonts: `--em-font-body`, `--em-font-serif`, `--em-font-mono`, `--em-font-display`. The viewer doesn't load fonts; the default stacks start with IBM Plex and fall back to system fonts.
 
 ## The skill
 
-[`skill/SKILL.md`](skill/SKILL.md) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. The file in this repo is the reference copy: install it in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `schema/data.schema.json`); it never downloads instructions.
+[`skill/SKILL.md`](skill/SKILL.md) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. The file in this repo is the reference copy: install it in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `schema/data.schema.json`); it never downloads instructions.
 
 ## Development
 
 ```bash
 npm install
-npm test        # schema, i18n, validation, layout
+npm test        # schema, i18n, validation, analysis, layout
 npm run build   # dist/ergomap.js, ergomap.min.js, ergomap.mjs
-npm run dev     # rebuild on change, http://localhost:8000/examples/
+npm run dev     # rebuild on change, http://localhost:8000/examples/ (?agentic-poetry for the other example)
 ```
 
 Releases go to npm from GitHub Actions when a version tag is pushed:

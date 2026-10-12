@@ -16,10 +16,11 @@
 </head>
 <body>
   <div id="graph"></div>
-  <!-- Local development: `npm run dev`, then open http://localhost:8000/examples/ -->
+  <!-- Local development: `npm run dev`, then open http://localhost:8000/examples/ or http://localhost:8000/examples/?agentic-poetry -->
   <script src="../dist/ergomap.js"></script>
   <script>
-    fetch("sdd-scrum-kanban.json")
+    const name = /^\?[a-z0-9-]+$/.test(location.search) ? location.search.slice(1) : "sdd-scrum-kanban";
+    fetch(name + ".json")
       .then(r => r.json())
       .then(data => Ergomap.mount("#graph", data));
   </script>

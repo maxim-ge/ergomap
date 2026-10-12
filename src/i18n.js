@@ -56,6 +56,9 @@ export function createI18n({ locale = "en", strings = null, warn = () => {} } = 
 
   let listFormat = null;
   try { listFormat = new Intl.ListFormat(locale, { type: "conjunction", style: "long" }); } catch { listFormat = null; }
+  let numberFormat = null;
+  try { numberFormat = new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); } catch { numberFormat = null; }
+  const fixed = n => (numberFormat ? numberFormat.format(n) : n.toFixed(2));
 
   return {
     lang,
@@ -67,6 +70,12 @@ export function createI18n({ locale = "en", strings = null, warn = () => {} } = 
     t(key, vars = {}) {
       const s = key in table ? table[key] : key;
       return s.replace(PLACEHOLDER, (m, name) => (name in vars ? String(vars[name]) : m));
+    },
+    /** A strength with two decimals, without rounding a nonzero value to 0 or a value below 1 to 1. */
+    strength(v) {
+      if (v > 0 && v < 0.005) return "<" + fixed(0.01);
+      if (v >= 0.995 && v < 1) return ">" + fixed(0.99);
+      return fixed(v);
     },
     /** Splits a conjunction list of n items into parts, so items can be rendered as elements. */
     listParts(n) {

@@ -12,7 +12,7 @@ test("resolveLocale prefers option, then data, then page", () => {
 test("built-in language is used as is", () => {
   const i = createI18n({ locale: "ru-RU" });
   assert.equal(i.lang, "ru");
-  assert.equal(i.t("premise"), "Посылка");
+  assert.equal(i.t("conclusion"), "Вывод");
   assert.deepEqual(i.missing, []);
 });
 
@@ -44,6 +44,16 @@ test("listParts follows the language's conjunction rules", () => {
   assert.equal(join(createI18n({ locale: "ru" }), 3), "[0], [1] и [2]");
   assert.equal(join(createI18n({ locale: "en" }), 3), "[0], [1], and [2]");
   assert.equal(join(createI18n({ locale: "en" }), 1), "[0]");
+});
+
+test("strengths keep two decimals without rounding to 0 or 1", () => {
+  const en = createI18n({ locale: "en" });
+  assert.equal(en.strength(0.48000000000000004), "0.48");
+  assert.equal(en.strength(0.2688), "0.27");
+  assert.equal(en.strength(0.001), "<0.01");
+  assert.equal(en.strength(0.999), ">0.99");
+  assert.equal(en.strength(1), "1.00");
+  assert.equal(createI18n({ locale: "ru" }).strength(0.6), "0,60");
 });
 
 test("every key has a value in every built-in language", () => {
