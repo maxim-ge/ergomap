@@ -17,7 +17,7 @@
 
 ### Argument structure
 
-- **Key point:** a conclusion that carries the argument: much of the reasoning gathers in it, and much of the reasoning toward the final conclusions continues from it.
+- **Key point:** a conclusion that carries the argument: much of the reasoning gathers in it, and much of the reasoning toward the final conclusions continues from it. Chosen by the key point rule: conclusions ranked by the number of theses behind them times the number depending on them, cut where a score falls below half of the previous one, at most 7.
 - **Foundation:** a starting claim that many conclusions depend on.
 - **Concept:** a term that several theses use and that the reader needs to understand to follow the argument.
 
@@ -214,7 +214,7 @@ The map shows the logic as a graph:
 - **Ends:** a starting claim has no incoming arrows, and a final conclusion has no outgoing ones.
 - **Implicit premises and conditions:** shown only in the reconstructed and optimized logic, marked as added. An implicit premise is a node like any starting claim; an implicit condition sits on its step, not as a node.
 - **Pool:** a box around its members, with one arrow from the box to its conclusion.
-- **Strength, verdicts and issues:** shown as marks on nodes and arrows; how they look is described in What the reader sees → Map view.
+- **Strength, verdicts and issues:** shown as marks on nodes and arrows.
 - **Key points and concepts:** listed in the Summary view; each one opens the graph at its theses.
 
 ### Audit
@@ -238,25 +238,23 @@ The map shows the logic as a graph:
 Extend ergomap from an argument map to an argument analysis. A page shows:
 - Key points
 - Key concepts
-- Premise validation
+- Starting claim verdicts
 - Original logic
-- Fixed logic
-- Optimized logic: the same conclusions with fewer premises
+- Reconstructed logic
+- Optimized logic: the same final conclusions at the same strength, with fewer starting claims
 
 Examples refer to the theses in [examples/sdd-scrum-kanban.json](../examples/sdd-scrum-kanban.json).
 
 
 ## UI
 
-1. **Summary:** Final conclusions, key points and key concepts
-2. **Audit:** issues (fallacies, gaps) and premise validation
-3. **Logic:** original, fixed and optimized, as three states of one map
+1. **Summary:** final conclusions and key points, each with its strength, and key concepts. A strength lowered by a weak rating or a flaw names its weakest link, for example "0.48, weakest: 'fit' is judged after the fact (18)".
+2. **Audit:** issues (fallacies, gaps) and starting claim verdicts
+3. **Logic:** original, reconstructed and optimized, as three states of one map
 
-The audit adds one item to the goal: an explicit list of issues. Every fix in the fixed logic points to the issue it fixes; without the list, the fixed logic is a black box. The audit covers both halves of judging an argument:
+The audit adds one item to the goal: an explicit list of issues. Every fix in the reconstructed logic points to the issue it fixes; without the list, the reconstructed logic is a black box. The audit covers both halves of judging an argument:
 - **Issues:** does each conclusion follow from its premises?
-- **Premise validation:** are the premises true?
-
-The plan describes the parts in four layers, each in its own terms: what the reader sees, how the analysis is made, data, and the viewer implementation.
+- **Starting claim verdicts:** are the starting claims true?
 
 ## Skill
 
@@ -266,12 +264,12 @@ To be drafted: changes to [skill/SKILL.md](../skill/SKILL.md) for the audit step
 
 Open unless marked decided; the recommended option is first.
 
-### What the reader sees
+### UI
 
 1. Page structure:
-   1. Two views, Summary and Map, opening on Summary (recommended)
-   2. One scrolling page with the summary above the map (on phones, panning and zooming the map fights with page scrolling)
-   3. Map only, with the summary in the side panel when nothing is selected
+   1. Three views, Summary, Audit and Logic, opening on Summary (recommended)
+   2. One scrolling page with the summary and the audit above the map (on phones, panning and zooming the map fights with page scrolling)
+   3. Map only, with the summary and the audit in the side panel when nothing is selected
 2. Issue names:
    1. Plain name first, textbook name in parentheses (recommended)
    2. Textbook names only
@@ -279,7 +277,7 @@ Open unless marked decided; the recommended option is first.
    1. One map with a version switch and stable positions (recommended)
    2. Graphs side by side (doesn't fit on screen and breaks on phones)
 
-### How the analysis is made
+### Audit
 
 4. Issue types (decided): hasty generalization, post hoc, questionable cause, ignored alternative and weak analogy are not supported. They name the weak end of a scale as if it were a yes/no: a generalization from 3 cases is weaker than one from 2,000, not "hasty" while the other is "fine". The strength of a generalization, an abductive step or an analogy is ranked instead, by its step strength and its implicit condition's rating (see Strength); the names stay as reasons for a weak or none rating.
 
@@ -287,7 +285,7 @@ Open unless marked decided; the recommended option is first.
 
 5. How to store the versions:
    1. Each version is a complete list of theses, with ids shared across versions, and the viewer computes the differences (recommended: each version validates on its own, and it's easy for the LLM to write)
-   2. Fixed and optimized as edit operations on the original (compact, but hard to write and validate)
+   2. Reconstructed and optimized as edit operations on the original (compact, but hard to write and validate)
    3. A separate data file per version
 
 ### Skill
@@ -298,12 +296,10 @@ Open unless marked decided; the recommended option is first.
 
 ## Phasing
 
-1. Issues and premise verdicts: marks on the original map and the issues list in the Summary view
+1. Issues and starting claim verdicts: marks on the original map and the Audit view
 2. Key points and key concepts
-3. Fixed and optimized versions
+3. Reconstructed and optimized logic, and strength, which is computed in the reconstructed logic
 
 ## Open questions
 
-- Premise validation: only the article, or outside sources too?
-- Optimized logic: preserve only the key-point conclusions, or every conclusion?
-- Strength: how do authority and value-judgment premises count?
+- Starting claim verdicts: only the article, or outside sources too?

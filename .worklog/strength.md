@@ -15,7 +15,7 @@ Both example maps scored with the rules and numbers in [plan-01.md → Strength]
   - Starting claims: weak 3, 5, 21; definition 4; the rest supported.
   - Implicit conditions: weak for 11, 16, 18, 23; the rest strong.
 
-**Key points:** chosen by the key point rule: conclusions ranked by the number of theses behind them times the number depending on them, cut where a score falls below half of the previous one, at most 7.
+**Key points:** chosen by the key point rule in [plan-01.md → Argument structure](plan-01.md#argument-structure).
 
 **Results:** strength of each thesis.
 - **SDD:**
