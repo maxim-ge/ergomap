@@ -149,10 +149,10 @@ The rules that turn the original logic into the reconstructed logic. Fixes are l
 
 Fixed by the reasoning type, the same for every step of the type: the built-in risk of that kind of step.
 
-- **Deductive:** 1
-- **Generalization:** 0.9
-- **Abductive:** 0.8
-- **Analogy:** 0.7
+- `Deductive`: 1
+- `Generalization`: 0.9
+- `Abductive`: 0.8
+- `Analogy`: 0.7
 
 #### Starting claim strength
 
