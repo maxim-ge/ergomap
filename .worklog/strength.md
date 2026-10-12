@@ -1,42 +1,18 @@
 <!-- markdownlint-disable -->
 
-## Solution
-
-**A thesis's strength is its step's strength times the weakest of its premises and its implicit condition. A starting claim's strength is its rating.** It's a number from 0 to 1, computed in the reconstructed logic.
-
-- **Why:** what a step needs and the step itself fail differently.
-  - **Premises and implicit conditions don't add up:** a step needs all of them, so it's only as strong as the weakest one. Five weak premises are no weaker than one, and splitting a thesis or sharing a premise changes nothing.
-  - **Steps add up along a chain:** each non-deductive step is a leap with its own risk, so the step strengths multiply. Three abductive steps in a row cost 0.8³ even when everything they rest on is strong.
-  - Unrolled, a thesis is as strong as its weakest chain: the rating of a starting claim or implicit condition, times the strength of every step from it up to the thesis.
-- **Step strength:** fixed by the reasoning type: deductive 1, generalization 0.9, abductive 0.8, analogy 0.7. It's the built-in risk of that kind of step, the same for every step of the type.
-- **Implicit condition:** what a non-deductive step relies on. It's rated by its reasoning type's criteria and shown on its step, not as a node, but in the calculation it joins the premises: a weak condition limits the conclusion the way a weak premise does.
-- **Starting claim:** a thesis with no premises. There are two kinds:
-  - **Explicit:** stated in the article, and rated by the checks (source, kind of backing, scope, relevance).
-  - **Implicit premise:** a premise the reconstruction adds to fill a gap, rated by the checks like an explicit one.
-- **Fixed numbers behind ratings:** the LLM rates strong, weak or none, never in decimals. Starting claims and implicit conditions share one scale: strong 0.95, weak 0.6, none 0. A definition is 1: it doesn't limit strength.
-- **Original logic:** it doesn't show implicit premises or conditions, so its theses show the value computed in the reconstructed logic. Otherwise non-deductive steps would be free.
-- **Exception, a flaw with no fix:** an inconsistency or an irrelevant conclusion doesn't come from any starting claim, so the thesis is set to 0.
-- **Convergence:** reasons of the same type for one conclusion are merged into one step with pooled premises, and the pooled premises count together as one premise, the pool. A pool is rated as a whole, with the same checks applied to the body of evidence. Example: "the roofs are wet" (strong) and "a blurry photo shows a wet street" (weak) form a strong pool, so the photo no longer caps "it rained". A member also used outside the pool counts there on its own.
-  - **Abductive:** one step over all the observations, whose implicit condition is "nothing else explains all of them".
-  - **Generalization:** the cases form one sample.
-  - **Analogy:** one step from several source cases.
-  - **Different types:** reasons of different types aren't merged; they're treated as all needed, so the weakest reason decides, which underrates the conclusion.
-- **Labels:** deferred. For now a thesis shows only its strength.
-- **One claim per thesis:** a bundled thesis with one weak part makes every conclusion that uses it weak, even those that need only its strong parts. The reconstruction splits such theses.
-
 ## Calibration
 
-Both example maps scored with the rules and numbers above, to check how the numbers behave. The results are computed by [strength.py](strength.py) from [strength-inputs.json](strength-inputs.json): `uv run .worklog/strength.py`.
+Both example maps scored with the rules and numbers in [plan-01.md → Strength](plan-01.md#strength), to check how the numbers behave. The results are computed by [strength.py](strength.py) from [strength-inputs.json](strength-inputs.json): `uv run .worklog/strength.py`.
 
 **Inputs:** reasoning types and ratings assigned from the articles alone.
 - **SDD** ([sdd-scrum-kanban.txt](sdd-scrum-kanban.txt)):
   - Steps: abductive 7, 10, 11, 14, 18, 20, 21; analogy 15; the rest deductive.
-  - Starting claims: weak 1, 6, 16, 17; definition 3; the rest strong.
+  - Starting claims: weak 1, 6, 16, 17; definition 3; the rest supported.
   - Implicit conditions: weak for 7 and 18; the rest strong.
   - Pools: 16 and 17, the observations of abductive step 18, form one pool, rated weak. 17 is also a premise of 21 on its own.
 - **Poetry** ([poetry.txt](poetry.txt)):
   - Steps: abductive 17, 18, 22, 23, 24, 25; analogy 11, 16; the rest deductive.
-  - Starting claims: weak 3, 5, 21; definition 4; the rest strong.
+  - Starting claims: weak 3, 5, 21; definition 4; the rest supported.
   - Implicit conditions: weak for 11, 16, 18, 23; the rest strong.
 
 **Key points:** chosen by the key point rule: conclusions ranked by the number of theses behind them times the number depending on them, cut where a score falls below half of the previous one, at most 7.
@@ -73,7 +49,7 @@ Both example maps scored with the rules and numbers above, to check how the numb
 
 **Findings**
 
-1. **The size of an argument doesn't push strength toward 0.** SDD 22 scores 0.38 and poetry 27 0.27: lower than a sound argument of the same shape because of their weak ratings, not their size. With every rating strong, SDD 22 would score 0.49 and poetry 27 0.43.
+1. **The size of an argument doesn't push strength toward 0.** SDD 22 scores 0.38 and poetry 27 0.27: lower than a sound argument of the same shape because of their weak ratings, not their size. With every starting claim supported and every implicit condition strong, SDD 22 would score 0.49 and poetry 27 0.43.
 2. **The weakest chain decides.** Poetry 27's 0.27 comes from one chain: the weak implicit condition of 16 (0.6), then the analogy 16 and the abductive steps 17 and 24 (0.6 × 0.7 × 0.8 × 0.8). Poetry 18, 19 and 20 score 0.34, from weak starting claim 5 through the analogy 11 and the abductive step 18 (0.6 × 0.7 × 0.8).
 3. **Weak ratings don't add up, even along a chain.** The chain behind poetry 18 has three weak ratings (starting claim 5 and the implicit conditions of 11 and 18), yet it scores 0.34, the same as with 5 alone. Only step strengths add up.
 4. **The overlap is about meaning, not size.** Poetry 6 and 10 (0.60, one weak starting claim used directly) score above SDD 15 (0.53, nothing rated weak, but an analogy after an abductive step). The number says how sure, not why.
