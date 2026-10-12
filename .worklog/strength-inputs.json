@@ -1,9 +1,7 @@
 {
   "numbers": {
-    "explicit": { "strong": 0.95, "weak": 0.6, "none": 0, "def": 1 },
-    "condition": { "weak": 0.5, "none": 0 },
-    "caps": { "generalization": 0.9, "abductive": 0.8, "analogy": 0.7 },
-    "labels": { "strong": 0.7, "moderate": 0.45 }
+    "ratings": { "strong": 0.95, "weak": 0.6, "none": 0, "def": 1 },
+    "stepStrength": { "deductive": 1, "generalization": 0.9, "abductive": 0.8, "analogy": 0.7 }
   },
   "maps": [
     {

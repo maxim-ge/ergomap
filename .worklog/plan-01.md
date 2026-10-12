@@ -2,6 +2,8 @@
 
 # Plan
 
+- ??? pool 
+
 ## Terminology
 
 ### Core logic terms
@@ -13,7 +15,7 @@
 - **Starting claim:** a thesis with no premises: either stated in the article and taken as given, or an implicit premise the reconstruction adds.
 - **Final conclusion:** a conclusion that nothing else follows from.
 - **Implicit premise:** a premise the author relies on but doesn't state; it fills a gap in a step (a missing premise). The original logic doesn't show it; the reconstructed logic adds it as a starting claim.
-- **Implicit condition:** what a non-deductive step relies on without saying so: the cases are representative, nothing else explains the effect, the two cases are alike in the respect that matters. It isn't a premise: it sets the step's strength. The original logic doesn't show it; the reconstructed logic shows it on its step.
+- **Implicit condition:** what a non-deductive step relies on without saying so: the cases are representative, nothing else explains the effect, the two cases are alike in the respect that matters. It isn't a premise and isn't drawn as one, but it must hold like one: a weak condition limits the conclusion the way a weak premise does. The original logic doesn't show it; the reconstructed logic shows it on its step.
 
 ### Argument structure
 
@@ -23,13 +25,14 @@
 
 ### Reasoning types
 
-- **Reasoning type:** the rule by which an inference gets from its premises to its conclusion. A deductive rule guarantees the conclusion when the premises are true; every other rule also needs an implicit condition. The reconstructed logic states the implicit condition, and its rating is the step's strength. A type is recognized by matching the step's premises to a rule.
+- **Reasoning type:** the rule by which an inference gets from its premises to its conclusion. A deductive rule guarantees the conclusion when the premises are true; every other rule also needs an implicit condition, which the reconstructed logic states. Each type has a fixed step strength: the built-in risk of that kind of step. A type is recognized by matching the step's premises to a rule.
 
 #### Deductive
 
 The conclusion follows necessarily from the premises.
 
 - Rule: if A then B; A → B.
+- Step strength: 1.
 - Implicit condition: none.
 - Typical issues: non sequitur, missing premise.
 - Example: "If it rains, the street gets wet. It's raining. So the street is wet."
@@ -40,6 +43,7 @@ The conclusion follows necessarily from the premises.
 From cases to a general claim.
 
 - Rule: cases 1…n have P → such cases have P.
+- Step strength: 0.9.
 - Implicit condition: the cases are enough and representative.
 - Typical issue: hasty generalization.
 - Example: "Every swan I've seen is white. So swans are white."
@@ -50,6 +54,7 @@ From cases to a general claim.
 From a given effect, observed or wanted, to the cause that best accounts for it.
 
 - Rule: effect E is observed or wanted; C would bring about E → C.
+- Step strength: 0.8.
 - Implicit condition: no other cause fits E as well, and C's other consequences hold up. For an observed effect: not chance, another cause or the reverse direction, and C's other consequences match what's observed. For a wanted effect: no better action, and the side effects are acceptable.
 - Typical issues: post hoc, questionable cause, ignored alternative.
 - Example, observed effect: "The grass is wet this morning. Rain overnight would explain it. So it rained."
@@ -64,6 +69,7 @@ From a given effect, observed or wanted, to the cause that best accounts for it.
 What holds for one case holds for another.
 
 - Rule: A has P; B is like A → B has P.
+- Step strength: 0.7.
 - Implicit condition: A and B are alike in the respect that matters for P.
 - Typical issue: weak analogy.
 - Example: "My old car of this model ran 300,000 km. My new car is the same model. So it will run 300,000 km too."
@@ -82,23 +88,22 @@ A rule for merging steps, not a reasoning type. Reasons of the same type for one
 ### Strength
 
 - **Strength:** how firmly a thesis holds, a number from 0 to 1, computed in the reconstructed logic.
-- **Rule:** a thesis's strength is its step's strength times the strength of its weakest premise, explicit or implicit.
+- **Rule:** a thesis's strength is its step's strength times the weakest of its premises and its implicit condition.
   - A starting claim has no premises; its strength comes from its verdict (Starting claim strength, below).
-  - A deductive step's strength is 1. A non-deductive step's strength is the rating of its implicit condition (Implicit condition strength, below).
-  - Unrolled, a thesis is as strong as its weakest chain: a starting claim's rating times the strength of every step from it up to the thesis.
-- **Why:** premises and steps fail differently.
-  - **Premises don't add up:** a step needs all its premises, so it's only as strong as the weakest one. Five weak premises are no weaker than one, and splitting a thesis or sharing a premise changes nothing.
-  - **Steps add up along a chain:** each non-deductive step is a leap with its own risk, so the leaps multiply.
-- **Fixed numbers behind categories:** the LLM rates in categories, never in decimals:
-  - **Starting claim:** strong 0.95, weak 0.6, unsupported or false 0. A definition is 1: it doesn't limit strength.
-  - **Implicit condition:** strong is the cap of the step's reasoning type (generalization 0.9, abductive 0.8, analogy 0.7), weak 0.5, none 0. The cap means a non-deductive step never gives certainty.
-- **Labels:** strong at 0.7 and above, moderate from 0.45, weak below 0.45, none at 0. The label says how sure; the list of weak links says why.
+  - Step strength is fixed by the reasoning type: deductive 1, generalization 0.9, abductive 0.8, analogy 0.7.
+  - A non-deductive step's implicit condition is rated by its reasoning type's criteria (Implicit condition strength, below) and counts like a premise.
+  - Unrolled, a thesis is as strong as its weakest chain: the rating of a starting claim or implicit condition, times the strength of every step from it up to the thesis.
+- **Why:** what a step needs and the step itself fail differently.
+  - **Premises and implicit conditions don't add up:** a step needs all of them, so it's only as strong as the weakest one. Five weak premises are no weaker than one, and splitting a thesis or sharing a premise changes nothing.
+  - **Steps add up along a chain:** each non-deductive step is a leap with its own risk, so the step strengths multiply.
+- **Fixed numbers behind ratings:** the LLM rates in categories, never in decimals. Starting claims and implicit conditions share one scale: strong 0.95, weak 0.6, unsupported, false or none 0. A definition is 1: it doesn't limit strength.
+- **Labels:** deferred. For now a thesis shows only its strength.
 - **Original logic:** it doesn't show implicit premises or conditions, so its theses show the value computed in the reconstructed logic.
 - **A gap no plausible premise closes, or another flaw with no fix:** the conclusion is none.
 - **Examples:**
-  - "Copper is a metal (strong). Metals conduct electricity (strong). So copper conducts": deductive, 1 × 0.95 = 0.95, strong. If "copper is a metal" were weak: 0.6, moderate.
-  - "80% of 2,000 randomly chosen viewers liked the film. So most viewers like it": generalization with the implicit condition "the viewers are representative", strong: 0.9 × 0.95 = 0.86, strong. "3 friends liked it. So people like it": the implicit condition is weak: 0.5 × 0.95 = 0.48, moderate.
-  - "The grass is wet; the sprinklers were off, and the roofs are wet too. So it rained": abductive with the implicit condition "nothing else explains it", strong: 0.8 × 0.95 = 0.76, strong. The same without checking the sprinklers: 0.48, moderate.
+  - "Copper is a metal (strong). Metals conduct electricity (strong). So copper conducts": deductive, 1 × 0.95 = 0.95. If "copper is a metal" were weak: 1 × 0.6 = 0.6.
+  - "80% of 2,000 randomly chosen viewers liked the film. So most viewers like it": generalization with the implicit condition "the viewers are representative", strong: 0.9 × 0.95 = 0.86. "3 friends liked it. So people like it": the implicit condition is weak: 0.9 × 0.6 = 0.54.
+  - "The grass is wet; the sprinklers were off, and the roofs are wet too. So it rained": abductive with the implicit condition "nothing else explains it", strong: 0.8 × 0.95 = 0.76. The same without checking the sprinklers: 0.8 × 0.6 = 0.48.
 
 ### Starting claim strength
 
@@ -122,7 +127,7 @@ A rule for merging steps, not a reasoning type. Reasons of the same type for one
 
 ### Implicit condition strength
 
-- **Implicit condition strength:** the implicit condition of a non-deductive step is rated by its reasoning type's criteria below, not by the starting claim checks; its rating is the step's strength. In the reconstructed logic it's shown on its step, marked added; in the original logic, its rating is shown with the conclusion.
+- **Implicit condition strength:** the implicit condition of a non-deductive step is rated by its reasoning type's criteria below, not by the starting claim checks, on the same scale as a starting claim. In the reconstructed logic it's shown on its step, marked added; in the original logic, its rating is shown with the conclusion.
   - Example: in "Every swan I've seen is white → swans are white", the step's implicit condition is "the swans I've seen are representative of all swans" (added, weak: all of them were in Europe).
 - **Generalization:** strong with many varied cases, not hand-picked, no known counterexamples, and a conclusion no broader than the cases ("most", not "all"); weak with few or similar cases; none with a single case behind a general claim.
 - **Abductive:** strong when the main alternatives are ruled out and the cause explains all the observations, or, for a wanted effect, when the alternatives were compared and the side effects are acceptable; weak when the alternatives weren't checked; none when an alternative fits better or an observation contradicts the cause.
@@ -155,7 +160,7 @@ The map shows the logic as a graph:
 - **Severity:** flaw or weakness.
   - **Flaw:** breaks the reasoning; some conclusion doesn't follow as stated.
   - **Weakness:** the reasoning holds, but less firmly than the article presents it.
-- **Verdict:** for a starting claim: supported / weak / unsupported / false. Every thesis also gets a label from its strength: strong / moderate / weak / none.
+- **Verdict:** for a starting claim: supported / weak / unsupported / false.
 
 ### Logic versions
 

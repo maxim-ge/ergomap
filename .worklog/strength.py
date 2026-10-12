@@ -4,15 +4,14 @@
 # ///
 """Strength calibration for ergomap argument maps.
 
-A thesis's strength is its step's strength times the strength of its weakest premise:
+A thesis's strength is its step's strength times the weakest of its premises and its implicit condition:
 - a starting claim's strength is its rating
-- a deductive step's strength is 1; a non-deductive step's strength is its condition's rating,
-  capped by its reasoning type
+- a step's strength is fixed by its reasoning type
+- a non-deductive step's implicit condition is rated like a starting claim and joins the premises
 - a pool replaces its members in one step and counts as one premise
 - a flaw with no fix sets the thesis to 0
 
-For each reported thesis the script prints its strength, its label from the thresholds,
-and its weak links.
+For each reported thesis the script prints its strength.
 
 Usage: uv run .worklog/strength.py [inputs.json]
 """
@@ -29,10 +28,10 @@ from pathlib import Path
 from typing import Any, cast
 
 STEP_TYPES = ("generalization", "abductive", "analogy")
+ALL_STEP_TYPES = ("deductive", *STEP_TYPES)
 CLAIM_RATINGS = ("strong", "weak", "none", "def")
 POOL_RATINGS = ("strong", "weak", "none")
 CONDITION_RATINGS = ("weak", "none")
-LABEL_THRESHOLDS = ("strong", "moderate")
 KEY_POINTS_MAX = 7
 
 
@@ -85,17 +84,8 @@ def read_json(path: Path) -> Any:
 
 @dataclass(frozen=True)
 class Numbers:
-    explicit: dict[str, float]
-    condition: dict[str, float]
-    caps: dict[str, float]
-    labels: dict[str, float]
-
-    def label(self, strength: float) -> str:
-        if strength >= self.labels["strong"]:
-            return "strong"
-        if strength >= self.labels["moderate"]:
-            return "moderate"
-        return "weak" if strength > 0 else "none"
+    ratings: dict[str, float]
+    step_strength: dict[str, float]
 
 
 @dataclass(frozen=True)
@@ -129,10 +119,8 @@ def number_table(raw: Any, where: str, required: Iterable[str]) -> dict[str, flo
 def parse_numbers(raw: Any) -> Numbers:
     data = as_dict(raw, "numbers")
     return Numbers(
-        explicit=number_table(data.get("explicit"), "numbers.explicit", CLAIM_RATINGS),
-        condition=number_table(data.get("condition"), "numbers.condition", CONDITION_RATINGS),
-        caps=number_table(data.get("caps"), "numbers.caps", STEP_TYPES),
-        labels=number_table(data.get("labels"), "numbers.labels", LABEL_THRESHOLDS),
+        ratings=number_table(data.get("ratings"), "numbers.ratings", CLAIM_RATINGS),
+        step_strength=number_table(data.get("stepStrength"), "numbers.stepStrength", ALL_STEP_TYPES),
     )
 
 
@@ -218,10 +206,6 @@ def closure(start: str, step: Callable[[str], Iterable[str]]) -> set[str]:
     return seen
 
 
-def id_order(key: str) -> tuple[int, int, str]:
-    return (0, int(key), "") if key.isdigit() else (1, 0, key)
-
-
 # ---- analysis
 
 
@@ -276,11 +260,7 @@ class Analysis:
         return pool.rating if pool else self.inputs.claim_ratings.get(key, "strong")
 
     def step_strength(self, key: str) -> float:
-        kind = self.step_type(key)
-        if kind == "deductive":
-            return 1.0
-        rating = self.inputs.condition_ratings.get(key, "strong")
-        return self.numbers.caps[kind] if rating == "strong" else self.numbers.condition[rating]
+        return self.numbers.step_strength[self.step_type(key)]
 
     def strength(self, key: str) -> float:
         cached = self._memo.get(key)
@@ -288,35 +268,16 @@ class Analysis:
             return cached
         premises = self.premises[key]
         if not premises:
-            value = self.numbers.explicit[self.rating(key)]
+            value = self.numbers.ratings[self.rating(key)]
         elif key in self.inputs.flaws:
             value = 0.0
         else:
-            value = self.step_strength(key) * min(self.strength(p) for p in premises)
+            parts = [self.strength(p) for p in premises]
+            if self.step_type(key) != "deductive":
+                parts.append(self.numbers.ratings[self.inputs.condition_ratings.get(key, "strong")])
+            value = self.step_strength(key) * min(parts)
         self._memo[key] = value
         return value
-
-    def weak_links(self, key: str) -> list[str]:
-        """Distinct weak items the thesis depends on: starting claims, pools, conditions, flaws."""
-        claims: list[str] = []
-        pools: list[str] = []
-        conditions: list[str] = []
-        flaws: list[str] = []
-        for item in closure(key, lambda k: self.premises[k]) | {key}:
-            if not self.premises[item]:
-                if self.rating(item) in ("weak", "none"):
-                    (pools if item in self.pools else claims).append(item)
-                continue
-            if self.step_type(item) != "deductive" and self.inputs.condition_ratings.get(item, "strong") != "strong":
-                conditions.append(item)
-            if item in self.inputs.flaws:
-                flaws.append(item)
-        return (
-            sorted(claims, key=id_order)
-            + sorted(pools)
-            + [f"c{k}" for k in sorted(conditions, key=id_order)]
-            + [f"flaw {k}" for k in sorted(flaws, key=id_order)]
-        )
 
     def final_conclusions(self) -> list[str]:
         children = self._children()
@@ -360,10 +321,7 @@ def fmt(value: float) -> str:
 
 
 def thesis_line(analysis: Analysis, key: str) -> str:
-    strength = analysis.strength(key)
-    line = f"[{key}] {analysis.map.labels[key]}: {fmt(strength)} {analysis.numbers.label(strength)}"
-    weak = analysis.weak_links(key)
-    return f"{line}; weak links: {', '.join(weak)}" if weak else line
+    return f"[{key}] {analysis.map.labels[key]}: {fmt(analysis.strength(key))}"
 
 
 def report(analysis: Analysis) -> list[str]:
