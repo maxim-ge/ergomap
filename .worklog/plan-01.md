@@ -84,7 +84,7 @@ A rule for merging steps, not a reasoning type. Reasons of the same type for one
 - Analogy: one step from several source cases, whose implicit condition is "B is like all of them in the respect that matters".
 - Generalization: excluded; its cases are already the premises of one step.
 - Different types: reasons of different types aren't merged; they're treated as all needed, so the weakest reason decides, which underrates the conclusion.
-- Example: "The roofs are wet" and "a photo shows a wet street" merge into one abductive step for "it rained", with the implicit condition "nothing else explains both". The street cleaner explains only the street, so it drops out; dew explains both and remains the alternative to rule out.
+- Example, abductive: "The roofs are wet" and "a photo shows a wet street" merge into one abductive step for "it rained", with the implicit condition "nothing else explains both". The street cleaner explains only the street, so it drops out; dew explains both and remains the alternative to rule out.
 
 ```mermaid
 flowchart
@@ -98,6 +98,23 @@ flowchart
       P2["A photo shows a wet street"]
     end
     pool -->|"abductive: nothing else explains both"| C2["It rained"]
+  end
+```
+
+- Example, analogy: "My old car of this model ran 300,000 km" and "my neighbor's car of the same model ran 300,000 km" merge into one analogy step for "my new car will run 300,000 km", with the implicit condition "the new car is like both in the respect that matters". My careful driving explains only my old car, so it drops out as the difference that matters; a new engine in this year's model breaks the likeness to both and remains the difference to rule out.
+
+```mermaid
+flowchart
+  subgraph separate ["Two reasons"]
+    O1["My old car ran 300,000 km"] -->|"analogy: the new car is like the old one"| N1["My new car will run 300,000 km"]
+    H1["My neighbor's car ran 300,000 km"] -->|"analogy: the new car is like the neighbor's"| N1
+  end
+  subgraph merged ["Merged into one step"]
+    subgraph pool ["Pool"]
+      O2["My old car ran 300,000 km"]
+      H2["My neighbor's car ran 300,000 km"]
+    end
+    pool -->|"analogy: the new car is like both"| N2["My new car will run 300,000 km"]
   end
 ```
 
