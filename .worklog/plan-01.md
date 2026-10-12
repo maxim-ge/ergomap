@@ -4,6 +4,22 @@
 
 ## Terminology
 
+### Core logic terms
+
+- **Thesis:** one claim.
+- **Premise:** a thesis that a conclusion follows from. A conclusion's premises are the theses it follows from.
+- **Conclusion:** a thesis with premises; it needs all of them.
+- **Inference:** a conclusion together with its premises; one step of reasoning.
+- **Starting claim:** a thesis with no premises; the article takes it as given.
+- **Final conclusion:** a conclusion that nothing else follows from.
+- **Implicit premise:** a premise the author relies on but doesn't state. There are two kinds: one that fills a gap in a step (a missing premise), and the condition of a non-deductive step. The original logic doesn't show them; the reconstructed logic adds them, including the condition of every non-deductive step.
+
+### Argument structure
+
+- **Key point:** a conclusion that carries the argument: much of the reasoning gathers in it, and much of the reasoning toward the final conclusions continues from it.
+- **Foundation:** a starting claim that many conclusions depend on.
+- **Concept:** a term that several theses use and that the reader needs to understand to follow the argument.
+
 ### Reasoning types
 
 - **Reasoning type:** the rule by which an inference gets from its premises to its conclusion. A deductive rule guarantees the conclusion when the premises are true; every other rule also needs an implicit premise, its condition. The reconstructed logic states the implicit premise, and it limits the conclusion's strength like any other premise. A type is recognized by matching the step's premises to a rule.
@@ -96,16 +112,13 @@ What holds for one case holds for another.
 
 ### Graph
 
-- **Thesis:** one claim, a node in the map.
-- **Premise:** a thesis that a conclusion follows from. A conclusion's premises are the theses it follows from.
-- **Starting claim:** a thesis with no premises; the article takes it as given.
-- **Implicit premise:** a premise the author relies on but doesn't state. There are two kinds: one that fills a gap in a step (a missing premise), and the condition of a non-deductive step. The original logic doesn't show them; the reconstructed logic adds them, including the condition of every non-deductive step.
-- **Conclusion:** a thesis with premises; it needs all of them.
-- **Inference:** a conclusion together with its premises; one step of reasoning.
-- **Final conclusion:** a conclusion that nothing else follows from.
-- **Key point:** a conclusion that carries the argument: much of the reasoning gathers in it, and much of the reasoning toward the final conclusions continues from it.
-- **Foundation:** a starting claim that many conclusions depend on.
-- **Concept:** a term that several theses use and that the reader needs to understand to follow the argument, usually because the article gives it a specific meaning.
+The map shows the logic as a graph:
+- **Node:** a thesis, with its number and label.
+- **Arrow:** from a premise to the conclusion that follows from it. A conclusion's incoming arrows are its inference.
+- **Ends:** a starting claim has no incoming arrows, and a final conclusion has no outgoing ones.
+- **Implicit premises:** shown only in the reconstructed and optimized logic, marked as added.
+- **Strength, verdicts and issues:** shown as marks on nodes and arrows; how they look is described in What the reader sees → Map view.
+- **Key points and concepts:** listed in the Summary view; each one opens the graph at its theses.
 
 ### Audit
 
