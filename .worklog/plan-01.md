@@ -68,15 +68,23 @@ What holds for one case holds for another.
 - Example: "My old car of this model ran 300,000 km. My new car is the same model. So it will run 300,000 km too."
 - Fails (weak analogy): the new one has a different engine, and the engine is what matters for mileage.
 
+#### Convergence
+
+A rule for merging steps, not a reasoning type. Reasons of the same type for one conclusion are merged into one step with pooled premises, and the pooled premises count together as one premise, so a doubtful item weakens the pool rather than capping the conclusion on its own.
+
+- Abductive: one step over all the observations, whose implicit premise is "nothing else explains all of them".
+- Generalization: the cases form one sample.
+- Analogy: one step from several source cases.
+- Different types: reasons of different types aren't merged; strength treats them as all needed, which underrates the conclusion.
+- Example: "The roofs are wet" and "a photo shows a wet street" merge into one abductive step for "it rained", with the implicit premise "nothing else explains both". The street cleaner explains only the street, so it drops out; dew explains both and remains the alternative to rule out.
+
 ### Strength
 
 - **Strength:** how firmly a thesis holds, on one scale for every thesis: strong / weak / none.
 - **Rule:** a thesis is as strong as its weakest premise, explicit or implicit.
   - A starting claim has no premises; its strength comes from its verdict (Starting claim strength, below).
   - A deductive step adds no implicit premise. A non-deductive step adds one, its condition, rated by its reasoning type's criteria (Implicit premise strength, below).
-- **Generalization:** its cases count together as one premise, the sample, so a doubtful case weakens the sample rather than capping the conclusion on its own.
 - **A gap no plausible premise closes, or another flaw with no fix:** the conclusion is none.
-- **Independent reasons for one conclusion:** treated as all needed. This underrates rather than overrates, which is the safer error for an audit.
 - **Examples:**
   - "Copper is a metal (strong). Metals conduct electricity (strong). So copper conducts": deductive, no implicit premise, strong. If "copper is a metal" were weak, the conclusion would be weak.
   - "80% of 2,000 randomly chosen viewers liked the film. So most viewers like it": the implicit premise "the viewers are representative" is strong, so the conclusion is strong. "3 friends liked it. So people like it": the implicit premise is weak, so the conclusion is weak.

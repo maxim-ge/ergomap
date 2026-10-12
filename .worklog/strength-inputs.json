@@ -1,0 +1,30 @@
+{
+  "numbers": {
+    "explicit": { "strong": 0.95, "weak": 0.6, "none": 0, "def": 1 },
+    "condition": { "weak": 0.5, "none": 0 },
+    "caps": { "generalization": 0.9, "abductive": 0.8, "analogy": 0.7 },
+    "labels": { "strong": 0.7, "moderate": 0.45 }
+  },
+  "maps": [
+    {
+      "name": "SDD",
+      "map": "../examples/sdd-scrum-kanban.json",
+      "steps": { "abductive": [7, 10, 11, 14, 18, 20, 21], "analogy": [15] },
+      "startingClaims": { "weak": [1, 6, 16, 17], "def": [3] },
+      "conditions": { "weak": [7, 18] },
+      "pools": [{ "id": "p16+17", "step": 18, "members": [16, 17], "rating": "weak" }],
+      "flaws": [],
+      "other": []
+    },
+    {
+      "name": "Poetry",
+      "map": "../examples/agentic-poetry.json",
+      "steps": { "abductive": [17, 18, 22, 23, 24, 25], "analogy": [11, 16] },
+      "startingClaims": { "weak": [3, 5, 21], "def": [4] },
+      "conditions": { "weak": [11, 16, 18, 23] },
+      "pools": [],
+      "flaws": [],
+      "other": [22, 23, 26]
+    }
+  ]
+}

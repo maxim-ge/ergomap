@@ -172,7 +172,7 @@
       "section": "summary",
       "label": "Living, fitted, measured",
       "text": "SDD strengthens Agile when the spec is living, kept inside the sprint at the level the problem needs, and judged by measurement rather than by feel.",
-      "from": [2, 7, 14, 15, 20, 21],
+      "from": [2, 5, 7, 10, 14, 15, 18, 20, 21],
       "note": "The article's answer to its opening question: the faster sprint was the one where the spec lived inside the sprint at the right level."
     }
   ],
