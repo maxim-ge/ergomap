@@ -10,7 +10,7 @@
       "steps": { "abductive": [7, 10, 11, 14, 18, 20, 21], "analogy": [15] },
       "startingClaims": { "weak": [1, 6, 16, 17], "def": [3] },
       "conditions": { "weak": [7, 18] },
-      "pools": [{ "id": "p16+17", "step": 18, "members": [16, 17], "rating": "weak" }],
+      "pools": [{ "id": "p16+17", "step": 18, "members": [16, 17] }],
       "flaws": [],
       "other": []
     },

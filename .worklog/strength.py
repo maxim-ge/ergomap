@@ -8,7 +8,8 @@ A thesis's strength is its step's strength times the weakest of its premises and
 - a starting claim's strength is its rating
 - a step's strength is fixed by its reasoning type
 - a non-deductive step's implicit condition is rated like a starting claim and joins the premises
-- a pool replaces its members in one step and counts as one premise
+- a pool replaces its members in one step and counts as one premise; it holds if at least one member
+  holds: 1 - (1 - s1)(1 - s2)..., at most a supported claim's number
 - a flaw with no fix sets the thesis to 0
 
 For each reported thesis the script prints its strength.
@@ -30,7 +31,6 @@ from typing import Any, cast
 STEP_TYPES = ("generalization", "abductive", "analogy")
 ALL_STEP_TYPES = ("deductive", *STEP_TYPES)
 CLAIM_RATINGS = ("strong", "weak", "none", "def")
-POOL_RATINGS = ("strong", "weak", "none")
 CONDITION_RATINGS = ("weak", "none")
 KEY_POINTS_MAX = 7
 
@@ -93,7 +93,6 @@ class Pool:
     key: str
     step: str
     members: tuple[str, ...]
-    rating: str
 
 
 @dataclass(frozen=True)
@@ -145,14 +144,10 @@ def parse_ids(raw: Any, where: str) -> list[str]:
 
 def parse_pool(raw: Any, where: str) -> Pool:
     data = as_dict(raw, where)
-    rating = as_str(data.get("rating"), f"{where}.rating")
-    if rating not in POOL_RATINGS:
-        raise InputError(f"{where}.rating: expected one of {', '.join(POOL_RATINGS)}")
     return Pool(
         key=as_str(data.get("id"), f"{where}.id"),
         step=as_id(data.get("step"), f"{where}.step"),
         members=tuple(parse_ids(data.get("members"), f"{where}.members")),
-        rating=rating,
     )
 
 
@@ -231,7 +226,7 @@ class Analysis:
         if missing:
             raise InputError(f"{self.inputs.name}: pool {pool.key}: {', '.join(missing)} are not premises of {pool.step}")
         self.premises[pool.step] = tuple(p for p in step if p not in pool.members) + (pool.key,)
-        self.premises[pool.key] = ()
+        self.premises[pool.key] = pool.members
 
     def _check(self) -> None:
         name = self.inputs.name
@@ -256,18 +251,26 @@ class Analysis:
         return self.inputs.step_types.get(key, "deductive")
 
     def rating(self, key: str) -> str:
-        pool = self.pools.get(key)
-        return pool.rating if pool else self.inputs.claim_ratings.get(key, "strong")
+        return self.inputs.claim_ratings.get(key, "strong")
 
     def step_strength(self, key: str) -> float:
         return self.numbers.step_strength[self.step_type(key)]
+
+    def pool_strength(self, pool: Pool) -> float:
+        doubt = 1.0
+        for member in pool.members:
+            doubt *= 1 - self.strength(member)
+        return min(1 - doubt, self.numbers.ratings["strong"])
 
     def strength(self, key: str) -> float:
         cached = self._memo.get(key)
         if cached is not None:
             return cached
         premises = self.premises[key]
-        if not premises:
+        pool = self.pools.get(key)
+        if pool is not None:
+            value = self.pool_strength(pool)
+        elif not premises:
             value = self.numbers.ratings[self.rating(key)]
         elif key in self.inputs.flaws:
             value = 0.0

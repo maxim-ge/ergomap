@@ -2,8 +2,6 @@
 
 # Plan
 
-- ??? pool
-
 ## Terminology
 
 ### Core logic terms
@@ -79,7 +77,7 @@ What holds for one case holds for another.
 
 A rule for merging steps, not a reasoning type. Reasons of the same type for one conclusion, each of which would support it alone, are merged into one step, and their premises form a pool.
 
-- Pool: the premises of a merged step taken together. It counts as one premise, so a doubtful item weakens the pool rather than limiting the conclusion on its own.
+- Pool: the premises of a merged step taken together. It counts as one premise, so a doubtful item doesn't limit the conclusion, and each added item raises the pool (see Pool strength).
 - Abductive: one step over all the observations, whose implicit condition is "nothing else explains all of them".
 - Analogy: one step from several source cases, whose implicit condition is "B is like all of them in the respect that matters".
 - Generalization: excluded; its cases are already the premises of one step.
@@ -179,13 +177,19 @@ A starting claim's verdict measures how well its backing in the article matches 
 The implicit condition of a non-deductive step is rated by its reasoning type's criteria, not by the starting claim checks, with the same numbers as the verdicts: strong 0.95, weak 0.6, none 0. In the reconstructed logic it's shown on its step, marked added; in the original logic, its rating is shown with the conclusion.
 
 - **Generalization:** strong with many varied cases, not hand-picked, no known counterexamples, and a conclusion no broader than the cases ("most", not "all"); weak with few or similar cases; none with a single case behind a general claim.
-- **Abductive:** strong when the main alternatives are ruled out and the cause explains all the observations, or, for a wanted effect, when the alternatives were compared and the side effects are acceptable; weak when the alternatives weren't checked; none when an alternative fits better or an observation contradicts the cause.
-- **Analogy:** strong when the two cases share the features that matter for P and no relevant difference is known; weak when they're similar in general but the relevance isn't shown; none when a difference that matters is known.
+- **Abductive:** strong when the main alternatives are ruled out and the cause explains all the observations, or, for a wanted effect, when the alternatives were compared and the side effects are acceptable; weak when the alternatives weren't checked; none when an alternative fits better or an observation contradicts the cause. Each added independent observation that the cause explains and an alternative doesn't counts toward strong.
+- **Analogy:** strong when the two cases share the features that matter for P and no relevant difference is known; weak when they're similar in general but the relevance isn't shown; none when a difference that matters is known. Each added source case that shares P but differs from the others in some feature counts toward strong: it shows that feature doesn't matter.
 - Example: in "Every swan I've seen is white → swans are white", the step's implicit condition is "the swans I've seen are representative of all swans" (added, weak: all of them were in Europe).
 
-#### Pool strength ???
+#### Pool strength
 
-A pool counts as one premise and gets one verdict: the starting claim checks applied to the body of evidence. Example: "the roofs are wet" (supported) and "a blurry photo shows a wet street" (weak) form a supported pool, so the photo no longer limits "it rained". A member also used outside the pool counts there on its own.
+A pool's members are alternative evidence, so the pool holds if at least one of them holds: 1 − (1 − s₁)(1 − s₂)…, where s is each member's strength, at most 0.95: nothing that can be wrong scores above supported. The larger the pool, the stronger it is.
+
+- **Numbers:** two weak members 1 − 0.4 × 0.4 = 0.84, three 0.94, four or more 0.95. A supported member and anything else: 0.95.
+- **Independence:** members that rest on the same source count as one member; otherwise the same survey quoted three times would count three times.
+- **Example:** "the roofs are wet" (weak) and "a neighbor's photo shows a wet street" (weak) form a 0.84 pool, stronger than either alone.
+- **A member also used outside the pool** counts there on its own.
+- **The implicit condition** also grows with the pool: more independent observations or source cases rule out more alternatives or differences (see Implicit condition strength).
 
 #### Examples
 

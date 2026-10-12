@@ -9,7 +9,7 @@ Both example maps scored with the rules and numbers in [plan-01.md → Strength]
   - Steps: abductive 7, 10, 11, 14, 18, 20, 21; analogy 15; the rest deductive.
   - Starting claims: weak 1, 6, 16, 17; definition 3; the rest supported.
   - Implicit conditions: weak for 7 and 18; the rest strong.
-  - Pools: 16 and 17, the observations of abductive step 18, form one pool, rated weak. 17 is also a premise of 21 on its own.
+  - Pools: 16 and 17, the observations of abductive step 18, form one pool: two weak members, 1 − 0.4 × 0.4 = 0.84. 17 is also a premise of 21 on its own.
 - **Poetry** ([poetry.txt](poetry.txt)):
   - Steps: abductive 17, 18, 22, 23, 24, 25; analogy 11, 16; the rest deductive.
   - Starting claims: weak 3, 5, 21; definition 4; the rest supported.
@@ -58,3 +58,4 @@ Both example maps scored with the rules and numbers in [plan-01.md → Strength]
 7. **Final conclusions that summarize are deductive.** Both articles end by restating earlier conclusions, so SDD 22 and poetry 27 are deductive steps. Claims that look new in them were argued earlier: "SDD strengthens Agile" comes from SDD 18 ("The data confirms the direction", [sdd:114](sdd-scrum-kanban.txt#L114)), and "work from goals, values and principles" from poetry 18. A summary that adds a claim nothing earlier argues has a gap (a missing premise or a non sequitur), not a different reasoning type.
    - **Map correction (applied to the example):** SDD 22's premises now include all of the article's own takeaways ([sdd:156-160](sdd-scrum-kanban.txt#L156-L160)): 5, 10 and 18 were added to 2, 7, 14, 15, 20 and 21, so that 18 is a direct premise. 2, 7 and 21 stay, because dropping them would leave them as dead ends. Its strength doesn't change: the weakest premise is still 20 (0.38).
    - **The opening question answered with a different comparison** is an irrelevant-conclusion issue in 22's note, not part of its claim, so it doesn't change the reasoning type.
+8. **A larger pool doesn't get past a weak implicit condition.** The SDD pool of 16 and 17 scores 0.84, above either member (0.6), yet 18 stays at 0.48: its implicit condition is weak (fit is judged after the fact), and that's now the weakest part.
