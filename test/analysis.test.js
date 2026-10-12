@@ -12,27 +12,27 @@ const example = async name => validate(JSON.parse(await readFile(new URL(`../exa
 const round = v => Math.round(v * 100) / 100;
 const strengths = (a, version, keys) => Object.fromEntries(keys.map(k => [k, round(a.strengthOf(version, k).value)]));
 
-test("SDD: key points by the key point rule, strengths as in the calibration", async () => {
+test("SDD: key points by the key point rule, strengths from the weakest chains", async () => {
   const a = (await example("sdd-scrum-kanban.json")).analysis;
-  assert.deepEqual(a.finals, ["22"]);
-  assert.deepEqual(a.keyPoints, ["5", "10", "11", "14", "15", "18", "20"]);
-  assert.deepEqual(strengths(a, "reconstructed", ["22", "5", "10", "11", "14", "15", "18", "20"]), {
-    22: 0.38, 5: 0.95, 10: 0.76, 11: 0.76, 14: 0.61, 15: 0.53, 18: 0.48, 20: 0.38
+  assert.deepEqual(a.finals, ["10", "32", "33", "34"]);
+  assert.deepEqual(a.keyPoints, ["6", "15", "17", "20", "21", "26", "29"]);
+  assert.deepEqual(strengths(a, "reconstructed", ["10", "32", "33", "34", "6", "16", "20", "21", "26", "29"]), {
+    10: 0.38, 32: 0.38, 33: 0.48, 34: 0.48, 6: 0.95, 16: 0.76, 20: 0.61, 21: 0.53, 26: 0, 29: 0.48
   });
-  // the pool of 16 and 17a: 16 rests on an unsupported claim, so the pool gives 17a alone
-  assert.equal(round(a.strengthOf("reconstructed", "16").value), 0);
-  assert.deepEqual(a.strengthOf("reconstructed", "22").link, { kind: "condition", key: "18", step: 0 });
-  assert.equal(a.strengthOf("reconstructed", "10").link, null);
+  // the pool of 26 and 27: 26 rests on an unsupported claim, so the pool gives 27 alone
+  assert.equal(round(a.strengthOf("reconstructed", "29").value), 0.48);
+  assert.deepEqual(a.strengthOf("reconstructed", "34").link, { kind: "condition", key: "29", step: 0 });
+  assert.equal(a.strengthOf("reconstructed", "16").link, null);
 });
 
-test("poetry: splitting the bundled axioms frees 22, the weakest chain still decides 27", async () => {
+test("poetry: one claim per thesis keeps weak parts out of conclusions that don't use them", async () => {
   const a = (await example("agentic-poetry.json")).analysis;
-  assert.deepEqual(a.finals, ["20", "27"]);
-  assert.deepEqual(a.keyPoints, ["6", "10", "11", "13", "18", "19"]);
-  assert.deepEqual(strengths(a, "reconstructed", ["20", "27", "6", "11", "13", "18", "22", "23", "26"]), {
-    20: 0.34, 27: 0.27, 6: 0.6, 11: 0.42, 13: 0.42, 18: 0.34, 22: 0.76, 23: 0.48, 26: 0.6
+  assert.deepEqual(a.finals, ["27", "36", "37", "38", "39", "41", "42"]);
+  assert.deepEqual(a.keyPoints, ["6", "11", "12", "16", "17", "24", "25"]);
+  assert.deepEqual(strengths(a, "reconstructed", ["27", "36", "37", "38", "41", "42", "6", "12", "17", "34"]), {
+    27: 0.34, 36: 0.48, 37: 0.27, 38: 0.76, 41: 0.6, 42: 0.34, 6: 0.6, 12: 0.42, 17: 0.42, 34: 0.76
   });
-  assert.deepEqual(a.strengthOf("reconstructed", "27").link, { kind: "condition", key: "16", step: 0 });
+  assert.deepEqual(a.strengthOf("reconstructed", "37").link, { kind: "condition", key: "21", step: 0 });
   assert.deepEqual(a.strengthOf("reconstructed", "6").link, { kind: "claim", key: "5" });
 });
 
@@ -48,8 +48,9 @@ test("optimized logic keeps every final conclusion at the same strength with few
 
 test("the original logic shows the reconstructed values", async () => {
   const a = (await example("sdd-scrum-kanban.json")).analysis;
-  assert.equal(a.strengthOf("original", "18"), a.strengthOf("reconstructed", "18"));
-  assert.equal(a.strengthOf("original", "17"), null);
+  assert.equal(a.strengthOf("original", "29"), a.strengthOf("reconstructed", "29"));
+  assert.ok(!a.versions.original.byKey.has("35"));
+  assert.equal(round(a.strengthOf("original", "35").value), 0.6);
 });
 
 test("pools and steps of different types combine toward 0.95", () => {
@@ -133,8 +134,8 @@ test("analysis errors are caught with readable messages", () => {
 test("versions share one layout: every node of every version placed, pools kept as clusters", async () => {
   const m = await example("sdd-scrum-kanban.json");
   const g = unionGraph(m);
-  assert.equal(g.theses.length, 26); // 25 reconstructed + 17 from the original
-  assert.deepEqual(g.clusters, [["16", "17a"]]);
+  assert.equal(g.theses.length, 35); // 34 in the original + the implicit premise 35
+  assert.deepEqual(g.clusters, [["26", "27"]]);
   const measure = s => s.length * 7;
   const L = computeLayout(g, { measureLabel: measure, measureNum: measure, badge: 32 });
   const boxes = [...L.nodes.values()];
@@ -150,17 +151,17 @@ test("each version draws its own theses, edges and pools", async () => {
   const m = await example("sdd-scrum-kanban.json");
   const i18n = createI18n({ locale: "en" });
   const original = mapView(m, "original", i18n);
-  assert.ok(original.edges.some(e => e.u === "17" && e.v === "18" && e.cls === "em-broken"));
+  assert.ok(original.edges.some(e => e.u === "28" && e.v === "29" && e.cls === "em-broken"));
   assert.equal(original.pools.length, 0);
-  assert.equal(original.theses.find(t => t.key === "18").badge, "0.48");
+  assert.equal(original.theses.find(t => t.key === "29").badge, "0.48");
   const reconstructed = mapView(m, "reconstructed", i18n);
-  assert.deepEqual(reconstructed.pools, [{ v: "18", members: ["16", "17a"] }]);
-  assert.ok(reconstructed.theses.find(t => t.key === "16a").classes.includes("em-added"));
-  assert.ok(!reconstructed.edges.some(e => e.u === "17a" && e.v === "18"));
+  assert.deepEqual(reconstructed.pools, [{ v: "29", members: ["26", "27"] }]);
+  assert.ok(reconstructed.theses.find(t => t.key === "35").classes.includes("em-added"));
+  assert.ok(!reconstructed.edges.some(e => e.u === "27" && e.v === "29"));
   const optimized = mapView(m, "optimized", i18n);
-  assert.ok(optimized.theses.find(t => t.key === "7").faded);
-  assert.ok(optimized.edges.some(e => e.u === "7" && e.v === "22" && e.cls === "em-faded"));
-  assert.ok(!optimized.theses.find(t => t.key === "2").faded);
+  assert.ok(optimized.theses.find(t => t.key === "22").faded);
+  assert.ok(optimized.edges.some(e => e.u === "26" && e.v === "29" && e.cls === "em-faded"));
+  assert.ok(!optimized.theses.find(t => t.key === "27").faded);
 });
 
 test("the router keeps views and versions in the hash", () => {

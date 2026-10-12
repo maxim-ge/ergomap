@@ -118,7 +118,7 @@ flowchart
 
 ### Logic versions
 
-- **Original logic:** the reasoning as the author gives it.
+- **Original logic:** the reasoning as the author gives it, one claim per thesis. A sentence that bundles claims is split during extraction, because a bundle spreads weakness: one weak part would weaken every conclusion that uses the thesis, even those that need only its strong parts. Splitting doesn't change the author's reasoning; it shows each link where the author made it.
 - **Reconstructed logic:** the original made explicit by the rules in Reconstruction. Every issue that has a fix is repaired, and issues with no fix stay visible.
 - **Optimized logic:** the reconstructed logic reduced to the fewest starting claims that still yield the same final conclusions at the same strength. Final conclusions with strength 0 stay as they are; only the support of the others is reduced.
 
@@ -126,10 +126,9 @@ flowchart
 
 The rules that turn the original logic into the reconstructed logic. Fixes are linked to the issues they repair; the other changes only make the logic explicit and need no issue.
 
-- **Fix:** one minimal change that repairs one issue and keeps the author's conclusion: state an implicit premise, split a thesis, change a conclusion's premises, or reword a thesis. Some issues have none, for example an inconsistency or an irrelevant conclusion. A premise that only restates the step ("if the premises hold, the conclusion holds") is not a fix.
+- **Fix:** one minimal change that repairs one issue and keeps the author's conclusion: state an implicit premise, change a conclusion's premises, or reword a thesis. Some issues have none, for example an inconsistency or an irrelevant conclusion. A premise that only restates the step ("if the premises hold, the conclusion holds") is not a fix.
 - **Implicit premises:** a gap with a plausible fix gets an implicit premise. It's added as a starting claim, linked to the issue it fixes, and judged like any other starting claim.
 - **Implicit conditions:** every non-deductive step gets one. It's shown on its step and rated by its reasoning type's criteria.
-- **One claim per thesis:** a thesis that bundles several claims is split, even when no issue calls for it. Otherwise one weak part makes every conclusion that uses it weak, even those that need only its strong parts.
 - **Convergence:** reasons of the same type for one conclusion are merged into one step with a pool; reasons of different types stay separate steps (see Convergence).
 - **Summaries:** a final conclusion that restates earlier conclusions is deductive. A claim in it that nothing earlier argues is a gap, not a different reasoning type.
 
@@ -248,7 +247,7 @@ Examples refer to the theses in [examples/sdd-scrum-kanban.json](../examples/sdd
 
 ## UI
 
-1. **Summary:** final conclusions and key points, each with its strength, and key concepts. A strength lowered by a weak rating or a flaw names its weakest link, for example "0.48, weakest: 'fit' is judged after the fact (18)".
+1. **Summary:** final conclusions and key points, each with its strength, and key concepts. A strength lowered by a weak rating or a flaw names its weakest link, for example "0.48, weakest: 'fit' is judged after the fact (29)", because the number says how sure, not why: a conclusion with one weak starting claim can score above one with nothing rated weak but an analogy after an abductive step.
 2. **Audit:** issues (fallacies, gaps) and starting claim verdicts
 3. **Logic:** original, reconstructed and optimized, as three states of one map
 

@@ -20,7 +20,7 @@
       "id": 1,
       "section": "tension",
       "label": "Agents don't ask",
-      "text": "An AI agent builds exactly what the contract says: where a human would ask a follow-up question, the agent confidently builds the wrong thing.",
+      "text": "An AI agent builds exactly what the contract says: where a human would ask a follow-up question, it builds the wrong thing with full confidence.",
       "note": "The article's opening contrast: the same team runs one sprint from a story and a conversation, and another from a contract that an agent implements."
     },
     {
@@ -35,148 +35,227 @@
       "id": 3,
       "section": "tension",
       "label": "Frozen or living spec",
-      "text": "A spec can be frozen, agreed up front and defended by phase gates, or living, maturing inside the sprint as the implementation teaches the team.",
+      "text": "A spec can be frozen, agreed up front and defended against change by phase gates, or living, maturing inside the sprint as the implementation teaches the team.",
       "note": "The frozen variant is Big Design Up Front, and it is what gives SDD its bad name."
     },
     {
       "id": 4,
       "section": "tension",
       "label": "Agile never banned docs",
-      "text": "The Agile Manifesto ranks working software above documentation without excluding documentation; agility is the contract's right to change after the build starts.",
-      "note": "So the common objection that SDD is waterfall in Markdown targets the spec's presence instead of its being frozen."
+      "text": "The Agile Manifesto ranks working software above comprehensive documentation without excluding documentation.",
+      "note": "Its authors added that there is value on the right side too."
     },
     {
       "id": 5,
       "section": "tension",
-      "label": "The tension: frozen vs living",
-      "text": "The real tension is between a frozen spec and a living one, not between fast delivery and writing specs, and only the frozen spec deserves the waterfall charge.",
-      "from": [3, 4]
+      "label": "Agility is the right to change",
+      "text": "Agility isn't the absence of a contract but the contract's right to change after the build starts.",
+      "note": "The article quotes Eisenhower: \"Plans are worthless, but planning is everything.\""
     },
     {
       "id": 6,
       "section": "tension",
-      "label": "AI: faster greenfield, slower legacy",
-      "text": "AI assistance sped up a greenfield task in a controlled study but slowed experienced developers down on a mature repository with millions of lines of code.",
-      "note": "Different conditions, different results: the author reads them as two ends of the same axis."
+      "label": "The tension: frozen vs living",
+      "text": "The real tension is between a frozen spec and a living one, not between fast delivery and writing specs: only a frozen spec deserves the waterfall charge.",
+      "from": [3, 4, 5],
+      "note": "So the common objection that SDD is waterfall in Markdown targets the spec's presence instead of its being frozen."
     },
     {
       "id": 7,
       "section": "tension",
-      "label": "The spec closes the gaps",
-      "text": "On mature code, gaps a human would question turn into wrong implementations, so the spec is the place to close them before the agent starts building.",
-      "from": [1, 6]
+      "label": "AI sped up greenfield work",
+      "text": "A controlled study on a greenfield task showed a clear speedup with an AI assistant."
     },
     {
       "id": 8,
-      "section": "ladder",
-      "label": "Three rungs of SDD",
-      "text": "SDD comes in three levels: spec-first, spec-anchored and spec-as-source, and each higher rung raises the maintenance cost and the coupling between spec and code.",
-      "note": "The classification is by Birgitta Böckeler of Thoughtworks. Spec-first: the spec leads, the code is maintained. Spec-anchored: the spec is versioned and evolves with the code. Spec-as-source: the spec is the source of truth, the code is generated and disposable."
+      "section": "tension",
+      "label": "AI slowed legacy work",
+      "text": "A study on a mature repository with millions of lines of code showed a slowdown for experienced developers.",
+      "note": "Different conditions, different results: the author reads the two studies as two ends of the same axis."
     },
     {
       "id": 9,
-      "section": "ladder",
-      "label": "\"Spec\" is a blurry word",
-      "text": "\"Spec\" can mean anything from an elaborate prompt to dozens of Markdown files, so any SDD statistic is meaningless without its level.",
-      "note": "Conflating levels is, in the author's words, the costliest mistake in the whole topic."
+      "section": "tension",
+      "label": "Gaps become wrong code",
+      "text": "On mature code, gaps a human would question turn into wrong implementations.",
+      "from": [1, 7, 8]
     },
     {
       "id": 10,
-      "section": "ladder",
-      "label": "Pick the lowest rung that fits",
-      "text": "Most work should stay at spec-first, shared contracts such as public APIs justify spec-anchored, and spec-as-source belongs to experiments and safety-critical systems.",
-      "from": [8, 9],
-      "note": "The one antipattern is paying for a higher rung while the problem sits on a lower one, such as a simple bug that spawns several stories and a dozen acceptance criteria."
+      "section": "tension",
+      "label": "The spec closes the gaps",
+      "text": "The spec is the place to close those gaps, before the agent starts building.",
+      "from": [9]
     },
     {
       "id": 11,
-      "section": "cycle",
-      "label": "The spec lives in the sprint",
-      "text": "The backlog should stay at the level of goal and intent, and the contract should be developed inside the sprint, as part of doing the work.",
-      "from": [5],
-      "note": "The author credits Yuval Yeret with this placement. A finished contract in the backlog signals a spec at the wrong level of abstraction."
+      "section": "ladder",
+      "label": "Three levels of spec",
+      "text": "SDD comes in three levels: spec-first, where the spec leads but the code is what's maintained; spec-anchored, where the spec is versioned and evolves with the code; and spec-as-source, where the spec is the source of truth and the code is generated.",
+      "note": "The classification is by Birgitta Böckeler of Thoughtworks."
     },
     {
       "id": 12,
+      "section": "ladder",
+      "label": "Higher levels cost more",
+      "text": "Each higher level raises the maintenance cost and the coupling between spec and code."
+    },
+    {
+      "id": 13,
+      "section": "ladder",
+      "label": "When a higher level pays",
+      "text": "A higher level pays off only where its cost buys something: spec-anchored where several teams or agents share one contract, and spec-as-source in experiments or where certification requires a formal model anyway."
+    },
+    {
+      "id": 14,
+      "section": "ladder",
+      "label": "\"Spec\" is a blurry word",
+      "text": "\"Spec\" can mean anything from an elaborate prompt to dozens of Markdown files."
+    },
+    {
+      "id": 15,
+      "section": "ladder",
+      "label": "A statistic needs its level",
+      "text": "An SDD statistic means nothing without the level of spec it was measured at.",
+      "from": [11, 12, 14],
+      "note": "A metric from a spec-anchored project doesn't transfer to a simple bug fix; the author calls conflating levels the costliest mistake in the whole topic."
+    },
+    {
+      "id": 16,
+      "section": "ladder",
+      "label": "Pick the lowest level that fits",
+      "text": "Each piece of work should get the lowest level of spec that fits it, not the level another project's numbers favor: spec-first for most work, spec-anchored for contracts shared across teams, and spec-as-source only for experiments and safety-critical systems.",
+      "from": [11, 12, 13, 15],
+      "note": "The one antipattern is paying for a higher level while the problem sits on a lower one, such as a simple bug that spawns several stories and a dozen acceptance criteria."
+    },
+    {
+      "id": 17,
+      "section": "cycle",
+      "label": "The spec lives in the sprint",
+      "text": "The backlog should stay at the level of goal and intent, and the contract should be developed inside the sprint, as part of doing the work.",
+      "from": [3, 6],
+      "note": "The author credits Yuval Yeret with this placement. A finished contract in the backlog signals a spec at the wrong level of abstraction."
+    },
+    {
+      "id": 18,
       "section": "cycle",
       "label": "The spec feeds the DoR",
       "text": "A spec already supplies what a Definition of Ready asks for: acceptance criteria, scope boundaries and edge cases."
     },
     {
-      "id": 13,
+      "id": 19,
       "section": "cycle",
       "label": "A DoR can become a gate",
       "text": "A Definition of Ready can turn into a gatekeeper that blocks the iteration and drifts back toward waterfall.",
       "note": "This is Mike Cohn's warning, quoted in the article."
     },
     {
-      "id": 14,
+      "id": 20,
       "section": "cycle",
       "label": "Scrum: DoR as agreement",
       "text": "In Scrum the spec belongs in the Definition of Ready, treated as the team's agreement on entry quality rather than a phase gate.",
-      "from": [11, 12, 13]
+      "from": [17, 18, 19]
     },
     {
-      "id": 15,
+      "id": 21,
       "section": "cycle",
       "label": "Kanban: the commitment point",
-      "text": "In Kanban the commitment point takes the role of the Definition of Ready, and WIP limits in Upstream Kanban keep specs from going stale before anyone builds them.",
-      "from": [11, 12],
-      "note": "A task crosses the commitment point only when it is ready to pull: there is clarity about what to build."
+      "text": "In Kanban the commitment point takes the role of the Definition of Ready: a task crosses it only once it's ready to pull.",
+      "from": [17, 18],
+      "note": "Before that point lives Upstream Kanban, the analysis and contract design ahead of the main flow, with WIP limits that keep specs from going stale before anyone builds them."
     },
     {
-      "id": 16,
+      "id": 22,
+      "section": "evidence",
+      "label": "A spec sped up Scrum",
+      "text": "In a quasi-experiment, Scrum with an architectural spec raised velocity by about 19% and cut defect density by about 31%.",
+      "note": "sMBSAP, Colorado State, 2023. The author notes it's a single project: a direction, not a guarantee."
+    },
+    {
+      "id": 23,
+      "section": "evidence",
+      "label": "A full spec halved defects",
+      "text": "A semiconductor product line had about half the defects after the team introduced a full, reviewed spec, despite higher complexity."
+    },
+    {
+      "id": 24,
+      "section": "evidence",
+      "label": "BDD specs cut firefighting",
+      "text": "At a global bank, firefighting dropped from over a third of developer time to single digits after nine months of behavior-driven specs."
+    },
+    {
+      "id": 25,
+      "section": "evidence",
+      "label": "Those specs fitted",
+      "text": "In those three cases the spec matched the scale of the problem."
+    },
+    {
+      "id": 26,
       "section": "evidence",
       "label": "Fitted specs paid off",
-      "text": "Where the spec matched the scale of the problem, quality improved in three different contexts.",
-      "note": "A Scrum quasi-experiment with an architectural spec (sMBSAP, Colorado State, 2023): velocity up about 19%, defect density down about 31%. A semiconductor product line: about half the defects despite higher complexity. A global bank: firefighting dropped from over a third of developer time to single digits after nine months of behavior-driven specs."
+      "text": "Where the spec matches the scale of the problem, quality goes up.",
+      "from": [22, 23, 24, 25]
     },
     {
-      "id": 17,
+      "id": 27,
       "section": "evidence",
-      "label": "Mismatched specs failed",
-      "text": "Where the spec level didn't fit, or SDD was imposed as a mandate, it slowed teams down and turned them against it.",
-      "note": "A practitioner measured roughly a tenfold slowdown with a rigid SDD workflow on a small CRUD feature, with more Markdown than code to review. Another rollout, imposed top-down, met a petition of more than a thousand engineers; the author notes that some details are unverified."
+      "label": "Rigid SDD slowed a CRUD",
+      "text": "A rigid SDD workflow on a small CRUD feature slowed a practitioner down roughly tenfold.",
+      "note": "The tool generated more Markdown than code, and all of it had to be reviewed: spec drift in its early stage."
     },
     {
-      "id": 18,
+      "id": 28,
+      "section": "evidence",
+      "label": "A mandate backfired",
+      "text": "SDD imposed top-down as a mandate turned the organization against it.",
+      "note": "A petition of more than a thousand engineers, with metric-gaming in the background; the author notes that some details are unverified."
+    },
+    {
+      "id": 29,
       "section": "evidence",
       "label": "Fit decides, not presence",
       "text": "What decides the outcome is fitting the spec level to the context, not the mere presence of a spec.",
-      "from": [10, 16, 17]
+      "from": [11, 26, 27, 28]
     },
     {
-      "id": 19,
+      "id": 30,
       "section": "practice",
       "label": "Perception isn't measurement",
       "text": "Developers who expected AI to speed them up by about 24% were measured to be about 19% slower on a mature repository.",
       "note": "METR, 2025: sixteen developers, wide confidence interval. The author calls the gap between perception and metrics the real opponent."
     },
     {
-      "id": 20,
+      "id": 31,
       "section": "practice",
       "label": "Roll it out as an experiment",
-      "text": "SDD should be rolled out as an experiment that tracks cycle time, rework rate and the ratio of code to Markdown, and the batch size should shrink when rework or spec files grow faster than code.",
-      "from": [18, 19]
+      "text": "SDD should be rolled out as an experiment that tracks cycle time, rework rate and the ratio of code to Markdown, not imposed as a mandate.",
+      "from": [27, 28, 30]
     },
     {
-      "id": 21,
+      "id": 32,
       "section": "practice",
-      "label": "One owner, few invariants",
-      "text": "A living spec needs a single owner, a version history and only a small set of invariant rules, or spec drift comes back.",
-      "from": [3, 17],
-      "note": "Too many fixed constraints don't add order; they add places for contradictions to hide."
+      "label": "Shrink the batch",
+      "text": "When rework or spec files grow faster than code, the batch size should shrink, not the process grow.",
+      "from": [29, 31]
     },
     {
-      "id": 22,
+      "id": 33,
+      "section": "practice",
+      "label": "One owner, a version history",
+      "text": "A living spec needs a single owner and a version history, or spec drift comes back.",
+      "from": [3, 27],
+      "note": "The author also caps invariant rules: too many fixed constraints don't add order; they add places for contradictions to hide."
+    },
+    {
+      "id": 34,
       "section": "summary",
       "label": "Living, fitted, measured",
       "text": "SDD strengthens Agile when the spec is living: developed inside the sprint, or before the commitment point in Kanban, as an agreement rather than a gate, at the level the problem needs, and judged by measurement rather than by feel.",
-      "from": [2, 5, 7, 10, 11, 14, 15, 18, 20, 21],
+      "from": [2, 6, 16, 17, 20, 21, 29, 31],
       "note": "The article's answer to its opening question: the faster sprint was the one where the spec lived inside the sprint at the right level."
     }
   ],
-  "start": 18,
+  "start": 29,
   "analysis": {
     "issues": [
       {
@@ -184,8 +263,8 @@
         "type": "non-sequitur",
         "severity": "flaw",
         "target": "inference",
-        "theses": [17, 18],
-        "explanation": "The mandate failure is about how SDD was introduced, not about the level of the spec, yet it's taken as evidence that fitting the level decides the outcome.",
+        "theses": [28, 29],
+        "explanation": "The mandate failure shows another deciding factor, how SDD was introduced, so it can't show that fitting the level is what decides the outcome.",
         "quote": "Still, the conclusion is clear: what decides the outcome is fitting the level to the context, not the mere presence of a spec."
       },
       {
@@ -193,8 +272,8 @@
         "type": "circular",
         "severity": "weakness",
         "target": "thesis",
-        "theses": [16],
-        "explanation": "The article never says which level of spec the three success cases used: the fit is read off the good outcome, so the cases assume the fit they're meant to show.",
+        "theses": [25],
+        "explanation": "The article never says which level of spec the three success cases used: the fit is read off the good outcome. By the article's own rule (15), a statistic without its level means nothing.",
         "quote": "Three different contexts, one direction: when the spec matched the scale of the problem, quality went up."
       },
       {
@@ -203,7 +282,7 @@
         "severity": "weakness",
         "target": "concept",
         "concept": "SDD",
-        "theses": [16, 22],
+        "theses": [22, 23, 24, 34],
         "explanation": "SDD is defined as an AI agent building from a contract, but none of the three success cases involves an agent: they show that specs helped, not that SDD with agents does.",
         "quote": "In a quasi-experiment comparing Scrum with a version enriched by an architectural spec (sMBSAP, Colorado State, 2023)"
       },
@@ -213,8 +292,8 @@
         "severity": "weakness",
         "target": "concept",
         "concept": "Spec level",
-        "theses": [10, 11],
-        "explanation": "\"Level\" is a rung of the ladder in 8, 10 and 18, but a level of abstraction (goal or finished contract) in 11; the sentence treats a finished contract in the backlog as a lower rung.",
+        "theses": [16, 17],
+        "explanation": "\"Level\" is a rung of the ladder in 11, 16 and 29, but a level of abstraction (goal or finished contract) in 17; the sentence treats a finished contract in the backlog as a lower rung.",
         "quote": "Placing a finished, complete contract in the backlog is a signal that the spec sits at the wrong level of abstraction, one rung too low relative to the intent."
       },
       {
@@ -222,54 +301,63 @@
         "type": "inconsistency",
         "severity": "weakness",
         "target": "pair",
-        "theses": [5, 18],
-        "explanation": "Each is presented as the one thing that decides: frozen versus living in 5, fitting the level in 18. Both can hold only if neither is the single deciding factor the article calls it.",
-        "quote": "The rest of this article is just the unpacking of that one distinction."
+        "theses": [17, 20],
+        "explanation": "A Definition of Ready is what a task must meet before it enters the sprint, yet 17 develops the contract only after the task is pulled in. Both hold only if the DoR checks a partial spec, which the article doesn't say; Kanban's commitment point (21) has the same tension.",
+        "quote": "The spec already supplies what the DoR requires: acceptance criteria, scope boundaries, and edge cases."
       },
       {
         "id": "i6",
         "type": "irrelevant-conclusion",
         "severity": "weakness",
         "target": "argument",
-        "theses": [22],
+        "theses": [34],
         "explanation": "The opening compares a sprint that starts from a story with one that starts from a contract; the summary answers by comparing a living contract with a frozen one, a pair the opening never set up.",
         "quote": "The one that delivered faster was the one where the spec lived inside the sprint at the right level — not the one that got a finished, frozen contract handed down from the backlog."
+      },
+      {
+        "id": "i7",
+        "type": "missing-premise",
+        "severity": "weakness",
+        "target": "inference",
+        "theses": [32],
+        "explanation": "The batch-size rule follows only if rework or spec files growing faster than code show that the spec has outgrown the problem. The article doesn't say so, and the remedy that fit (29) suggests would be a lower level, not a smaller batch.",
+        "quote": "If the share of rework grows after the rollout, or the number of spec files bloats faster than the code, that’s a signal to pull back the batch size, not to pile on more process."
       }
     ],
     "concepts": [
       {
         "term": "SDD",
         "senses": [
-          { "definition": "A precise contract written before the code, from which an AI agent builds the implementation.", "theses": [8, 17, 20, 22] },
-          { "definition": "Any practice that writes a spec before the code, with or without an agent.", "theses": [16] }
+          { "definition": "A precise contract written before the code, from which an AI agent builds the implementation.", "theses": [11, 28, 31, 34] },
+          { "definition": "Any practice that writes a spec before the code, with or without an agent.", "theses": [22, 23, 24] }
         ]
       },
       {
         "term": "Spec level",
         "senses": [
-          { "definition": "A rung of Böckeler's ladder: spec-first, spec-anchored or spec-as-source.", "theses": [8, 9, 10, 18] },
-          { "definition": "A level of abstraction: goal and intent, or a finished contract.", "theses": [11] }
+          { "definition": "A rung of Böckeler's ladder: spec-first, spec-anchored or spec-as-source.", "theses": [11, 12, 15, 16, 29] },
+          { "definition": "A level of abstraction: goal and intent, or a finished contract.", "theses": [17] }
         ]
       },
       {
         "term": "Living spec",
-        "senses": [{ "definition": "A contract that matures inside the sprint as the implementation teaches the team.", "theses": [3, 5, 11, 21, 22] }]
+        "senses": [{ "definition": "A contract that matures inside the sprint as the implementation teaches the team.", "theses": [3, 6, 17, 33, 34] }]
       },
       {
         "term": "Frozen spec",
-        "senses": [{ "definition": "A design agreed up front and defended against change by phase gates.", "theses": [3, 4, 5] }]
+        "senses": [{ "definition": "A design agreed up front and defended against change by phase gates.", "theses": [3, 6] }]
       },
       {
         "term": "Definition of Ready",
-        "senses": [{ "definition": "The criteria a task must meet before it enters the sprint.", "theses": [12, 13, 14, 15] }]
+        "senses": [{ "definition": "The criteria a task must meet before it enters the sprint.", "theses": [18, 19, 20, 21] }]
       },
       {
         "term": "Commitment point",
-        "senses": [{ "definition": "In Kanban, the moment a task stops being optional and becomes a commitment to deliver.", "theses": [15] }]
+        "senses": [{ "definition": "In Kanban, the moment a task stops being optional and becomes a commitment to deliver.", "theses": [21] }]
       },
       {
         "term": "Spec drift",
-        "senses": [{ "definition": "The gap between the spec and the code once there are more documents than the team can maintain.", "theses": [17, 21] }]
+        "senses": [{ "definition": "The gap between the spec and the code once there are more documents than the team can maintain.", "theses": [27, 33] }]
       }
     ],
     "reconstructed": [
@@ -277,121 +365,135 @@
       { "id": 2, "from": [1] },
       { "id": 3, "verdict": "definition", "reason": "Defines the two kinds of spec the article compares." },
       { "id": 4, "verdict": "supported", "reason": "Checkable in the Manifesto itself, whose authors say there is value in the items on the right." },
-      { "id": 5, "from": [3, 4] },
-      { "id": 6, "verdict": "weak", "reason": "Two studies that differ in task, tool and developers, so the contrast isn't controlled; the second (METR, 2025) had sixteen developers." },
+      { "id": 5, "verdict": "supported", "reason": "Restates the Manifesto's own value: responding to change over following a plan." },
+      { "id": 6, "from": [3, 4, 5] },
+      { "id": 7, "verdict": "weak", "reason": "An unnamed controlled study; the article gives neither its source nor its numbers." },
+      { "id": 8, "verdict": "weak", "reason": "An unnamed study; the article gives no source here." },
       {
-        "id": 7,
-        "from": [1, 6],
+        "id": 9,
+        "from": [1, 7, 8],
         "type": "abductive",
         "condition": { "text": "Nothing but gaps no one questioned explains the slowdown on mature code.", "rating": "weak", "reason": "questionable cause: the study doesn't say why the developers were slower" }
       },
-      { "id": 8, "verdict": "supported", "reason": "A named, checkable classification by Birgitta Böckeler of Thoughtworks." },
-      { "id": 9, "verdict": "supported", "reason": "Shown by the ladder itself: one word covers three levels with different costs." },
       {
         "id": 10,
-        "from": [8, 9],
+        "from": [9],
         "type": "abductive",
-        "condition": { "text": "No other choice of level fits the costs of the three levels better.", "rating": "strong", "reason": "each level's cost is weighed against where it pays off" }
+        "condition": { "text": "Closing the gaps in the spec, before the agent builds, is the best way to avoid wrong implementations.", "rating": "weak", "reason": "the alternatives, such as an agent that asks back, aren't considered" }
+      },
+      { "id": 11, "verdict": "definition", "reason": "Birgitta Böckeler's classification, named and checkable." },
+      { "id": 12, "verdict": "supported", "reason": "Follows from the definitions: each higher level keeps more of the spec in step with the code." },
+      { "id": 13, "verdict": "supported", "reason": "Common practice: shared API contracts are versioned and tested, and certification asks for formal models." },
+      { "id": 14, "verdict": "supported", "reason": "Common knowledge; the tools the article mentions range from a prompt to many Markdown files." },
+      { "id": 15, "from": [11, 12, 14] },
+      {
+        "id": 16,
+        "from": [11, 12, 13, 15],
+        "type": "abductive",
+        "condition": { "text": "No other choice of level weighs cost against payoff better.", "rating": "strong", "reason": "each level's cost is weighed against where it pays off" }
       },
       {
-        "id": 11,
-        "from": [5],
+        "id": 17,
+        "from": [3, 6],
         "type": "abductive",
         "condition": { "text": "Developing the contract inside the sprint is the best way to keep the spec living.", "rating": "strong", "reason": "the alternative, a finished contract in the backlog, is shown to freeze it" }
       },
-      { "id": 12, "verdict": "supported", "reason": "Common knowledge: acceptance criteria, scope boundaries and edge cases are what both contain." },
-      { "id": 13, "verdict": "supported", "reason": "Mike Cohn's warning, quoted; he writes on this exact point." },
+      { "id": 18, "verdict": "supported", "reason": "Common knowledge: acceptance criteria, scope boundaries and edge cases are what both contain." },
+      { "id": 19, "verdict": "supported", "reason": "Mike Cohn's warning, quoted; he writes on this exact point." },
       {
-        "id": 14,
-        "from": [11, 12, 13],
+        "id": 20,
+        "from": [17, 18, 19],
         "type": "abductive",
         "condition": { "text": "Treating the DoR as an agreement is the best way to use the spec without a gate.", "rating": "strong", "reason": "it answers Cohn's warning directly" }
       },
       {
-        "id": 15,
-        "from": [11, 12],
+        "id": 21,
+        "from": [17, 18],
         "type": "analogy",
         "condition": { "text": "Kanban's commitment point is like Scrum's DoR in the respect that matters: it's where a task must be ready to build.", "rating": "strong", "reason": "the article states the shared role: a task crosses it only when it's ready to pull" }
       },
+      { "id": 22, "verdict": "weak", "reason": "A single project, as the author notes: it points to a direction, not a guarantee." },
+      { "id": 23, "verdict": "weak", "reason": "A single, unnamed product line." },
+      { "id": 24, "verdict": "weak", "reason": "An unnamed bank, and the drop came after nine months of specs, which shows sequence, not cause." },
+      { "id": 25, "verdict": "unsupported", "reason": "The article never says which level of spec each case used; the fit is read off the good outcome." },
       {
-        "id": "16a",
-        "section": "evidence",
-        "label": "Specs preceded\nbetter quality",
-        "text": "In three different contexts, quality improved after a team introduced a spec.",
-        "note": "A Scrum quasi-experiment with an architectural spec (sMBSAP, Colorado State, 2023): velocity up about 19%, defect density down about 31%. A semiconductor product line: about half the defects despite higher complexity. A global bank: firefighting dropped from over a third of developer time to single digits after nine months of behavior-driven specs.",
-        "verdict": "weak",
-        "reason": "Three single cases: one quasi-experiment on a single project, one product line, and one bank where the drop came after nine months of specs, which shows sequence, not cause."
+        "id": 26,
+        "from": [22, 23, 24, 25],
+        "type": "generalization",
+        "condition": { "text": "The three cases are enough and representative.", "rating": "weak", "reason": "three successes picked for one direction" }
       },
+      { "id": 27, "verdict": "weak", "reason": "One practitioner's experiment on one feature; the source isn't named." },
+      { "id": 28, "verdict": "weak", "reason": "The author's own hedge: some details of the story are unverified." },
       {
-        "id": "16b",
-        "section": "evidence",
-        "label": "Those specs\nfitted",
-        "text": "In those three contexts, the spec matched the scale of the problem.",
-        "verdict": "unsupported",
-        "reason": "The article never says which level of spec each case used; the fit is read off the good outcome."
-      },
-      { "id": 16, "from": ["16a", "16b"], "note": "" },
-      {
-        "id": "17a",
-        "section": "evidence",
-        "label": "Rigid SDD\nslowed a CRUD",
-        "text": "A rigid SDD workflow on a small CRUD feature slowed a practitioner down roughly tenfold.",
-        "note": "The tool generated more Markdown than code, and all of it had to be reviewed: spec drift in its early stage.",
-        "verdict": "weak",
-        "reason": "One practitioner's experiment on one feature; the source isn't named."
-      },
-      {
-        "id": "17b",
-        "section": "evidence",
-        "label": "A mandate\nbackfired",
-        "text": "SDD imposed top-down as a mandate turned the organization against it.",
-        "note": "A petition of more than a thousand engineers, with metric-gaming in the background.",
-        "verdict": "weak",
-        "reason": "The author's own hedge: some details of the story are unverified."
-      },
-      {
-        "id": 18,
-        "from": [10, 16, "17a"],
-        "pool": [16, "17a"],
+        "id": 29,
+        "from": [11, 26, 27],
+        "pool": [26, 27],
         "type": "abductive",
         "condition": { "text": "Nothing but the fit of the spec level explains why some rollouts paid off and others failed.", "rating": "weak", "reason": "the fit is judged after the fact, and other differences between the cases aren't ruled out" },
         "fixes": ["i1"]
       },
-      { "id": 19, "verdict": "supported", "reason": "A named, checkable study (METR, 2025), with its limits stated: sixteen developers, wide confidence interval." },
+      { "id": 30, "verdict": "supported", "reason": "A named, checkable study (METR, 2025), with its limits stated: sixteen developers, wide confidence interval." },
       {
-        "id": 20,
-        "from": [18, 19, "17b"],
+        "id": 31,
+        "from": [27, 28, 30],
         "type": "abductive",
-        "condition": { "text": "An experiment with tracked metrics is the best way to roll out SDD.", "rating": "strong", "reason": "the measured gap between perception and speed calls for metrics, and the alternative, a mandate, failed" },
-        "fixes": ["i1"]
+        "condition": { "text": "An experiment with tracked metrics is the best way to roll out SDD.", "rating": "strong", "reason": "the measured gap between perception and speed calls for metrics, and the alternative, a mandate, failed" }
       },
       {
-        "id": 21,
-        "from": [3, "17a"],
-        "type": "abductive",
-        "condition": { "text": "A single owner, a version history and few invariants are what keep spec drift away.", "rating": "strong", "reason": "drift appeared exactly where specs multiplied without an owner" }
+        "id": 35,
+        "section": "practice",
+        "label": "Bloat means the spec outgrew",
+        "text": "Rework or spec files growing faster than code show that the spec has outgrown the problem.",
+        "verdict": "weak",
+        "reason": "Backed only by the CRUD case (27), where Markdown outgrew code on a small feature.",
+        "fixes": ["i7"]
       },
-      { "id": 22, "from": [2, 5, 7, 10, 11, 14, 15, 18, 20, 21] }
+      {
+        "id": 32,
+        "from": [29, 31, 35],
+        "type": "abductive",
+        "condition": { "text": "Shrinking the batch is the best response when rework or spec files outgrow the code.", "rating": "weak", "reason": "the obvious alternative, a lower level of spec, isn't compared" },
+        "fixes": ["i7"]
+      },
+      {
+        "id": 33,
+        "from": [3, 27],
+        "type": "abductive",
+        "condition": { "text": "A single owner and a version history are what keep spec drift away.", "rating": "strong", "reason": "drift appeared where specs multiplied without an owner" }
+      },
+      { "id": 34, "from": [2, 6, 16, 17, 20, 21, 29, 31] }
     ],
     "optimized": [
       { "id": 1 },
       { "id": 2, "from": [1] },
       { "id": 3 },
       { "id": 4 },
-      { "id": 5, "from": [3, 4] },
+      { "id": 5 },
+      { "id": 6, "from": [3, 4, 5] },
+      { "id": 7 },
       { "id": 8 },
-      { "id": 9 },
-      { "id": 10, "from": [8, 9] },
-      { "id": 11, "from": [5] },
+      { "id": 9, "from": [1, 7, 8] },
+      { "id": 10, "from": [9] },
+      { "id": 11 },
       { "id": 12 },
       { "id": 13 },
-      { "id": 14, "from": [11, 12, 13] },
-      { "id": 15, "from": [11, 12] },
-      { "id": "17a" },
-      { "id": 18, "from": [10, "17a"] },
+      { "id": 14 },
+      { "id": 15, "from": [11, 12, 14] },
+      { "id": 16, "from": [11, 12, 13, 15] },
+      { "id": 17, "from": [3, 6] },
+      { "id": 18 },
       { "id": 19 },
-      { "id": 20, "from": [18, 19] },
-      { "id": 22, "from": [2, 5, 11, 14, 15, 18, 20] }
+      { "id": 20, "from": [17, 18, 19] },
+      { "id": 21, "from": [17, 18] },
+      { "id": 27 },
+      { "id": 28 },
+      { "id": 29, "from": [11, 27] },
+      { "id": 30 },
+      { "id": 31, "from": [27, 28, 30] },
+      { "id": 35 },
+      { "id": 32, "from": [29, 31, 35] },
+      { "id": 33, "from": [3, 27] },
+      { "id": 34, "from": [2, 6, 16, 17, 20, 21, 29, 31] }
     ]
   }
 }

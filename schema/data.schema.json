@@ -196,7 +196,7 @@
         "reconstructed": {
           "type": "array",
           "minItems": 1,
-          "description": "The original made explicit: every thesis with its verdict or its step, implicit premises added, bundled theses split, fixes applied.",
+          "description": "The original made explicit: every thesis with its verdict or its step, implicit premises added, fixes applied.",
           "items": { "$ref": "#/$defs/versionThesis" }
         },
         "optimized": {

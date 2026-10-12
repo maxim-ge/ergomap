@@ -26,7 +26,7 @@ With an optional analysis, the page also judges the argument: a summary of the f
 
 Always pin an exact version in the script URL. Published versions never change, so a page keeps working when a new version comes out.
 
-Full examples, both with an analysis: [`examples/sdd-scrum-kanban.json`](examples/sdd-scrum-kanban.json), the reasoning of an article on spec-driven development in Scrum and Kanban as 22 theses in six sections, and [`examples/agentic-poetry.json`](examples/agentic-poetry.json), a Russian article on writing code with agents.
+Full examples, both with an analysis: [`examples/sdd-scrum-kanban.json`](examples/sdd-scrum-kanban.json), the reasoning of an article on spec-driven development in Scrum and Kanban as 34 theses in six sections, and [`examples/agentic-poetry.json`](examples/agentic-poetry.json), a Russian article on writing code with agents.
 
 ## Data format
 
@@ -54,7 +54,7 @@ The viewer checks the data on mount. A reference to a missing thesis, a cycle, a
 
 `theses` is the original logic, faithful to the author. `analysis` adds:
 
-- `reconstructed`: the original made explicit. Each thesis repeats its id and inherits the original's `label`, `text`, `note` and `section`; it gives its own `from`, and either a `verdict` and `reason` (a starting claim: `supported`, `weak`, `unsupported`, `false` or `definition`) or a step: `type` (`deductive` by default, `generalization`, `abductive`, `analogy`), an implicit `condition` `{ text, rating, reason }` rated `strong`, `weak` or `none`, and a `pool` of premises that are alternative evidence. Reasons of different types for one conclusion go in `steps`. New theses (implicit premises, parts of a split thesis) bring their own `label` and `text`. `fixes` names the issues whose fix added or changed a thesis; `flaw` names a flaw with no fix, which sets the thesis to 0
+- `reconstructed`: the original made explicit. Each thesis repeats its id and inherits the original's `label`, `text`, `note` and `section`; it gives its own `from`, and either a `verdict` and `reason` (a starting claim: `supported`, `weak`, `unsupported`, `false` or `definition`) or a step: `type` (`deductive` by default, `generalization`, `abductive`, `analogy`), an implicit `condition` `{ text, rating, reason }` rated `strong`, `weak` or `none`, and a `pool` of premises that are alternative evidence. Reasons of different types for one conclusion go in `steps`. New theses, the implicit premises, bring their own `label` and `text`. `fixes` names the issues whose fix added or changed a thesis; `flaw` names a flaw with no fix, which sets the thesis to 0
 - `optimized`: the reconstructed logic with the fewest starting claims that keep every final conclusion at the same strength. Ids from the reconstructed logic, which they inherit from, `from` and `pool` excepted
 - `issues`: `{ id, type, severity, target, theses, concept, explanation, quote }`; types are `non-sequitur`, `missing-premise`, `circular`, `equivocation`, `straw-man`, `inconsistency` and `irrelevant-conclusion`, severities `flaw` and `weakness`
 - `concepts`: up to 7 `{ term, senses: [{ definition, theses }] }`; a term used in two senses lists both

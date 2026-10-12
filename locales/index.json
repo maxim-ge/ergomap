@@ -306,7 +306,7 @@
     },
     "added": {
       "en": "Added in the reconstruction",
-      "usage": "Mark on a thesis that the reconstructed logic added: an implicit premise or a part of a split thesis."
+      "usage": "Mark on a thesis that the reconstructed logic added: an implicit premise the article relies on but doesn't state."
     },
     "fixes": {
       "en": "Fixes",

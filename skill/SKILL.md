@@ -23,11 +23,12 @@ Build a chain of theses, the way a concise numbered explanation works:
 
 - A starting claim is a claim the article takes as given or supports from outside the chain. It has no `from`
 - A conclusion follows from earlier theses. Its `from` lists exactly the theses it needs, no more and no fewer
-- One claim per thesis. If a step needs a claim that isn't stated yet, add it as its own starting claim
+- One claim per thesis. A sentence bundles claims when its parts could get different verdicts or strengths, or when different conclusions use different parts; "X, so Y" is a premise and a conclusion. Split it, or one weak part weakens every conclusion that uses the thesis, even those that need only its strong parts
+- If a step needs a claim the article states but the chain doesn't have yet, add it as its own starting claim. A claim the article never states is a gap: leave it out (in an analysis, it becomes an issue)
 - Stay faithful to the author. Don't add your own arguments, and don't drop a step because it seems weak
 - Number theses 1, 2, 3… in reading order. A thesis refers only to lower numbers
 - The last thesis is usually the article's main conclusion
-- Aim for 10–30 theses. Fewer if the article is short; never pad
+- Aim for 10–40 theses, as many as the claims need. Fewer if the article is short; never pad
 
 Check every conclusion: would a reader accept it given only the theses in its `from`? If not, a premise is missing.
 
@@ -69,11 +70,10 @@ Hasty generalization, post hoc, questionable cause, ignored alternative and weak
 
 ### 4.2 Reconstructed logic
 
-`reconstructed`: every thesis of the reconstructed logic, the original made explicit. Theses keep their ids; a thesis with the same id inherits `label`, `text`, `note` and `section` from the original, so give only what changes. New theses need an id that isn't in the original (`16a`, `16b` for the parts of 16; the next free numbers for implicit premises), a `label`, a `text` and usually a `section`. `from` is never inherited: write it for every conclusion.
+`reconstructed`: every thesis of the reconstructed logic, the original made explicit. Theses keep their ids; a thesis with the same id inherits `label`, `text`, `note` and `section` from the original, so give only what changes. New theses, the implicit premises, take the next free numbers and need a `label`, a `text` and usually a `section`. `from` is never inherited: write it for every conclusion.
 
-- Fix: one minimal change that repairs one issue and keeps the author's conclusion: state an implicit premise, split a thesis, change a conclusion's premises, or reword a thesis. Mark every thesis a fix added or changed with `"fixes": ["<issue id>"]`. A premise that only restates the step ("if the premises hold, the conclusion holds") is not a fix
+- Fix: one minimal change that repairs one issue and keeps the author's conclusion: state an implicit premise, change a conclusion's premises, or reword a thesis. Mark every thesis a fix added or changed with `"fixes": ["<issue id>"]`. A premise that only restates the step ("if the premises hold, the conclusion holds") is not a fix
 - Implicit premises: a gap with a plausible fix gets a new starting claim, judged like any other
-- One claim per thesis: split a thesis that bundles several claims, even when no issue calls for it, or one weak part weakens every conclusion that uses it. The bundle may stay as a conclusion that follows from its parts
 - Convergence: reasons of the same type for one conclusion, each sufficient alone (several observations explained by one cause, several source cases for one analogy), are one step; list them in `pool`, which must be a subset of `from`. Members resting on the same source count as one, so list only one of them. Not for generalization: its cases are already one step's premises. Reasons of different types for one conclusion are separate steps: give `steps: [{ from, type, condition, pool }, …]` instead of `from`
 - Summaries: a final conclusion that restates earlier conclusions is deductive. A claim in it that nothing earlier argues is a gap, not another type
 - A flaw with no fix (an inconsistency or an irrelevant conclusion, say) stays: set `"flaw": "<issue id>"` on the conclusion it breaks, and its strength becomes 0
@@ -103,7 +103,7 @@ Every starting claim gets a `verdict` and a `reason` that points to its backing 
 
 ### 4.5 Optimized logic
 
-`optimized`: the reconstructed logic reduced to the fewest starting claims that keep every final conclusion at the same strength (4.6). Only ids from the reconstructed logic; each inherits everything but `from` and `pool`, so most entries are just `{ "id": 3 }` or `{ "id": 18, "from": [10, "17a"] }`. A conclusion may take an earlier conclusion instead of the steps between, if its claim still follows. Every conclusion keeps the premises its claim needs (step 6). A final conclusion with strength 0 stays as it is.
+`optimized`: the reconstructed logic reduced to the fewest starting claims that keep every final conclusion at the same strength (4.6). Only ids from the reconstructed logic; each inherits everything but `from` and `pool`, so most entries are just `{ "id": 3 }` or `{ "id": 29, "from": [11, 27] }`. A conclusion may take an earlier conclusion instead of the steps between, if its claim still follows. Every conclusion keeps the premises its claim needs (step 6). A final conclusion with strength 0 stays as it is.
 
 ### 4.6 Check strength
 
@@ -118,14 +118,14 @@ The viewer chooses the key points itself: conclusions ranked by the theses behin
 
 ```json
 "analysis": {
-  "issues": [{ "id": "i1", "type": "non-sequitur", "severity": "flaw", "target": "inference", "theses": [17, 18], "explanation": "…", "quote": "…" }],
-  "concepts": [{ "term": "Spec level", "senses": [{ "definition": "A rung of the ladder", "theses": [8, 10] }, { "definition": "A level of abstraction", "theses": [11] }] }],
+  "issues": [{ "id": "i1", "type": "non-sequitur", "severity": "flaw", "target": "inference", "theses": [28, 29], "explanation": "…", "quote": "…" }],
+  "concepts": [{ "term": "Spec level", "senses": [{ "definition": "A rung of the ladder", "theses": [11, 16] }, { "definition": "A level of abstraction", "theses": [17] }] }],
   "reconstructed": [
-    { "id": 16, "verdict": "weak", "reason": "Three single cases, one of them post hoc." },
-    { "id": 17, "verdict": "weak", "reason": "One unnamed practitioner's experiment." },
-    { "id": 18, "from": [10, 16, 17], "pool": [16, 17], "type": "abductive", "condition": { "text": "Nothing but the fit explains the outcomes.", "rating": "weak", "reason": "fit is judged after the fact" }, "fixes": ["i1"] }
+    { "id": 25, "verdict": "unsupported", "reason": "The fit is read off the good outcome." },
+    { "id": 27, "verdict": "weak", "reason": "One unnamed practitioner's experiment." },
+    { "id": 29, "from": [11, 26, 27], "pool": [26, 27], "type": "abductive", "condition": { "text": "Nothing but the fit explains the outcomes.", "rating": "weak", "reason": "fit is judged after the fact" }, "fixes": ["i1"] }
   ],
-  "optimized": [{ "id": 17 }, { "id": 18, "from": [10, 17] }]
+  "optimized": [{ "id": 27 }, { "id": 29, "from": [11, 27] }]
 }
 ```
 
