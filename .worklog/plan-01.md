@@ -10,9 +10,10 @@
 - **Premise:** a thesis that a conclusion follows from. A conclusion's premises are the theses it follows from.
 - **Conclusion:** a thesis with premises; it needs all of them.
 - **Inference:** a conclusion together with its premises; one step of reasoning.
-- **Starting claim:** a thesis with no premises; the article takes it as given.
+- **Starting claim:** a thesis with no premises: either stated in the article and taken as given, or an implicit premise the reconstruction adds.
 - **Final conclusion:** a conclusion that nothing else follows from.
-- **Implicit premise:** a premise the author relies on but doesn't state. There are two kinds: one that fills a gap in a step (a missing premise), and the condition of a non-deductive step. The original logic doesn't show them; the reconstructed logic adds them, including the condition of every non-deductive step.
+- **Implicit premise:** a premise the author relies on but doesn't state; it fills a gap in a step (a missing premise). The original logic doesn't show it; the reconstructed logic adds it as a starting claim.
+- **Implicit condition:** what a non-deductive step relies on without saying so: the cases are representative, nothing else explains the effect, the two cases are alike in the respect that matters. It isn't a premise: it sets the step's strength. The original logic doesn't show it; the reconstructed logic shows it on its step.
 
 ### Argument structure
 
@@ -22,14 +23,14 @@
 
 ### Reasoning types
 
-- **Reasoning type:** the rule by which an inference gets from its premises to its conclusion. A deductive rule guarantees the conclusion when the premises are true; every other rule also needs an implicit premise, its condition. The reconstructed logic states the implicit premise, and it limits the conclusion's strength like any other premise. A type is recognized by matching the step's premises to a rule.
+- **Reasoning type:** the rule by which an inference gets from its premises to its conclusion. A deductive rule guarantees the conclusion when the premises are true; every other rule also needs an implicit condition. The reconstructed logic states the implicit condition, and its rating is the step's strength. A type is recognized by matching the step's premises to a rule.
 
 #### Deductive
 
 The conclusion follows necessarily from the premises.
 
 - Rule: if A then B; A → B.
-- Implicit premise: none.
+- Implicit condition: none.
 - Typical issues: non sequitur, missing premise.
 - Example: "If it rains, the street gets wet. It's raining. So the street is wet."
 - Fails (non sequitur): "If it rains, the street gets wet. The street is wet. So it rained." A street cleaner could have wet it.
@@ -39,7 +40,7 @@ The conclusion follows necessarily from the premises.
 From cases to a general claim.
 
 - Rule: cases 1…n have P → such cases have P.
-- Implicit premise: the cases are enough and representative.
+- Implicit condition: the cases are enough and representative.
 - Typical issue: hasty generalization.
 - Example: "Every swan I've seen is white. So swans are white."
 - Fails (hasty generalization): all the swans seen were in Europe, and black swans live in Australia.
@@ -49,7 +50,7 @@ From cases to a general claim.
 From a given effect, observed or wanted, to the cause that best accounts for it.
 
 - Rule: effect E is observed or wanted; C would bring about E → C.
-- Implicit premise: no other cause fits E as well, and C's other consequences hold up. For an observed effect: not chance, another cause or the reverse direction, and C's other consequences match what's observed. For a wanted effect: no better action, and the side effects are acceptable.
+- Implicit condition: no other cause fits E as well, and C's other consequences hold up. For an observed effect: not chance, another cause or the reverse direction, and C's other consequences match what's observed. For a wanted effect: no better action, and the side effects are acceptable.
 - Typical issues: post hoc, questionable cause, ignored alternative.
 - Example, observed effect: "The grass is wet this morning. Rain overnight would explain it. So it rained."
 - Fails (questionable cause): the sprinklers ran overnight.
@@ -63,7 +64,7 @@ From a given effect, observed or wanted, to the cause that best accounts for it.
 What holds for one case holds for another.
 
 - Rule: A has P; B is like A → B has P.
-- Implicit premise: A and B are alike in the respect that matters for P.
+- Implicit condition: A and B are alike in the respect that matters for P.
 - Typical issue: weak analogy.
 - Example: "My old car of this model ran 300,000 km. My new car is the same model. So it will run 300,000 km too."
 - Fails (weak analogy): the new one has a different engine, and the engine is what matters for mileage.
@@ -72,23 +73,32 @@ What holds for one case holds for another.
 
 A rule for merging steps, not a reasoning type. Reasons of the same type for one conclusion are merged into one step with pooled premises, and the pooled premises count together as one premise, so a doubtful item weakens the pool rather than capping the conclusion on its own.
 
-- Abductive: one step over all the observations, whose implicit premise is "nothing else explains all of them".
+- Abductive: one step over all the observations, whose implicit condition is "nothing else explains all of them".
 - Generalization: the cases form one sample.
 - Analogy: one step from several source cases.
 - Different types: reasons of different types aren't merged; strength treats them as all needed, which underrates the conclusion.
-- Example: "The roofs are wet" and "a photo shows a wet street" merge into one abductive step for "it rained", with the implicit premise "nothing else explains both". The street cleaner explains only the street, so it drops out; dew explains both and remains the alternative to rule out.
+- Example: "The roofs are wet" and "a photo shows a wet street" merge into one abductive step for "it rained", with the implicit condition "nothing else explains both". The street cleaner explains only the street, so it drops out; dew explains both and remains the alternative to rule out.
 
 ### Strength
 
-- **Strength:** how firmly a thesis holds, on one scale for every thesis: strong / weak / none.
-- **Rule:** a thesis is as strong as its weakest premise, explicit or implicit.
+- **Strength:** how firmly a thesis holds, a number from 0 to 1, computed in the reconstructed logic.
+- **Rule:** a thesis's strength is its step's strength times the strength of its weakest premise, explicit or implicit.
   - A starting claim has no premises; its strength comes from its verdict (Starting claim strength, below).
-  - A deductive step adds no implicit premise. A non-deductive step adds one, its condition, rated by its reasoning type's criteria (Implicit premise strength, below).
+  - A deductive step's strength is 1. A non-deductive step's strength is the rating of its implicit condition (Implicit condition strength, below).
+  - Unrolled, a thesis is as strong as its weakest chain: a starting claim's rating times the strength of every step from it up to the thesis.
+- **Why:** premises and steps fail differently.
+  - **Premises don't add up:** a step needs all its premises, so it's only as strong as the weakest one. Five weak premises are no weaker than one, and splitting a thesis or sharing a premise changes nothing.
+  - **Steps add up along a chain:** each non-deductive step is a leap with its own risk, so the leaps multiply.
+- **Fixed numbers behind categories:** the LLM rates in categories, never in decimals:
+  - **Starting claim:** strong 0.95, weak 0.6, unsupported or false 0. A definition is 1: it doesn't limit strength.
+  - **Implicit condition:** strong is the cap of the step's reasoning type (generalization 0.9, abductive 0.8, analogy 0.7), weak 0.5, none 0. The cap means a non-deductive step never gives certainty.
+- **Labels:** strong at 0.7 and above, moderate from 0.45, weak below 0.45, none at 0. The label says how sure; the list of weak links says why.
+- **Original logic:** it doesn't show implicit premises or conditions, so its theses show the value computed in the reconstructed logic.
 - **A gap no plausible premise closes, or another flaw with no fix:** the conclusion is none.
 - **Examples:**
-  - "Copper is a metal (strong). Metals conduct electricity (strong). So copper conducts": deductive, no implicit premise, strong. If "copper is a metal" were weak, the conclusion would be weak.
-  - "80% of 2,000 randomly chosen viewers liked the film. So most viewers like it": the implicit premise "the viewers are representative" is strong, so the conclusion is strong. "3 friends liked it. So people like it": the implicit premise is weak, so the conclusion is weak.
-  - "The grass is wet; the sprinklers were off, and the roofs are wet too. So it rained": the implicit premise "no other cause fits as well" is strong. The same without checking the sprinklers: weak.
+  - "Copper is a metal (strong). Metals conduct electricity (strong). So copper conducts": deductive, 1 × 0.95 = 0.95, strong. If "copper is a metal" were weak: 0.6, moderate.
+  - "80% of 2,000 randomly chosen viewers liked the film. So most viewers like it": generalization with the implicit condition "the viewers are representative", strong: 0.9 × 0.95 = 0.86, strong. "3 friends liked it. So people like it": the implicit condition is weak: 0.5 × 0.95 = 0.48, moderate.
+  - "The grass is wet; the sprinklers were off, and the roofs are wet too. So it rained": abductive with the implicit condition "nothing else explains it", strong: 0.8 × 0.95 = 0.76, strong. The same without checking the sprinklers: 0.48, moderate.
 
 ### Starting claim strength
 
@@ -104,16 +114,16 @@ A rule for merging steps, not a reasoning type. Reasons of the same type for one
   - **Weak:** some backing, but it falls short on at least one check. Example: "Remote teams are more productive", backed by one company's survey.
   - **Unsupported:** only the author's assertion. Example: "Most startups fail because of bad hiring", with no backing.
   - **False:** contradicted by the article itself or, if outside sources are used, by a checked source. Example: "The Great Wall of China is visible from space with the naked eye."
-- **Strength:** the verdict mapped to the scale: supported → strong, weak → weak, unsupported or false → none.
+- **Strength:** the verdict's fixed number: supported 0.95, weak 0.6, unsupported or false 0.
 - **Expert backing:** "A cardiologist says this drug lowers blood pressure" is supported; "A cardiologist says this tax policy is good" is weak, because the expertise doesn't cover the claim.
 - **Definitions:** not rated, and they don't limit strength. Example: "A sprint is a fixed time box." Using a term in two senses is an equivocation issue.
 - **Value judgments:** supported if most readers would accept them, weak if contested. Examples: "Code should be readable" is supported; "Tabs are better than spaces" is weak.
 - **Reason:** every verdict has a short reason that points to the backing in the article, or says there is none.
 
-### Implicit premise strength
+### Implicit condition strength
 
-- **Implicit premise strength:** the implicit premise of a non-deductive step is rated by its reasoning type's criteria below, not by the starting claim checks. In the reconstructed logic it's shown as a thesis marked added; in the original logic, its rating is shown with the conclusion.
-  - Example: "Every swan I've seen is white → swans are white" becomes "Every swan I've seen is white" + "The swans I've seen are representative of all swans" (added, weak: all of them were in Europe) → "swans are white".
+- **Implicit condition strength:** the implicit condition of a non-deductive step is rated by its reasoning type's criteria below, not by the starting claim checks; its rating is the step's strength. In the reconstructed logic it's shown on its step, marked added; in the original logic, its rating is shown with the conclusion.
+  - Example: in "Every swan I've seen is white → swans are white", the step's implicit condition is "the swans I've seen are representative of all swans" (added, weak: all of them were in Europe).
 - **Generalization:** strong with many varied cases, not hand-picked, no known counterexamples, and a conclusion no broader than the cases ("most", not "all"); weak with few or similar cases; none with a single case behind a general claim.
 - **Abductive:** strong when the main alternatives are ruled out and the cause explains all the observations, or, for a wanted effect, when the alternatives were compared and the side effects are acceptable; weak when the alternatives weren't checked; none when an alternative fits better or an observation contradicts the cause.
 - **Analogy:** strong when the two cases share the features that matter for P and no relevant difference is known; weak when they're similar in general but the relevance isn't shown; none when a difference that matters is known.
@@ -124,7 +134,7 @@ The map shows the logic as a graph:
 - **Node:** a thesis, with its number and label.
 - **Arrow:** from a premise to the conclusion that follows from it. A conclusion's incoming arrows are its inference.
 - **Ends:** a starting claim has no incoming arrows, and a final conclusion has no outgoing ones.
-- **Implicit premises:** shown only in the reconstructed and optimized logic, marked as added.
+- **Implicit premises and conditions:** shown only in the reconstructed and optimized logic, marked as added. An implicit premise is a node like any starting claim; an implicit condition sits on its step, not as a node.
 - **Strength, verdicts and issues:** shown as marks on nodes and arrows; how they look is described in What the reader sees → Map view.
 - **Key points and concepts:** listed in the Summary view; each one opens the graph at its theses.
 
@@ -145,12 +155,12 @@ The map shows the logic as a graph:
 - **Severity:** flaw or weakness.
   - **Flaw:** breaks the reasoning; some conclusion doesn't follow as stated.
   - **Weakness:** the reasoning holds, but less firmly than the article presents it.
-- **Verdict:** for a starting claim: supported / weak / unsupported / false. For a key point: holds / weak / doesn't hold.
+- **Verdict:** for a starting claim: supported / weak / unsupported / false. Every thesis also gets a label from its strength: strong / moderate / weak / none.
 
 ### Logic versions
 
 - **Original logic:** the reasoning as the author gives it.
-- **Reconstructed logic:** the original made explicit. Every issue that has a fix is repaired, and issues with no fix stay visible. Each implicit premise it adds gets a rating: one that fills a gap is linked to the issue it fixes and gets a verdict like any other starting claim; a condition is rated by its reasoning type's criteria.
+- **Reconstructed logic:** the original made explicit. Every issue that has a fix is repaired, and issues with no fix stay visible. Each implicit premise it adds fills a gap, is linked to the issue it fixes, and gets a verdict like any other starting claim. Every non-deductive step gets its implicit condition, rated by its reasoning type's criteria.
 - **Fix:** one minimal change that repairs one issue and keeps the author's conclusion: state an implicit premise, split a thesis, change a conclusion's premises, or reword a thesis. Some issues have none, for example an inconsistency or an irrelevant conclusion. A premise that only restates the step ("if the premises hold, the conclusion holds") is not a fix.
 - **Optimized logic:** the reconstructed logic reduced to the fewest starting claims that still yield the same final conclusions. Final conclusions that don't hold stay as they are; only the support of the ones that hold is reduced.
 
@@ -231,7 +241,7 @@ Issues: 4 flaws, 4 weaknesses · Premises: 7 supported, 3 weak, 1 unsupported
   - **Conclusion with a broken step:** a warning badge
   - **Broken link:** a dashed red line
 - A switch changes between Original, Fixed and Optimized; nodes stay in place.
-  - **Fixed:** added premises, including the condition of every non-deductive step, and split theses are marked "added", and each change names the issue it fixes. The only marks left are weak premises.
+  - **Fixed:** added premises and split theses are marked "added", and so is the implicit condition on every non-deductive step; each change names the issue it fixes. The only marks left are weak premises.
   - **Optimized:** theses not needed for the key points fade out, and a counter shows the reduction, for example "22 → 15 theses, 11 → 7 premises".
 - The panel for a selected thesis also shows:
   - **For a premise:** its verdict and the reason
