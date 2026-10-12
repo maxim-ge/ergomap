@@ -77,14 +77,29 @@ What holds for one case holds for another.
 
 #### Convergence
 
-A rule for merging steps, not a reasoning type. Reasons of the same type for one conclusion are merged into one step, and their premises form a pool.
+A rule for merging steps, not a reasoning type. Reasons of the same type for one conclusion, each of which would support it alone, are merged into one step, and their premises form a pool.
 
 - Pool: the premises of a merged step taken together. It counts as one premise, so a doubtful item weakens the pool rather than limiting the conclusion on its own.
 - Abductive: one step over all the observations, whose implicit condition is "nothing else explains all of them".
-- Generalization: the cases form one sample.
-- Analogy: one step from several source cases.
+- Analogy: one step from several source cases, whose implicit condition is "B is like all of them in the respect that matters".
+- Generalization: excluded; its cases are already the premises of one step.
 - Different types: reasons of different types aren't merged; they're treated as all needed, so the weakest reason decides, which underrates the conclusion.
 - Example: "The roofs are wet" and "a photo shows a wet street" merge into one abductive step for "it rained", with the implicit condition "nothing else explains both". The street cleaner explains only the street, so it drops out; dew explains both and remains the alternative to rule out.
+
+```mermaid
+flowchart
+  subgraph separate ["Two reasons"]
+    R1["The roofs are wet"] -->|"abductive: nothing else explains the roofs"| C1["It rained"]
+    P1["A photo shows a wet street"] -->|"abductive: nothing else explains the street"| C1
+  end
+  subgraph merged ["Merged into one step"]
+    subgraph pool ["Pool"]
+      R2["The roofs are wet"]
+      P2["A photo shows a wet street"]
+    end
+    pool -->|"abductive: nothing else explains both"| C2["It rained"]
+  end
+```
 
 ### Logic versions
 
