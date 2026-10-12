@@ -8,8 +8,8 @@ A thesis's strength is its step's strength times the weakest of its premises and
 - a starting claim's strength is its rating
 - a step's strength is fixed by its reasoning type
 - a non-deductive step's implicit condition is rated like a starting claim and joins the premises
-- a pool replaces its members in one step and counts as one premise; it holds if at least one member
-  holds: 1 - (1 - s1)(1 - s2)..., at most a supported claim's number
+- a pool replaces its members in one step and counts as one premise; each member closes its share of
+  the gap to a supported claim's number L: L * (1 - (1 - s1/L)(1 - s2/L)...), with each s at most L
 - a flaw with no fix sets the thesis to 0
 
 For each reported thesis the script prints its strength.
@@ -257,10 +257,12 @@ class Analysis:
         return self.numbers.step_strength[self.step_type(key)]
 
     def pool_strength(self, pool: Pool) -> float:
-        doubt = 1.0
+        """Each member closes its share of the gap that remains to a supported claim's number."""
+        limit = self.numbers.ratings["strong"]
+        gap = 1.0
         for member in pool.members:
-            doubt *= 1 - self.strength(member)
-        return min(1 - doubt, self.numbers.ratings["strong"])
+            gap *= 1 - min(self.strength(member), limit) / limit
+        return limit * (1 - gap)
 
     def strength(self, key: str) -> float:
         cached = self._memo.get(key)

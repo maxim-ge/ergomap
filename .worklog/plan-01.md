@@ -183,11 +183,11 @@ The implicit condition of a non-deductive step is rated by its reasoning type's 
 
 #### Pool strength
 
-A pool's members are alternative evidence, so the pool holds if at least one of them holds: 1 − (1 − s₁)(1 − s₂)…, where s is each member's strength, at most 0.95: nothing that can be wrong scores above supported. The larger the pool, the stronger it is.
+A pool's members are alternative evidence, so each member closes its share of the gap that remains to 0.95: 0.95 × (1 − (1 − s₁/0.95)(1 − s₂/0.95)…), where s is each member's strength, counted as at most 0.95. The larger the pool, the stronger it is, approaching 0.95: nothing that can be wrong scores above supported.
 
-- **Numbers:** two weak members 1 − 0.4 × 0.4 = 0.84, three 0.94, four or more 0.95. A supported member and anything else: 0.95.
+- **Numbers:** one member: the member itself. Weak members: two 0.82, three 0.90, four 0.93, five 0.94. A supported member and anything else: 0.95. Four weak anecdotes stay below one supported source.
 - **Independence:** members that rest on the same source count as one member; otherwise the same survey quoted three times would count three times.
-- **Example:** "the roofs are wet" (weak) and "a neighbor's photo shows a wet street" (weak) form a 0.84 pool, stronger than either alone.
+- **Example:** "the roofs are wet" (weak) and "a neighbor's photo shows a wet street" (weak) form a 0.82 pool, stronger than either alone.
 - **A member also used outside the pool** counts there on its own.
 - **The implicit condition** also grows with the pool: more independent observations or source cases rule out more alternatives or differences (see Implicit condition strength).
 
