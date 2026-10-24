@@ -154,7 +154,7 @@ Then check that premises match claims, in the original logic and, with an analys
 
 ## 7. Build the page
 
-Start from this template. Replace the title, `V` and the JSON. In the JSON, escape every `<` as `<`, so the text can't close the script tag.
+Start from this template. Replace the title, `V` and the JSON. In the JSON, escape every `<` as `\u003c`, so the text can't close the script tag.
 
 ```html
 <title>TITLE</title>
