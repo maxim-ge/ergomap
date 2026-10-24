@@ -1,15 +1,15 @@
 ---
 name: ergomap
-description: Extract an article's reasoning as premises and conclusions, as markdown or as a clickable argument map, and optionally analyze it: issues, verdicts on starting claims, reconstructed and optimized logic, strength of each conclusion. Use when asked for the theses or logic of an article, an argument map or a thesis graph, or for an analysis, audit or critique of an article's argument.
+description: "Extract an article's reasoning as premises and conclusions in one of three ways: extract reasoning as markdown, make an argument map (a clickable graph), or analyze reasoning (issues, verdicts on starting claims, reconstructed and optimized logic, strength of each conclusion). Use when asked for the theses, premises or logic of an article as text, a list or a map, for an argument map or a thesis graph, or for an analysis, audit or critique of an article's argument."
 ---
 
 # ergomap: article to argument map
 
 You extract the reasoning of an article as a chain of theses and output it in the form the user asked for:
 
-- Markdown: steps 1, 2 and 9. Nothing is published
-- Map: steps 1–3 and 5–8. If the user didn't say, make the map
-- Analysis: steps 1–8, the map plus step 4. Only when the user asks to analyze, audit or critique the argument, or asks whether it holds up or how strong it is. It costs several times more than the map
+- Extract reasoning as markdown: steps 1, 2 and 9. Nothing is published. When the user asks for markdown, text or a list, or says no map
+- Make an argument map: steps 1–3 and 5–8. If the user didn't say, make the map
+- Analyze reasoning: steps 1–8, the map plus step 4. Only when the user asks to analyze, audit or critique the argument, or asks whether it holds up or how strong it is. It costs several times more than the map
 
 For the graph you write only data. Never read or copy the viewer's code: the page loads it from the CDN.
 
@@ -47,7 +47,7 @@ These `theses` are the original logic: the article as the author argues it, weak
 
 ## 4. Analyze
 
-Analysis mode only. Add `analysis` to the data. Write explanations, reasons, conditions and definitions in the article's language; quote the article verbatim. You pick names (reasoning types, verdicts, ratings), never numbers: the viewer computes every strength.
+Only when you analyze reasoning. Add `analysis` to the data. Write explanations, reasons, conditions and definitions in the article's language; quote the article verbatim. You pick names (reasoning types, verdicts, ratings), never numbers: the viewer computes every strength.
 
 ### 4.1 Issues
 
@@ -183,7 +183,7 @@ The title is a short name for the map, two to four words, in the article's langu
 
 Publish the page as an artifact with the icon `map` and a one-sentence description that names the article. Then tell the user in one or two sentences what the map covers and which thesis it opens on. With an analysis, the page opens on the summary instead: give the final conclusion's strength and its weakest link, and the number of flaws.
 
-## 9. Markdown
+## 9. Extract reasoning as markdown
 
 Reply in the article's language. Group theses under the article's sections, keep one continuous numbering, and start each conclusion with the theses it follows from:
 
