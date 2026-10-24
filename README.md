@@ -26,27 +26,25 @@ With an optional analysis, the page also judges the argument: a summary of the f
 
 Always pin an exact version in the script URL. Published versions never change, so a page keeps working when a new version comes out.
 
-Full examples, both with an analysis: [`examples/sdd-scrum-kanban.json`](examples/sdd-scrum-kanban.json), the reasoning of an article on spec-driven development in Scrum and Kanban as 34 theses in six sections, and [`examples/agentic-poetry.json`](examples/agentic-poetry.json), a Russian article on writing code with agents.
-
 ## Data format
 
 The contract is [`schema/data.schema.json`](schema/data.schema.json). In short:
 
-| Field | Required | Meaning |
-|---|---|---|
-| `theses` | yes | Theses in reading order |
-| `theses[].id` | yes | Integer or slug (`[A-Za-z0-9_-]+`). Shown as `[id]`, used in the URL as `#t<id>` |
-| `theses[].label` | yes | Short node caption, two to four words. Wrapped automatically; `\n` forces a break |
-| `theses[].text` | yes | The claim as a complete standalone sentence |
-| `theses[].from` | no | Ids this thesis follows from. Empty or missing means a starting claim |
-| `theses[].note` | no | Context from the source. Markdown links `[text](https://…)` become links |
-| `theses[].section` | no | Id of a section |
-| `sections` | no | `[{ id, title }]`, shown above the selected thesis |
-| `lang` | no | Language of the content, picks the UI strings |
-| `title`, `source` | no | Shown in the header. `source` is `{ title, url, author }` |
-| `start` | no | Thesis selected on open. Defaults to the first one |
-| `strings` | no | UI strings for languages without a built-in dictionary |
-| `analysis` | no | The argument analysis, see below |
+| Field              | Required | Meaning                                                                           |
+|--------------------|----------|-----------------------------------------------------------------------------------|
+| `theses`           | yes      | Theses in reading order                                                           |
+| `theses[].id`      | yes      | Integer or slug (`[A-Za-z0-9_-]+`). Shown as `[id]`, used in the URL as `#t<id>`  |
+| `theses[].label`   | yes      | Short node caption, two to four words. Wrapped automatically; `\n` forces a break |
+| `theses[].text`    | yes      | The claim as a complete standalone sentence                                       |
+| `theses[].from`    | no       | Ids this thesis follows from. Empty or missing means a starting claim             |
+| `theses[].note`    | no       | Context from the source. Markdown links `[text](https://…)` become links          |
+| `theses[].section` | no       | Id of a section                                                                   |
+| `sections`         | no       | `[{ id, title }]`, shown above the selected thesis                                |
+| `lang`             | no       | Language of the content, picks the UI strings                                     |
+| `title`, `source`  | no       | Shown in the header. `source` is `{ title, url, author }`                         |
+| `start`            | no       | Thesis selected on open. Defaults to the first one                                |
+| `strings`          | no       | UI strings for languages without a built-in dictionary                            |
+| `analysis`         | no       | The argument analysis, see below                                                  |
 
 The viewer checks the data on mount. A reference to a missing thesis, a cycle, a duplicate id and similar mistakes show a readable error instead of a blank page.
 
@@ -75,16 +73,16 @@ graph.destroy();
 
 `target` is an element or a selector. Give it a height: the viewer fills its container.
 
-| Option | Default | Meaning |
-|---|---|---|
-| `locale` | `data.lang`, then the page's `lang`, then `"en"` | UI language |
-| `strings` | none | Overrides for UI strings, merged over `data.strings` |
-| `hash` | `"t"` | Prefix for `#t13` links. `false` keeps the selection out of the URL |
-| `start` | `data.start` | Thesis selected on open |
-| `theme` | follows the page | `"light"` or `"dark"` to force one |
-| `header` | `true` | `false` hides the title and source line |
-| `onSelect` | none | Called with the id of each newly selected thesis |
-| `warn` | `console.warn` | Receives warnings about missing or broken strings |
+| Option     | Default                                          | Meaning                                                             |
+|------------|--------------------------------------------------|---------------------------------------------------------------------|
+| `locale`   | `data.lang`, then the page's `lang`, then `"en"` | UI language                                                         |
+| `strings`  | none                                             | Overrides for UI strings, merged over `data.strings`                |
+| `hash`     | `"t"`                                            | Prefix for `#t13` links. `false` keeps the selection out of the URL |
+| `start`    | `data.start`                                     | Thesis selected on open                                             |
+| `theme`    | follows the page                                 | `"light"` or `"dark"` to force one                                  |
+| `header`   | `true`                                           | `false` hides the title and source line                             |
+| `onSelect` | none                                             | Called with the id of each newly selected thesis                    |
+| `warn`     | `console.warn`                                   | Receives warnings about missing or broken strings                   |
 
 Also exported: `Ergomap.version`, `Ergomap.locales` (built-in languages), `Ergomap.validate(data)`.
 
