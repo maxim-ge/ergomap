@@ -118,7 +118,7 @@ Colors: `--em-bg`, `--em-canvas`, `--em-surface`, `--em-premise`, `--em-ink`, `-
 
 ## The skill
 
-[`.agents/skills/ergomap/SKILL.md`](.agents/skills/ergomap/SKILL.md) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. The file in this repo is the reference copy: install it in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `locales/strings.json`, `schema/data.schema.json`); it never downloads instructions.
+[`.agents/skills/ergomap/`](.agents/skills/ergomap/) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. The skill is a folder: [`SKILL.md`](.agents/skills/ergomap/SKILL.md), and [`analysis.md`](.agents/skills/ergomap/analysis.md) with the analysis rules, read only when an analysis is asked for. The folder in this repo is the reference copy: install the whole folder in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `locales/strings.json`, `schema/data.schema.json`), or from this repo when asked for "local"; it never downloads instructions.
 
 ## Development
 
