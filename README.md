@@ -101,7 +101,7 @@ Built-in: English and Russian. For any other language, put the strings in `data.
 }
 ```
 
-Every key, its English text and where it appears are listed in [`locales/index.json`](locales/index.json), together with a short glossary of terms that are easy to mistranslate. A missing key falls back to English, and so does a string that drops a placeholder such as `{refs}`. The list of references in "From [1], [4] and [5]" uses `Intl.ListFormat`, so each language gets its own conjunction.
+Every key, its English text and where it appears are listed in [`locales/strings.json`](locales/strings.json), together with a short glossary of terms that are easy to mistranslate. [`locales/index.json`](locales/index.json) lists the built-in languages. A missing key falls back to English, and so does a string that drops a placeholder such as `{refs}`. The list of references in "From [1], [4] and [5]" uses `Intl.ListFormat`, so each language gets its own conjunction.
 
 ## Styling
 
@@ -118,7 +118,7 @@ Colors: `--em-bg`, `--em-canvas`, `--em-surface`, `--em-premise`, `--em-ink`, `-
 
 ## The skill
 
-[`skill/SKILL.md`](skill/SKILL.md) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. The file in this repo is the reference copy: install it in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `schema/data.schema.json`); it never downloads instructions.
+[`.agents/skills/ergomap/SKILL.md`](.agents/skills/ergomap/SKILL.md) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. The file in this repo is the reference copy: install it in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `locales/strings.json`, `schema/data.schema.json`); it never downloads instructions.
 
 ## Development
 

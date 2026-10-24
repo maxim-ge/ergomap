@@ -182,7 +182,7 @@
     "start": { "$ref": "#/$defs/id", "description": "Thesis selected when the page opens. Defaults to the first one." },
     "strings": {
       "type": "object",
-      "description": "UI strings for a language without a built-in dictionary, or overrides. Keys are listed in locales/index.json.",
+      "description": "UI strings for a language without a built-in dictionary, or overrides. Keys are listed in locales/strings.json.",
       "additionalProperties": { "type": "string" }
     },
     "analysis": {
