@@ -1,6 +1,6 @@
-# Analyze reasoning
+# Analysis
 
-Part of the ergomap skill: read it when the user asks to analyze reasoning, right after writing the data (SKILL.md).
+Part of the ergomap skill: read it for an output with an analysis, right after writing the fields in Reasoning as JSON (`prompts/ergomap.md`).
 
 Add `analysis` to the data. Write explanations, reasons, conditions and definitions in the article's language; quote the article verbatim. You pick names (reasoning types, verdicts, ratings), never numbers: the viewer computes every strength.
 
@@ -58,7 +58,7 @@ Every starting claim gets a `verdict` and a `reason` that points to its backing 
 
 ## Optimized logic
 
-`optimized`: the reconstructed logic reduced to the fewest starting claims that keep every final conclusion at the same strength (Check strength). Only ids from the reconstructed logic; each inherits everything but `from` and `pool`, so most entries are just `{ "id": 3 }` or `{ "id": 29, "from": [11, 27] }`. A conclusion may take an earlier conclusion instead of the steps between, if its claim still follows. Every conclusion keeps the premises its claim needs (Validate in SKILL.md). A final conclusion with strength 0 stays as it is.
+`optimized`: the reconstructed logic reduced to the fewest starting claims that keep every final conclusion at the same strength (Check strength). Only ids from the reconstructed logic; each inherits everything but `from` and `pool`, so most entries are just `{ "id": 3 }` or `{ "id": 29, "from": [11, 27] }`. A conclusion may take an earlier conclusion instead of the steps between, if its claim still follows. Every conclusion keeps the premises its claim needs (Validate in `prompts/ergomap.md`). A final conclusion with strength 0 stays as it is.
 
 ## Check strength
 

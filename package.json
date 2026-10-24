@@ -34,12 +34,14 @@
     },
     "./locales/*": "./locales/*",
     "./schema/*": "./schema/*",
+    "./prompts/*": "./prompts/*",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
     "locales",
-    "schema"
+    "schema",
+    "prompts"
   ],
   "sideEffects": false,
   "scripts": {

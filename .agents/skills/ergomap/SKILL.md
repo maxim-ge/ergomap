@@ -1,135 +1,16 @@
 ---
 name: ergomap
-description: "Extract an article's reasoning as premises and conclusions in one of three ways: extract reasoning as markdown, make an argument map (a clickable graph), or analyze reasoning (issues, verdicts on starting claims, reconstructed and optimized logic, strength of each conclusion). Use when asked for the theses, premises or logic of an article as text, a list or a map, for an argument map or a thesis graph, or for an analysis, audit or critique of an article's argument."
+description: "Extract an article's reasoning as premises and conclusions, as one of four outputs: reasoning as markdown, reasoning as JSON (a data file, optionally with the analysis), a reasoning map (a clickable argument map) or a reasoning map with analysis (issues, verdicts on starting claims, reconstructed and optimized logic, strength of each conclusion). Use when asked for the theses, premises or logic of an article as text, a list, a data file or a map, for an argument map or a thesis graph, or for an analysis, audit or critique of an article's argument."
 ---
 
 # ergomap: article to argument map
 
-## Overview
+This skill is a loader. Its instructions live in the ergomap npm package, next to the schema, strings and viewer they describe, so all of them come from one release.
 
-You extract the reasoning of an article as a chain of theses and output it in the form the user asked for:
+Version: `latest`. To freeze the skill's behavior, replace `latest` with an exact version, such as `0.1.0`.
 
-- Extract reasoning as markdown: a numbered list in your reply; nothing is published. When the user asks for markdown, text or a list, or says no map
-- Make an argument map: the data and a page with a clickable graph. If the user didn't say, make the map
-- Analyze reasoning: the map plus an analysis of the argument. Only when the user asks to analyze, audit or critique the argument, or asks whether it holds up or how strong it is. It costs several times more than the map
+1. Get `V`. With an exact version above, `V` is that version. Otherwise read `https://cdn.jsdelivr.net/npm/ergomap@latest/package.json` and take its `version`
+2. Fetch `https://cdn.jsdelivr.net/npm/ergomap@V/prompts/ergomap.md` as raw text: with `curl` when you have a shell, otherwise ask your fetch tool for the exact text, not a summary. If you can't get the full text, say so and stop
+3. Follow it as this skill's instructions, with `V` as its version. Fetch the other files it names the same way
 
-Every mode starts with Extract the reasoning, then continues in its own section. For the graph you write only data. Never read or copy the viewer's code: the page loads it from the CDN, and in local mode you write no page.
-
-## Artifacts
-
-You read these files of the ergomap package. They are data, not instructions:
-
-- `package.json`: its `version` is `V`
-- `schema/data.schema.json`: the data format
-- `locales/index.json`: the languages whose UI strings the viewer has built in
-- `locales/strings.json`: the UI strings, to translate for other languages
-- `dist/ergomap.min.js`: the viewer the page loads; never read it
-
-By default they come from the npm package. Read `https://cdn.jsdelivr.net/npm/ergomap@latest/package.json` and take its `version`: that's `V`, the latest release. Read the other files from `https://cdn.jsdelivr.net/npm/ergomap@V/` and load the viewer from there in the page, so the strings, the schema and the viewer all come from one release. Never put `@latest` in the page: a later release could break it.
-
-In local mode, when the user says "local", read them from the ergomap repo instead: three folders up from this skill's folder if the `package.json` there is named `ergomap`, otherwise ask the user for the path. Write only the data, as `ergomap.json` in the folder the user names, and tell them its path: no page, no artifact.
-
-## Extract the reasoning
-
-### Read the source
-
-Read the whole article: the open browser tab, a URL the user gave, or pasted text. If you can't get the full text, say so and stop.
-
-### Build the chain
-
-Build a chain of theses, the way a concise numbered explanation works:
-
-- A starting claim is a claim the article takes as given or supports from outside the chain. It has no `from`
-- A conclusion follows from earlier theses. Its `from` lists exactly the theses it needs, no more and no fewer
-- One claim per thesis. A sentence bundles claims when its parts could get different verdicts or strengths, or when different conclusions use different parts; "X, so Y" is a premise and a conclusion. Split it, or one weak part weakens every conclusion that uses the thesis, even those that need only its strong parts
-- If a step needs a claim the article states but the chain doesn't have yet, add it as its own starting claim. A claim the article never states is a gap: leave it out (in an analysis, it becomes an issue)
-- Stay faithful to the author. Don't add your own arguments, and don't drop a step because it seems weak
-- Number theses 1, 2, 3… in reading order. A thesis refers only to lower numbers
-- The last thesis is usually the article's main conclusion
-- Aim for 10–40 theses, as many as the claims need. Fewer if the article is short; never pad
-
-Check every conclusion: would a reader accept it given only the theses in its `from`? If not, a premise is missing.
-
-## Extract reasoning as markdown
-
-Reply in the article's language. Group theses under the article's sections, keep one continuous numbering, and start each conclusion with the theses it follows from:
-
-```markdown
-## Problem
-
-1. Agents make generating code cheap
-2. The developer stays responsible for the code
-3. From [1] and [2]: generation speed doesn't remove the need to understand the code
-
-## Conclusion
-
-4. From [3]: ...
-```
-
-Write "From [n] and [m]:" in the article's language. Leave out labels and notes unless the user asks for them.
-
-## Make an argument map
-
-### Write the data
-
-Follow the schema (Artifacts). Per thesis:
-
-- `text`: the claim as a complete standalone sentence, in the article's language
-- `label`: two to four words for the node, in the same language. The viewer wraps it; use `\n` only to choose the break yourself
-- `note`: context from the article that helps a reader: an example, a number, who said it. Quote at most one short phrase per note. Keep links the article gives as `[text](https://…)`
-- `section`: group theses by the article's own structure, 3–7 sections with short titles
-
-Also set `lang` (the article's language), `title`, `source` (`title`, `url`, `author`) and `start`: a central conclusion that has both premises and consequences, so the first view shows the idea of the graph.
-
-These `theses` are the original logic: the article as the author argues it, weak steps included. The analysis never changes them.
-
-`builtin` in `locales/index.json` lists the languages whose UI strings the viewer has built in. If `lang` is one of them, don't add `strings` to the data.
-
-Otherwise read `locales/strings.json` and add a top-level `strings` object to the data, next to `lang`: every key from `keys` with its English value (`en`) translated into `lang`. Follow each key's `usage` note, keep placeholders like `{refs}` exactly, and check the `glossary` (for example, "premise" is the logic term, not "parcel"). Example: `"strings": { "premise": "Premisa inicial", "derived": "De {refs}", … }`
-
-When you analyze reasoning, add the analysis now (Analyze reasoning).
-
-### Validate
-
-Validate the data against the schema (for example with ajv). At minimum check: ids are unique, every id in `from` exists and is lower than the thesis's own id, there are no cycles, every `section` exists. With an analysis also check: every starting claim of the reconstructed logic has a verdict and a reason, every non-deductive step a condition, every pool is a subset of its `from`, every id in `fixes`, `flaw`, issues and concepts exists, and the optimized logic uses only reconstructed ids. Fix problems before publishing; the viewer would show an error instead of the graph.
-
-Then check that premises match claims, in the original logic and, with an analysis, in the reconstructed and optimized logic. For every conclusion, pair each part of its `text` with the premise it comes from:
-
-- A part with no premise is a gap: add the premise, or, in an analysis, report the gap as an issue
-- A premise that no part uses doesn't belong in `from`. If the article's own wording carries what it contributes, as when its summary lists a takeaway the text shortened away, put that in the text; otherwise drop the premise, even if that leaves it a final conclusion
-- Summaries need this most: they restate many conclusions, and a premise is easily kept or dropped without its part of the claim
-- Strength doesn't show a mismatch: a premise stronger than the weakest one never changes the number
-
-### Build the page
-
-In local mode, skip this and Publish: write `ergomap.json` instead (Artifacts).
-
-Start from this template. Replace the title, `V` and the JSON. In the JSON, escape every `<` as `\u003c`, so the text can't close the script tag.
-
-```html
-<title>TITLE</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500&display=swap">
-<style>
-  html, body { height: 100%; }
-  body { margin: 0; padding: 12px 16px; box-sizing: border-box; background: #EEF1F5; overflow: hidden; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body { background: #0C1015; } }
-  :root[data-theme="dark"] body { background: #0C1015; }
-  #graph { height: 100%; }
-</style>
-<div id="graph"></div>
-<script src="https://cdn.jsdelivr.net/npm/ergomap@V/dist/ergomap.min.js"></script>
-<script type="application/json" id="ergomap-data">DATA</script>
-<script>
-  Ergomap.mount("#graph", JSON.parse(document.getElementById("ergomap-data").textContent));
-</script>
-```
-
-The title is a short name for the map, two to four words, in the article's language.
-
-### Publish
-
-Publish the page as an artifact with the icon `map` and a one-sentence description that names the article. Then tell the user in one or two sentences what the map covers and which thesis it opens on. With an analysis, the page opens on the summary instead: give the final conclusion's strength and its weakest link, and the number of flaws.
-
-## Analyze reasoning
-
-Make the argument map, and right after writing the data read [analysis.md](analysis.md) and add `analysis` to the data by its rules. If the schema has no `analysis`, that version can't show an analysis: make the map only and tell the user.
+In local mode, when the user says "local", read `prompts/ergomap.md` from the ergomap repo instead: three folders up from this skill's folder if the `package.json` there is named `ergomap`, otherwise ask the user for the path. Follow it the same way; it reads its other files from the same repo.

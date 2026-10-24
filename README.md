@@ -116,7 +116,15 @@ Colors: `--em-bg`, `--em-canvas`, `--em-surface`, `--em-premise`, `--em-ink`, `-
 
 ## The skill
 
-[`.agents/skills/ergomap/`](.agents/skills/ergomap/) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data and publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. The skill is a folder: [`SKILL.md`](.agents/skills/ergomap/SKILL.md), and [`analysis.md`](.agents/skills/ergomap/analysis.md) with the analysis rules, read only when an analysis is asked for. The folder in this repo is the reference copy: install the whole folder in Claude yourself. The skill reads only data from the npm package (`locales/index.json`, `locales/strings.json`, `schema/data.schema.json`), or from this repo when asked for "local"; it never downloads instructions.
+[`.agents/skills/ergomap/SKILL.md`](.agents/skills/ergomap/SKILL.md) is a skill for Claude that reads an article, extracts its reasoning as premises and conclusions, writes the data, and saves it as a JSON file or publishes a page with the viewer. Asked for an analysis, it also audits the argument and writes the reconstructed and optimized logic. Install it in Claude yourself.
+
+The skill is a loader: its instructions are in the npm package, in [`prompts/ergomap.md`](prompts/ergomap.md) and, read only for an analysis, [`prompts/analysis.md`](prompts/analysis.md). The skill fetches them from the latest release, so instructions, schema, strings and viewer always come from one version. This means whoever publishes the package controls what the skill does. To freeze its behavior, write an exact version into `SKILL.md` instead of `latest`. Asked for "local", it reads the prompts and data from this repo instead.
+
+Without skills, paste this prompt instead:
+
+```text
+Read https://cdn.jsdelivr.net/npm/ergomap@latest/package.json and take its version as V. Fetch https://cdn.jsdelivr.net/npm/ergomap@V/prompts/ergomap.md as raw text and follow its instructions for this article: <URL or text>
+```
 
 ## Development
 
