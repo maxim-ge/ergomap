@@ -8,10 +8,10 @@ const read = async p => JSON.parse(await readFile(new URL(p, import.meta.url), "
 
 test("examples match the JSON schema and pass runtime validation", async () => {
   const schema = await read("../schema/data.schema.json");
-  const ajv = new Ajv2020({ allErrors: true, strict: false });
+  const ajv = new Ajv2020({ allErrors: true });
   const check = ajv.compile(schema);
-  for (const name of ["sdd-scrum-kanban.json", "agentic-poetry.json"]) {
-    const data = await read(`../examples/${name}`);
+  for (const name of ["pool-and-flaw.json", "many-finals.json"]) {
+    const data = await read(`fixtures/${name}`);
     assert.ok(check(data), `${name}: ${ajv.errorsText(check.errors)}`);
     assert.doesNotThrow(() => validate(data), name);
   }
@@ -19,14 +19,14 @@ test("examples match the JSON schema and pass runtime validation", async () => {
 
 test("schema rejects unknown fields and a missing label", async () => {
   const schema = await read("../schema/data.schema.json");
-  const check = new Ajv2020({ strict: false }).compile(schema);
+  const check = new Ajv2020().compile(schema);
   assert.equal(check({ theses: [{ id: 1, label: "a", text: "b", extra: 1 }] }), false);
   assert.equal(check({ theses: [{ id: 1, text: "b" }] }), false);
 });
 
 test("schema checks the analysis: names from fixed lists, analysis fields only in versions", async () => {
   const schema = await read("../schema/data.schema.json");
-  const check = new Ajv2020({ strict: false }).compile(schema);
+  const check = new Ajv2020().compile(schema);
   const theses = [{ id: 1, label: "a", text: "b" }];
   assert.equal(check({ theses, analysis: { reconstructed: [{ id: 1, verdict: "supported", reason: "r" }] } }), true);
   assert.equal(check({ theses, analysis: { reconstructed: [{ id: 1, verdict: "likely", reason: "r" }] } }), false);

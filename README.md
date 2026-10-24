@@ -132,7 +132,7 @@ Read https://cdn.jsdelivr.net/npm/ergomap@latest/package.json and take its versi
 npm install
 npm test        # schema, i18n, validation, analysis, layout
 npm run build   # dist/ergomap.js, ergomap.min.js, ergomap.mjs
-npm run dev     # rebuild on change, http://localhost:8000/examples/ (?agentic-poetry for the other example)
+npm run dev     # rebuild dist/ on change
 ```
 
 Releases go to npm from GitHub Actions when a version tag is pushed:

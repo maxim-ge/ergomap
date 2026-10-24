@@ -1,0 +1,975 @@
+{
+  "$schema": "../../schema/data.schema.json",
+  "lang": "en",
+  "title": "Pool and flaw",
+  "sections": [
+    {
+      "id": "s1",
+      "title": "Section 1"
+    },
+    {
+      "id": "s2",
+      "title": "Section 2"
+    },
+    {
+      "id": "s3",
+      "title": "Section 3"
+    },
+    {
+      "id": "s4",
+      "title": "Section 4"
+    },
+    {
+      "id": "s5",
+      "title": "Section 5"
+    },
+    {
+      "id": "s6",
+      "title": "Section 6"
+    }
+  ],
+  "theses": [
+    {
+      "id": 1,
+      "section": "s1",
+      "label": "Thesis 1",
+      "text": "Thesis 1."
+    },
+    {
+      "id": 2,
+      "section": "s1",
+      "label": "Thesis 2",
+      "text": "Thesis 2.",
+      "from": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "section": "s1",
+      "label": "Thesis 3",
+      "text": "Thesis 3."
+    },
+    {
+      "id": 4,
+      "section": "s1",
+      "label": "Thesis 4",
+      "text": "Thesis 4."
+    },
+    {
+      "id": 5,
+      "section": "s1",
+      "label": "Thesis 5",
+      "text": "Thesis 5."
+    },
+    {
+      "id": 6,
+      "section": "s1",
+      "label": "Thesis 6",
+      "text": "Thesis 6.",
+      "from": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": 7,
+      "section": "s1",
+      "label": "Thesis 7",
+      "text": "Thesis 7."
+    },
+    {
+      "id": 8,
+      "section": "s1",
+      "label": "Thesis 8",
+      "text": "Thesis 8."
+    },
+    {
+      "id": 9,
+      "section": "s1",
+      "label": "Thesis 9",
+      "text": "Thesis 9.",
+      "from": [
+        1,
+        7,
+        8
+      ]
+    },
+    {
+      "id": 10,
+      "section": "s1",
+      "label": "Thesis 10",
+      "text": "Thesis 10.",
+      "from": [
+        9
+      ]
+    },
+    {
+      "id": 11,
+      "section": "s2",
+      "label": "Thesis 11",
+      "text": "Thesis 11."
+    },
+    {
+      "id": 12,
+      "section": "s2",
+      "label": "Thesis 12",
+      "text": "Thesis 12."
+    },
+    {
+      "id": 13,
+      "section": "s2",
+      "label": "Thesis 13",
+      "text": "Thesis 13."
+    },
+    {
+      "id": 14,
+      "section": "s2",
+      "label": "Thesis 14",
+      "text": "Thesis 14."
+    },
+    {
+      "id": 15,
+      "section": "s2",
+      "label": "Thesis 15",
+      "text": "Thesis 15.",
+      "from": [
+        11,
+        12,
+        14
+      ]
+    },
+    {
+      "id": 16,
+      "section": "s2",
+      "label": "Thesis 16",
+      "text": "Thesis 16.",
+      "from": [
+        11,
+        12,
+        13,
+        15
+      ]
+    },
+    {
+      "id": 17,
+      "section": "s3",
+      "label": "Thesis 17",
+      "text": "Thesis 17.",
+      "from": [
+        3,
+        6
+      ]
+    },
+    {
+      "id": 18,
+      "section": "s3",
+      "label": "Thesis 18",
+      "text": "Thesis 18."
+    },
+    {
+      "id": 19,
+      "section": "s3",
+      "label": "Thesis 19",
+      "text": "Thesis 19."
+    },
+    {
+      "id": 20,
+      "section": "s3",
+      "label": "Thesis 20",
+      "text": "Thesis 20.",
+      "from": [
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "id": 21,
+      "section": "s3",
+      "label": "Thesis 21",
+      "text": "Thesis 21.",
+      "from": [
+        17,
+        18
+      ]
+    },
+    {
+      "id": 22,
+      "section": "s4",
+      "label": "Thesis 22",
+      "text": "Thesis 22."
+    },
+    {
+      "id": 23,
+      "section": "s4",
+      "label": "Thesis 23",
+      "text": "Thesis 23."
+    },
+    {
+      "id": 24,
+      "section": "s4",
+      "label": "Thesis 24",
+      "text": "Thesis 24."
+    },
+    {
+      "id": 25,
+      "section": "s4",
+      "label": "Thesis 25",
+      "text": "Thesis 25."
+    },
+    {
+      "id": 26,
+      "section": "s4",
+      "label": "Thesis 26",
+      "text": "Thesis 26.",
+      "from": [
+        22,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "id": 27,
+      "section": "s4",
+      "label": "Thesis 27",
+      "text": "Thesis 27."
+    },
+    {
+      "id": 28,
+      "section": "s4",
+      "label": "Thesis 28",
+      "text": "Thesis 28."
+    },
+    {
+      "id": 29,
+      "section": "s4",
+      "label": "Thesis 29",
+      "text": "Thesis 29.",
+      "from": [
+        11,
+        26,
+        27,
+        28
+      ]
+    },
+    {
+      "id": 30,
+      "section": "s5",
+      "label": "Thesis 30",
+      "text": "Thesis 30."
+    },
+    {
+      "id": 31,
+      "section": "s5",
+      "label": "Thesis 31",
+      "text": "Thesis 31.",
+      "from": [
+        27,
+        28,
+        30
+      ]
+    },
+    {
+      "id": 32,
+      "section": "s5",
+      "label": "Thesis 32",
+      "text": "Thesis 32.",
+      "from": [
+        29,
+        31
+      ]
+    },
+    {
+      "id": 33,
+      "section": "s5",
+      "label": "Thesis 33",
+      "text": "Thesis 33.",
+      "from": [
+        3,
+        27
+      ]
+    },
+    {
+      "id": 34,
+      "section": "s6",
+      "label": "Thesis 34",
+      "text": "Thesis 34.",
+      "from": [
+        2,
+        6,
+        16,
+        17,
+        20,
+        21,
+        29,
+        31
+      ]
+    }
+  ],
+  "start": 29,
+  "analysis": {
+    "issues": [
+      {
+        "id": "i1",
+        "type": "non-sequitur",
+        "severity": "flaw",
+        "target": "inference",
+        "theses": [
+          28,
+          29
+        ],
+        "explanation": "Issue i1.",
+        "quote": "Quote for i1."
+      },
+      {
+        "id": "i2",
+        "type": "circular",
+        "severity": "weakness",
+        "target": "thesis",
+        "theses": [
+          25
+        ],
+        "explanation": "Issue i2.",
+        "quote": "Quote for i2."
+      },
+      {
+        "id": "i3",
+        "type": "equivocation",
+        "severity": "weakness",
+        "target": "concept",
+        "concept": "Concept 1",
+        "theses": [
+          22,
+          23,
+          24,
+          34
+        ],
+        "explanation": "Issue i3.",
+        "quote": "Quote for i3."
+      },
+      {
+        "id": "i4",
+        "type": "equivocation",
+        "severity": "weakness",
+        "target": "concept",
+        "concept": "Concept 2",
+        "theses": [
+          16,
+          17
+        ],
+        "explanation": "Issue i4.",
+        "quote": "Quote for i4."
+      },
+      {
+        "id": "i5",
+        "type": "inconsistency",
+        "severity": "weakness",
+        "target": "pair",
+        "theses": [
+          17,
+          20
+        ],
+        "explanation": "Issue i5.",
+        "quote": "Quote for i5."
+      },
+      {
+        "id": "i6",
+        "type": "irrelevant-conclusion",
+        "severity": "weakness",
+        "target": "argument",
+        "theses": [
+          34
+        ],
+        "explanation": "Issue i6.",
+        "quote": "Quote for i6."
+      },
+      {
+        "id": "i7",
+        "type": "missing-premise",
+        "severity": "weakness",
+        "target": "inference",
+        "theses": [
+          32
+        ],
+        "explanation": "Issue i7.",
+        "quote": "Quote for i7."
+      }
+    ],
+    "concepts": [
+      {
+        "term": "Concept 1",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 1.",
+            "theses": [
+              11,
+              28,
+              31,
+              34
+            ]
+          },
+          {
+            "definition": "Sense 2 of concept 1.",
+            "theses": [
+              22,
+              23,
+              24
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 2",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 2.",
+            "theses": [
+              11,
+              12,
+              15,
+              16,
+              29
+            ]
+          },
+          {
+            "definition": "Sense 2 of concept 2.",
+            "theses": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 3",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 3.",
+            "theses": [
+              3,
+              6,
+              17,
+              33,
+              34
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 4",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 4.",
+            "theses": [
+              3,
+              6
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 5",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 5.",
+            "theses": [
+              18,
+              19,
+              20,
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 6",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 6.",
+            "theses": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 7",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 7.",
+            "theses": [
+              27,
+              33
+            ]
+          }
+        ]
+      }
+    ],
+    "reconstructed": [
+      {
+        "id": 1,
+        "verdict": "weak",
+        "reason": "Reason for 1."
+      },
+      {
+        "id": 2,
+        "from": [
+          1
+        ]
+      },
+      {
+        "id": 3,
+        "verdict": "definition",
+        "reason": "Reason for 3."
+      },
+      {
+        "id": 4,
+        "verdict": "supported",
+        "reason": "Reason for 4."
+      },
+      {
+        "id": 5,
+        "verdict": "supported",
+        "reason": "Reason for 5."
+      },
+      {
+        "id": 6,
+        "from": [
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "id": 7,
+        "verdict": "weak",
+        "reason": "Reason for 7."
+      },
+      {
+        "id": 8,
+        "verdict": "weak",
+        "reason": "Reason for 8."
+      },
+      {
+        "id": 9,
+        "from": [
+          1,
+          7,
+          8
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 9.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 9."
+        }
+      },
+      {
+        "id": 10,
+        "from": [
+          9
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 10.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 10."
+        }
+      },
+      {
+        "id": 11,
+        "verdict": "definition",
+        "reason": "Reason for 11."
+      },
+      {
+        "id": 12,
+        "verdict": "supported",
+        "reason": "Reason for 12."
+      },
+      {
+        "id": 13,
+        "verdict": "supported",
+        "reason": "Reason for 13."
+      },
+      {
+        "id": 14,
+        "verdict": "supported",
+        "reason": "Reason for 14."
+      },
+      {
+        "id": 15,
+        "from": [
+          11,
+          12,
+          14
+        ]
+      },
+      {
+        "id": 16,
+        "from": [
+          11,
+          12,
+          13,
+          15
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 16.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 16."
+        }
+      },
+      {
+        "id": 17,
+        "from": [
+          3,
+          6
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 17.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 17."
+        }
+      },
+      {
+        "id": 18,
+        "verdict": "supported",
+        "reason": "Reason for 18."
+      },
+      {
+        "id": 19,
+        "verdict": "supported",
+        "reason": "Reason for 19."
+      },
+      {
+        "id": 20,
+        "from": [
+          17,
+          18,
+          19
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 20.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 20."
+        }
+      },
+      {
+        "id": 21,
+        "from": [
+          17,
+          18
+        ],
+        "type": "analogy",
+        "condition": {
+          "text": "Condition of 21.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 21."
+        }
+      },
+      {
+        "id": 22,
+        "verdict": "weak",
+        "reason": "Reason for 22."
+      },
+      {
+        "id": 23,
+        "verdict": "weak",
+        "reason": "Reason for 23."
+      },
+      {
+        "id": 24,
+        "verdict": "weak",
+        "reason": "Reason for 24."
+      },
+      {
+        "id": 25,
+        "verdict": "unsupported",
+        "reason": "Reason for 25."
+      },
+      {
+        "id": 26,
+        "from": [
+          22,
+          23,
+          24,
+          25
+        ],
+        "type": "generalization",
+        "condition": {
+          "text": "Condition of 26.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 26."
+        }
+      },
+      {
+        "id": 27,
+        "verdict": "weak",
+        "reason": "Reason for 27."
+      },
+      {
+        "id": 28,
+        "verdict": "weak",
+        "reason": "Reason for 28."
+      },
+      {
+        "id": 29,
+        "from": [
+          11,
+          26,
+          27
+        ],
+        "pool": [
+          26,
+          27
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 29.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 29."
+        },
+        "fixes": [
+          "i1"
+        ]
+      },
+      {
+        "id": 30,
+        "verdict": "supported",
+        "reason": "Reason for 30."
+      },
+      {
+        "id": 31,
+        "from": [
+          27,
+          28,
+          30
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 31.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 31."
+        }
+      },
+      {
+        "id": 35,
+        "section": "s5",
+        "label": "Implicit 35",
+        "text": "Implicit premise 35.",
+        "verdict": "weak",
+        "reason": "Reason for 35.",
+        "fixes": [
+          "i7"
+        ]
+      },
+      {
+        "id": 32,
+        "from": [
+          29,
+          31,
+          35
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 32.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 32."
+        },
+        "fixes": [
+          "i7"
+        ]
+      },
+      {
+        "id": 33,
+        "from": [
+          3,
+          27
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 33.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 33."
+        }
+      },
+      {
+        "id": 34,
+        "from": [
+          2,
+          6,
+          16,
+          17,
+          20,
+          21,
+          29,
+          31
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "id": 1
+      },
+      {
+        "id": 2,
+        "from": [
+          1
+        ]
+      },
+      {
+        "id": 3
+      },
+      {
+        "id": 4
+      },
+      {
+        "id": 5
+      },
+      {
+        "id": 6,
+        "from": [
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "id": 7
+      },
+      {
+        "id": 8
+      },
+      {
+        "id": 9,
+        "from": [
+          1,
+          7,
+          8
+        ]
+      },
+      {
+        "id": 10,
+        "from": [
+          9
+        ]
+      },
+      {
+        "id": 11
+      },
+      {
+        "id": 12
+      },
+      {
+        "id": 13
+      },
+      {
+        "id": 14
+      },
+      {
+        "id": 15,
+        "from": [
+          11,
+          12,
+          14
+        ]
+      },
+      {
+        "id": 16,
+        "from": [
+          11,
+          12,
+          13,
+          15
+        ]
+      },
+      {
+        "id": 17,
+        "from": [
+          3,
+          6
+        ]
+      },
+      {
+        "id": 18
+      },
+      {
+        "id": 19
+      },
+      {
+        "id": 20,
+        "from": [
+          17,
+          18,
+          19
+        ]
+      },
+      {
+        "id": 21,
+        "from": [
+          17,
+          18
+        ]
+      },
+      {
+        "id": 27
+      },
+      {
+        "id": 28
+      },
+      {
+        "id": 29,
+        "from": [
+          11,
+          27
+        ]
+      },
+      {
+        "id": 30
+      },
+      {
+        "id": 31,
+        "from": [
+          27,
+          28,
+          30
+        ]
+      },
+      {
+        "id": 35
+      },
+      {
+        "id": 32,
+        "from": [
+          29,
+          31,
+          35
+        ]
+      },
+      {
+        "id": 33,
+        "from": [
+          3,
+          27
+        ]
+      },
+      {
+        "id": 34,
+        "from": [
+          2,
+          6,
+          16,
+          17,
+          20,
+          21,
+          29,
+          31
+        ]
+      }
+    ]
+  }
+}

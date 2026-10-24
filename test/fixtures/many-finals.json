@@ -1,0 +1,1021 @@
+{
+  "$schema": "../../schema/data.schema.json",
+  "lang": "en",
+  "title": "Many finals",
+  "sections": [
+    {
+      "id": "s1",
+      "title": "Section 1"
+    },
+    {
+      "id": "s2",
+      "title": "Section 2"
+    },
+    {
+      "id": "s3",
+      "title": "Section 3"
+    },
+    {
+      "id": "s4",
+      "title": "Section 4"
+    },
+    {
+      "id": "s5",
+      "title": "Section 5"
+    },
+    {
+      "id": "s6",
+      "title": "Section 6"
+    }
+  ],
+  "theses": [
+    {
+      "id": 1,
+      "section": "s1",
+      "label": "Thesis 1",
+      "text": "Thesis 1."
+    },
+    {
+      "id": 2,
+      "section": "s1",
+      "label": "Thesis 2",
+      "text": "Thesis 2."
+    },
+    {
+      "id": 3,
+      "section": "s1",
+      "label": "Thesis 3",
+      "text": "Thesis 3."
+    },
+    {
+      "id": 4,
+      "section": "s1",
+      "label": "Thesis 4",
+      "text": "Thesis 4."
+    },
+    {
+      "id": 5,
+      "section": "s1",
+      "label": "Thesis 5",
+      "text": "Thesis 5."
+    },
+    {
+      "id": 6,
+      "section": "s1",
+      "label": "Thesis 6",
+      "text": "Thesis 6.",
+      "from": [
+        1,
+        4,
+        5
+      ]
+    },
+    {
+      "id": 7,
+      "section": "s1",
+      "label": "Thesis 7",
+      "text": "Thesis 7."
+    },
+    {
+      "id": 8,
+      "section": "s2",
+      "label": "Thesis 8",
+      "text": "Thesis 8."
+    },
+    {
+      "id": 9,
+      "section": "s2",
+      "label": "Thesis 9",
+      "text": "Thesis 9."
+    },
+    {
+      "id": 10,
+      "section": "s2",
+      "label": "Thesis 10",
+      "text": "Thesis 10.",
+      "from": [
+        2,
+        3,
+        8,
+        9
+      ]
+    },
+    {
+      "id": 11,
+      "section": "s3",
+      "label": "Thesis 11",
+      "text": "Thesis 11.",
+      "from": [
+        6,
+        7
+      ]
+    },
+    {
+      "id": 12,
+      "section": "s3",
+      "label": "Thesis 12",
+      "text": "Thesis 12.",
+      "from": [
+        11
+      ]
+    },
+    {
+      "id": 13,
+      "section": "s3",
+      "label": "Thesis 13",
+      "text": "Thesis 13."
+    },
+    {
+      "id": 14,
+      "section": "s3",
+      "label": "Thesis 14",
+      "text": "Thesis 14."
+    },
+    {
+      "id": 15,
+      "section": "s3",
+      "label": "Thesis 15",
+      "text": "Thesis 15."
+    },
+    {
+      "id": 16,
+      "section": "s3",
+      "label": "Thesis 16",
+      "text": "Thesis 16.",
+      "from": [
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "id": 17,
+      "section": "s3",
+      "label": "Thesis 17",
+      "text": "Thesis 17.",
+      "from": [
+        16
+      ]
+    },
+    {
+      "id": 18,
+      "section": "s4",
+      "label": "Thesis 18",
+      "text": "Thesis 18."
+    },
+    {
+      "id": 19,
+      "section": "s4",
+      "label": "Thesis 19",
+      "text": "Thesis 19."
+    },
+    {
+      "id": 20,
+      "section": "s4",
+      "label": "Thesis 20",
+      "text": "Thesis 20."
+    },
+    {
+      "id": 21,
+      "section": "s4",
+      "label": "Thesis 21",
+      "text": "Thesis 21.",
+      "from": [
+        19,
+        20
+      ]
+    },
+    {
+      "id": 22,
+      "section": "s4",
+      "label": "Thesis 22",
+      "text": "Thesis 22.",
+      "from": [
+        21
+      ]
+    },
+    {
+      "id": 23,
+      "section": "s4",
+      "label": "Thesis 23",
+      "text": "Thesis 23."
+    },
+    {
+      "id": 24,
+      "section": "s4",
+      "label": "Thesis 24",
+      "text": "Thesis 24.",
+      "from": [
+        17,
+        18,
+        23
+      ]
+    },
+    {
+      "id": 25,
+      "section": "s4",
+      "label": "Thesis 25",
+      "text": "Thesis 25.",
+      "from": [
+        2,
+        24
+      ]
+    },
+    {
+      "id": 26,
+      "section": "s4",
+      "label": "Thesis 26",
+      "text": "Thesis 26."
+    },
+    {
+      "id": 27,
+      "section": "s4",
+      "label": "Thesis 27",
+      "text": "Thesis 27.",
+      "from": [
+        25,
+        26
+      ]
+    },
+    {
+      "id": 28,
+      "section": "s5",
+      "label": "Thesis 28",
+      "text": "Thesis 28."
+    },
+    {
+      "id": 29,
+      "section": "s5",
+      "label": "Thesis 29",
+      "text": "Thesis 29."
+    },
+    {
+      "id": 30,
+      "section": "s5",
+      "label": "Thesis 30",
+      "text": "Thesis 30."
+    },
+    {
+      "id": 31,
+      "section": "s5",
+      "label": "Thesis 31",
+      "text": "Thesis 31."
+    },
+    {
+      "id": 32,
+      "section": "s5",
+      "label": "Thesis 32",
+      "text": "Thesis 32."
+    },
+    {
+      "id": 33,
+      "section": "s5",
+      "label": "Thesis 33",
+      "text": "Thesis 33."
+    },
+    {
+      "id": 34,
+      "section": "s5",
+      "label": "Thesis 34",
+      "text": "Thesis 34.",
+      "from": [
+        28,
+        33
+      ]
+    },
+    {
+      "id": 35,
+      "section": "s5",
+      "label": "Thesis 35",
+      "text": "Thesis 35."
+    },
+    {
+      "id": 36,
+      "section": "s5",
+      "label": "Thesis 36",
+      "text": "Thesis 36.",
+      "from": [
+        1,
+        34,
+        35
+      ]
+    },
+    {
+      "id": 37,
+      "section": "s5",
+      "label": "Thesis 37",
+      "text": "Thesis 37.",
+      "from": [
+        22,
+        32
+      ]
+    },
+    {
+      "id": 38,
+      "section": "s5",
+      "label": "Thesis 38",
+      "text": "Thesis 38.",
+      "from": [
+        29,
+        32,
+        33
+      ]
+    },
+    {
+      "id": 39,
+      "section": "s5",
+      "label": "Thesis 39",
+      "text": "Thesis 39.",
+      "from": [
+        28
+      ]
+    },
+    {
+      "id": 40,
+      "section": "s5",
+      "label": "Thesis 40",
+      "text": "Thesis 40."
+    },
+    {
+      "id": 41,
+      "section": "s5",
+      "label": "Thesis 41",
+      "text": "Thesis 41.",
+      "from": [
+        30,
+        40
+      ]
+    },
+    {
+      "id": 42,
+      "section": "s6",
+      "label": "Thesis 42",
+      "text": "Thesis 42.",
+      "from": [
+        3,
+        10,
+        17,
+        24,
+        25
+      ]
+    }
+  ],
+  "start": 17,
+  "analysis": {
+    "issues": [
+      {
+        "id": "i1",
+        "type": "missing-premise",
+        "severity": "weakness",
+        "target": "inference",
+        "theses": [
+          16,
+          17
+        ],
+        "explanation": "Issue i1.",
+        "quote": "Quote for i1."
+      }
+    ],
+    "concepts": [
+      {
+        "term": "Concept 1",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 1.",
+            "theses": [
+              4,
+              6,
+              11,
+              13
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 2",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 2.",
+            "theses": [
+              4,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 3",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 3.",
+            "theses": [
+              5,
+              6,
+              7,
+              34
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 4",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 4.",
+            "theses": [
+              11,
+              12,
+              16
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 5",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 5.",
+            "theses": [
+              20,
+              21
+            ]
+          },
+          {
+            "definition": "Sense 2 of concept 5.",
+            "theses": [
+              22,
+              37
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 6",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 6.",
+            "theses": [
+              28,
+              29,
+              30,
+              31,
+              32,
+              33
+            ]
+          }
+        ]
+      },
+      {
+        "term": "Concept 7",
+        "senses": [
+          {
+            "definition": "Sense 1 of concept 7.",
+            "theses": [
+              3,
+              10
+            ]
+          }
+        ]
+      }
+    ],
+    "reconstructed": [
+      {
+        "id": 1,
+        "verdict": "supported",
+        "reason": "Reason for 1."
+      },
+      {
+        "id": 2,
+        "verdict": "supported",
+        "reason": "Reason for 2."
+      },
+      {
+        "id": 3,
+        "verdict": "weak",
+        "reason": "Reason for 3."
+      },
+      {
+        "id": 4,
+        "verdict": "definition",
+        "reason": "Reason for 4."
+      },
+      {
+        "id": 5,
+        "verdict": "weak",
+        "reason": "Reason for 5."
+      },
+      {
+        "id": 6,
+        "from": [
+          1,
+          4,
+          5
+        ]
+      },
+      {
+        "id": 7,
+        "verdict": "supported",
+        "reason": "Reason for 7."
+      },
+      {
+        "id": 8,
+        "verdict": "supported",
+        "reason": "Reason for 8."
+      },
+      {
+        "id": 9,
+        "verdict": "supported",
+        "reason": "Reason for 9."
+      },
+      {
+        "id": 10,
+        "from": [
+          2,
+          3,
+          8,
+          9
+        ]
+      },
+      {
+        "id": 11,
+        "from": [
+          6,
+          7
+        ]
+      },
+      {
+        "id": 12,
+        "from": [
+          11
+        ],
+        "type": "analogy",
+        "condition": {
+          "text": "Condition of 12.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 12."
+        }
+      },
+      {
+        "id": 13,
+        "verdict": "supported",
+        "reason": "Reason for 13."
+      },
+      {
+        "id": 14,
+        "verdict": "supported",
+        "reason": "Reason for 14."
+      },
+      {
+        "id": 15,
+        "verdict": "weak",
+        "reason": "Reason for 15."
+      },
+      {
+        "id": 16,
+        "from": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      {
+        "id": 43,
+        "section": "s3",
+        "label": "Implicit 43",
+        "text": "Implicit premise 43.",
+        "verdict": "supported",
+        "reason": "Reason for 43.",
+        "fixes": [
+          "i1"
+        ]
+      },
+      {
+        "id": 17,
+        "from": [
+          16,
+          43
+        ],
+        "fixes": [
+          "i1"
+        ]
+      },
+      {
+        "id": 18,
+        "verdict": "supported",
+        "reason": "Reason for 18."
+      },
+      {
+        "id": 19,
+        "verdict": "supported",
+        "reason": "Reason for 19."
+      },
+      {
+        "id": 20,
+        "verdict": "supported",
+        "reason": "Reason for 20."
+      },
+      {
+        "id": 21,
+        "from": [
+          19,
+          20
+        ],
+        "type": "analogy",
+        "condition": {
+          "text": "Condition of 21.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 21."
+        }
+      },
+      {
+        "id": 22,
+        "from": [
+          21
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 22.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 22."
+        }
+      },
+      {
+        "id": 23,
+        "verdict": "weak",
+        "reason": "Reason for 23."
+      },
+      {
+        "id": 24,
+        "from": [
+          17,
+          18,
+          23
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 24.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 24."
+        }
+      },
+      {
+        "id": 25,
+        "from": [
+          2,
+          24
+        ]
+      },
+      {
+        "id": 26,
+        "verdict": "supported",
+        "reason": "Reason for 26."
+      },
+      {
+        "id": 27,
+        "from": [
+          25,
+          26
+        ]
+      },
+      {
+        "id": 28,
+        "verdict": "supported",
+        "reason": "Reason for 28."
+      },
+      {
+        "id": 29,
+        "verdict": "supported",
+        "reason": "Reason for 29."
+      },
+      {
+        "id": 30,
+        "verdict": "weak",
+        "reason": "Reason for 30."
+      },
+      {
+        "id": 31,
+        "verdict": "supported",
+        "reason": "Reason for 31."
+      },
+      {
+        "id": 32,
+        "verdict": "supported",
+        "reason": "Reason for 32."
+      },
+      {
+        "id": 33,
+        "verdict": "supported",
+        "reason": "Reason for 33."
+      },
+      {
+        "id": 34,
+        "from": [
+          28,
+          33
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 34.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 34."
+        }
+      },
+      {
+        "id": 35,
+        "verdict": "supported",
+        "reason": "Reason for 35."
+      },
+      {
+        "id": 36,
+        "from": [
+          1,
+          34,
+          35
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 36.",
+          "rating": "weak",
+          "reason": "Reason for the condition of 36."
+        }
+      },
+      {
+        "id": 37,
+        "from": [
+          22,
+          32
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 37.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 37."
+        }
+      },
+      {
+        "id": 38,
+        "from": [
+          29,
+          32,
+          33
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 38.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 38."
+        }
+      },
+      {
+        "id": 39,
+        "from": [
+          28
+        ],
+        "type": "abductive",
+        "condition": {
+          "text": "Condition of 39.",
+          "rating": "strong",
+          "reason": "Reason for the condition of 39."
+        }
+      },
+      {
+        "id": 40,
+        "verdict": "supported",
+        "reason": "Reason for 40."
+      },
+      {
+        "id": 41,
+        "from": [
+          30,
+          40
+        ]
+      },
+      {
+        "id": 42,
+        "from": [
+          3,
+          10,
+          17,
+          24,
+          25
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "id": 1
+      },
+      {
+        "id": 2
+      },
+      {
+        "id": 3
+      },
+      {
+        "id": 4
+      },
+      {
+        "id": 5
+      },
+      {
+        "id": 6,
+        "from": [
+          1,
+          4,
+          5
+        ]
+      },
+      {
+        "id": 7
+      },
+      {
+        "id": 8
+      },
+      {
+        "id": 9
+      },
+      {
+        "id": 10,
+        "from": [
+          2,
+          3,
+          8,
+          9
+        ]
+      },
+      {
+        "id": 11,
+        "from": [
+          6,
+          7
+        ]
+      },
+      {
+        "id": 12,
+        "from": [
+          11
+        ]
+      },
+      {
+        "id": 13
+      },
+      {
+        "id": 14
+      },
+      {
+        "id": 15
+      },
+      {
+        "id": 16,
+        "from": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      {
+        "id": 43
+      },
+      {
+        "id": 17,
+        "from": [
+          16,
+          43
+        ]
+      },
+      {
+        "id": 18
+      },
+      {
+        "id": 19
+      },
+      {
+        "id": 20
+      },
+      {
+        "id": 21,
+        "from": [
+          19,
+          20
+        ]
+      },
+      {
+        "id": 22,
+        "from": [
+          21
+        ]
+      },
+      {
+        "id": 23
+      },
+      {
+        "id": 24,
+        "from": [
+          17,
+          18,
+          23
+        ]
+      },
+      {
+        "id": 25,
+        "from": [
+          2,
+          24
+        ]
+      },
+      {
+        "id": 26
+      },
+      {
+        "id": 27,
+        "from": [
+          25,
+          26
+        ]
+      },
+      {
+        "id": 28
+      },
+      {
+        "id": 29
+      },
+      {
+        "id": 30
+      },
+      {
+        "id": 32
+      },
+      {
+        "id": 33
+      },
+      {
+        "id": 34,
+        "from": [
+          28,
+          33
+        ]
+      },
+      {
+        "id": 35
+      },
+      {
+        "id": 36,
+        "from": [
+          1,
+          34,
+          35
+        ]
+      },
+      {
+        "id": 37,
+        "from": [
+          22,
+          32
+        ]
+      },
+      {
+        "id": 38,
+        "from": [
+          29,
+          32,
+          33
+        ]
+      },
+      {
+        "id": 39,
+        "from": [
+          28
+        ]
+      },
+      {
+        "id": 40
+      },
+      {
+        "id": 41,
+        "from": [
+          30,
+          40
+        ]
+      },
+      {
+        "id": 42,
+        "from": [
+          3,
+          10,
+          17,
+          24,
+          25
+        ]
+      }
+    ]
+  }
+}

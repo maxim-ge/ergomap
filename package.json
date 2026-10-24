@@ -46,8 +46,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "node build.mjs",
-    "dev": "node build.mjs --serve",
-    "test": "node --test \"test/*.test.js\"",
+    "dev": "node build.mjs --watch",
+    "test": "node --test",
     "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
